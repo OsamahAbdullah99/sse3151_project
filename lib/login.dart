@@ -16,8 +16,6 @@ class LoginWidget extends StatefulWidget {
 class _LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
-    // Figma Flutter Generator LoginWidget - FRAME
-
 
     return Scaffold(
         appBar: AppBar(
@@ -251,7 +249,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       color: Color.fromRGBO(108, 99, 255, 1),
                       fontFamily: 'Poppins',
                       fontSize: 15,
-                      letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+                      letterSpacing: 0,
                       fontWeight: FontWeight.normal,
                       height: 1
                   ),)
