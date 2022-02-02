@@ -22,6 +22,8 @@ class _LoginWidgetState extends State<LoginWidget> {
 
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
       body: Background(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
