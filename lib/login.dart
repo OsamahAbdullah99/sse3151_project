@@ -68,12 +68,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                 Container(
                   alignment: Alignment.centerRight,
                   margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0)),
-                    textColor: Colors.white,
-                    padding: const EdgeInsets.all(0),
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80.0),
+                        ))),
                     child: Container(
                       alignment: Alignment.center,
                       height: 50.0,
@@ -98,12 +101,15 @@ class _LoginWidgetState extends State<LoginWidget> {
             Container(
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {},
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(0),
+                style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80.0),
+                    ))),
                 child: Container(
                   alignment: Alignment.center,
                   height: 50.0,
