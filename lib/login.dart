@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'register.dart';
+import 'DashboardPA.dart';
+import 'dashboardStudent.dart';
 import 'background.dart';
 
 //import 'package:google_fonts/google_fonts.dart';
@@ -23,9 +25,9 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       body: Background(
-        child: Column(
+        child:
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
@@ -49,7 +51,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               margin: EdgeInsets.symmetric(horizontal: 40),
               child: TextField(
                 decoration: InputDecoration(
-                    labelText: "Email"
+                    labelText: "Username"
                 ),
               ),
             ),
@@ -84,7 +86,10 @@ class _LoginWidgetState extends State<LoginWidget> {
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => dashboardPA()));
+                },
+
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                 textColor: Colors.white,
                 padding: const EdgeInsets.all(0),
