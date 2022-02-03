@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../background.dart';
 
@@ -22,6 +23,16 @@ class dashboardStudent extends StatelessWidget {
           style: TextStyle(color: Colors.blue),
         ),
         centerTitle: true,
+        actions: [
+          TextButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: Image.asset(
+                'assets/images/logoutIcon.png',
+                scale: 20,
+              )),
+        ],
       ),
       body: Background(
         child: Card(

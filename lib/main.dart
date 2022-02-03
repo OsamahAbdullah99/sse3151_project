@@ -1,5 +1,6 @@
 import 'package:SSE3151_project/homepage.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
+import 'package:SSE3151_project/services/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => GoogleSignInProvider(),
       child: MaterialApp(
+        scaffoldMessengerKey: Utils.messengerKey,
         title: 'PAdvisor',
         debugShowCheckedModeBanner: false,
         home: HomePage(),

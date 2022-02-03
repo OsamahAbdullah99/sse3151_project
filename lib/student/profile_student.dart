@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 //trial test to see whether the details from google profile can be retrieve or not
-//Result: Success!
+//Result: Success! but only available for google user
 //Feel free to change the UI :)
 
 class StudentProfile extends StatelessWidget {
@@ -34,9 +34,11 @@ class StudentProfile extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                final provider =
-                    Provider.of<GoogleSignInProvider>(context, listen: false);
-                provider.logout();
+                //need to be fix: if user using google & if user using normal email
+                // final provider =
+                //     Provider.of<GoogleSignInProvider>(context, listen: false);
+                // provider.logout();
+                FirebaseAuth.instance.signOut();
               },
               child: Image.asset(
                 'assets/images/logoutIcon.png',
