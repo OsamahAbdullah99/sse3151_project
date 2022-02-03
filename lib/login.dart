@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'register.dart';
 import 'DashboardPA.dart';
 import 'dashboardStudent.dart';
@@ -111,7 +111,9 @@ class _LoginWidgetState extends State<LoginWidget> {
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: ElevatedButton(
                 onPressed: () {
-                  _logInWithGoogle();
+                  final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  provider.googleLogin();
                 },
                 style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -170,79 +172,5 @@ class _LoginWidgetState extends State<LoginWidget> {
         ),
       ),
     );
-  }
-
-// not yet complete
-  void _logInWithGoogle() async {
-    bool loading = false;
-    setState(() {
-      loading = false;
-    });
-
-    final googleSignIn = GoogleSignIn(scopes: ['email']);
-    try {
-      final googleSignInAccount = await googleSignIn.signIn();
-      if (googleSignInAccount == null) {
-        setState(() {
-          loading = false;
-        });
-        return;
-      }
-      final googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      final user = FirebaseAuth.instance.currentUser!;
-
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => dashboardStudent()),
-          (route) => false);
-    } on FirebaseAuthException catch (e) {
-      var content = '';
-      switch (e.code) {
-        case 'user-not-found':
-          content = 'The user you tried to log into was not found';
-          break;
-        case 'account-exists-with-different-credential':
-          content = 'This account exists with a different sign in provider';
-          break;
-      }
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text('Log in with Google failed'),
-                content: Text(content),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Ok'))
-                ],
-              ));
-    } catch (e) {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text('Log in with Google failed'),
-                content: Text('An unknown error occured'),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('Ok'))
-                ],
-              ));
-    } finally {
-      setState(() {
-        loading = false;
-      });
-    }
   }
 }
