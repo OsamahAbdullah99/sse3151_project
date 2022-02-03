@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:SSE3151_project/provider/googleSignIn.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'register.dart';
@@ -10,7 +11,10 @@ import 'background.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 class LoginWidget extends StatefulWidget {
-  const LoginWidget({Key? key}) : super(key: key);
+  final VoidCallback onClickedSignUp;
+
+  const LoginWidget({Key? key, required this.onClickedSignUp})
+      : super(key: key);
 
   @override
   _LoginWidgetState createState() => _LoginWidgetState();
@@ -154,19 +158,39 @@ class _LoginWidgetState extends State<LoginWidget> {
             Container(
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: GestureDetector(
-                onTap: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()))
-                },
-                child: Text(
-                  "Don't Have an Account? Sign up",
+              child: RichText(
+                text: TextSpan(
                   style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF2661FA)),
+                    color: Color(0xFF2661FA),
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  text: 'Don\'t Have an Account? ',
+                  children: [
+                    TextSpan(
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = widget.onClickedSignUp,
+                      text: 'Sign Up',
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          color: Color(0xFF2661FA)),
+                    ),
+                  ],
                 ),
               ),
+              // GestureDetector(
+              //   onTap: () => {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => RegisterScreen()))
+              //   },
+              //   child: Text(
+              //     "Don't Have an Account? Sign up",
+              //     style: TextStyle(
+              //         fontSize: 12,
+              //         fontWeight: FontWeight.bold,
+              //         color: Color(0xFF2661FA)),
+              //   ),
+              // ),
             )
           ],
         ),

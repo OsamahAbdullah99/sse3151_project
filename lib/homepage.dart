@@ -1,4 +1,5 @@
 import 'package:SSE3151_project/login.dart';
+import 'package:SSE3151_project/provider/auth_page.dart';
 import 'package:SSE3151_project/student/profile_student.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class HomePage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Center(child: Text('Something Went Wrong'));
           } else {
-            return LoginWidget();
+            return AuthPage();
           }
         },
       ),
