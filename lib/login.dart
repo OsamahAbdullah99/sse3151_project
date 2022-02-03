@@ -198,13 +198,6 @@ class _LoginWidgetState extends State<LoginWidget> {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
       final user = FirebaseAuth.instance.currentUser!;
-      // await DatabaseService(uid: user.uid)
-      //     .updateUserData('0', googleSignInAccount.displayName as String, 100);
-      // await FirebaseFirestore.instance.collection('users').add({
-      //   'email': googleSignInAccount.email,
-      //   'imageUrl': googleSignInAccount.photoUrl,
-      //   'name': googleSignInAccount.displayName,
-      // });
 
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => dashboardStudent()),
