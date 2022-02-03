@@ -13,10 +13,10 @@ class dashboardStudent extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.blue[300]),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back, color: Colors.blue[300]),
+        //   onPressed: () => Navigator.of(context).pop(),
+        // ),
         title: Text(
           "Dashboard",
           style: TextStyle(color: Colors.blue),

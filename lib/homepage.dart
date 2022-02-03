@@ -3,7 +3,7 @@ import 'package:SSE3151_project/student/profile_student.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-//trial test to see whether the details from google profile can be retrieve or not
+//trial test connection with firebase
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 

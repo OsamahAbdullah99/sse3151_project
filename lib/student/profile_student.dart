@@ -1,5 +1,6 @@
 import 'package:SSE3151_project/login.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
+import 'package:SSE3151_project/student/DashboardStudent.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,11 @@ class StudentProfile extends StatelessWidget {
             style:
                 GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w600)),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => dashboardStudent())),
+        ),
         actions: [
           TextButton(
               onPressed: () {
