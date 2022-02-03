@@ -3,6 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'background.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email_validator/email_validator.dart';
 
 class RegisterWidget extends StatefulWidget {
   final VoidCallback onClickedSignIn;
@@ -14,6 +16,20 @@ class RegisterWidget extends StatefulWidget {
 }
 
 class _RegisterWidgetState extends State<RegisterWidget> {
+  final formKey = GlobalKey<FormState>();
+  final emailCtrl = TextEditingController();
+  final MIDCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
+  final FNCtrl = TextEditingController();
+  final PNCtrl = TextEditingController();
+
+  @override
+  void dispose() {
+    emailCtrl.dispose();
+    passwordCtrl.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,12 +55,14 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               ),
               SizedBox(height: size.height * 0.03),
               Form(
+                key: formKey,
                 child: Column(
                   children: [
                     Container(
                       alignment: Alignment.center,
                       margin: EdgeInsets.symmetric(horizontal: 40),
-                      child: TextField(
+                      child: TextFormField(
+                        controller: FNCtrl,
                         decoration: InputDecoration(labelText: "Full Name"),
                       ),
                     ),
@@ -52,7 +70,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     Container(
                       alignment: Alignment.center,
                       margin: EdgeInsets.symmetric(horizontal: 40),
-                      child: TextField(
+                      child: TextFormField(
+                        controller: MIDCtrl,
                         decoration: InputDecoration(labelText: "Matric ID"),
                       ),
                     ),
@@ -60,15 +79,22 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     Container(
                       alignment: Alignment.center,
                       margin: EdgeInsets.symmetric(horizontal: 40),
-                      child: TextField(
+                      child: TextFormField(
+                        controller: emailCtrl,
                         decoration: InputDecoration(labelText: "Email address"),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (email) =>
+                            email != null && !EmailValidator.validate(email)
+                                ? 'Enter a valid email'
+                                : null,
                       ),
                     ),
                     SizedBox(height: size.height * 0.03),
                     Container(
                       alignment: Alignment.center,
                       margin: EdgeInsets.symmetric(horizontal: 40),
-                      child: TextField(
+                      child: TextFormField(
+                        controller: PNCtrl,
                         decoration: InputDecoration(labelText: "Mobile number"),
                       ),
                     ),
@@ -76,9 +102,15 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     Container(
                       alignment: Alignment.center,
                       margin: EdgeInsets.symmetric(horizontal: 40),
-                      child: TextField(
+                      child: TextFormField(
+                        controller: passwordCtrl,
                         decoration: InputDecoration(labelText: "Password"),
                         obscureText: true,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (password) =>
+                            password != null && password.length < 6
+                                ? 'Enter min. 6 characters'
+                                : null,
                       ),
                     ),
                     SizedBox(height: size.height * 0.05),
@@ -159,5 +191,31 @@ class _RegisterWidgetState extends State<RegisterWidget> {
         ),
       ),
     );
+  }
+
+  Future signUp() async {
+    // try {
+    //   await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    //       email: emailCtrl.text.trim(), password: passwordCtrl.text.trim());
+    // } on FirebaseAuthException catch (e) {
+    //   print(e);
+    // }
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
+
+    final String fullName = FNCtrl.text.trim();
+    final String UPMID = MIDCtrl.text.trim();
+    final String email = emailCtrl.text.trim();
+    final String phoneNumber = PNCtrl.text.trim();
+    final String password = passwordCtrl.text.trim();
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: CircularProgressIndicator(),
+            ));
+
+    if (fullName.isEmpty) {}
   }
 }

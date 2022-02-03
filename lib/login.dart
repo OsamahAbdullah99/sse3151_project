@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'register.dart';
 import 'PA/DashboardPA.dart';
-import 'dashboardStudent.dart';
+import 'student/DashboardStudent.dart';
 import 'background.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
@@ -21,9 +21,8 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  String email = '';
-  String password = '';
-  String error = '';
+  final MIDCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +54,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextField(
-                      decoration: InputDecoration(labelText: "Email"),
+                      controller: MIDCtrl,
+                      decoration: InputDecoration(labelText: "UPM-ID"),
                     ),
                   ),
                   SizedBox(height: size.height * 0.03),
@@ -63,6 +63,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     alignment: Alignment.center,
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextField(
+                      controller: passwordCtrl,
                       decoration: InputDecoration(labelText: "Password"),
                       obscureText: true,
                     ),
@@ -80,7 +81,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                     alignment: Alignment.centerRight,
                     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        final String UPMID = MIDCtrl.text.trim();
+                        final String password = passwordCtrl.text.trim();
+                      },
                       style: ButtonStyle(
                           padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                           shape:
