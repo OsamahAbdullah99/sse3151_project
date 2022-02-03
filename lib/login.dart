@@ -4,7 +4,7 @@ import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'register.dart';
-import 'DashboardPA.dart';
+import 'PA/DashboardPA.dart';
 import 'dashboardStudent.dart';
 import 'background.dart';
 //import 'package:google_fonts/google_fonts.dart';
