@@ -1,11 +1,11 @@
-import 'package:SSE3151_project/services/database.dart';
 import 'package:SSE3151_project/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'database.dart';
 
-class GoogleSignInProvider extends ChangeNotifier {
+class AuthService with ChangeNotifier {
   final googleSignIn = GoogleSignIn();
 
   GoogleSignInAccount? _user;
@@ -61,9 +61,4 @@ class GoogleSignInProvider extends ChangeNotifier {
     await googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
   }
-
-  // void setUser(GoogleSignInAccount user) {
-  //   _user = user;
-  //   notifyListeners();
-  // }
 }

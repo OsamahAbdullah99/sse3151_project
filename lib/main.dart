@@ -1,6 +1,7 @@
 import 'package:SSE3151_project/homepage.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:SSE3151_project/services/utils.dart';
+import 'package:SSE3151_project/user.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,18 @@ import 'package:provider/provider.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  // runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => GoogleSignInProvider(),
+      ),
+      Provider<UserData>(
+          create: (context) =>
+              UserData(uid: '', name: '', upmid: '', email: '', phoneNumber: 0))
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,14 +28,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-      child: MaterialApp(
-        scaffoldMessengerKey: Utils.messengerKey,
-        title: 'PAdvisor',
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
-      ),
+    return
+        // ChangeNotifierProvider(
+        //   create: (context) => GoogleSignInProvider(),
+        //   child:
+        MaterialApp(
+      scaffoldMessengerKey: Utils.messengerKey,
+      title: 'PAdvisor',
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+      //Consumer<GoogleSignInProvider>(builder: (context, notifier, child) {
+      //   return notifier.user != null ? Student_Profile() : AuthPage();
+      // }),
+      // ),
     );
   }
 }

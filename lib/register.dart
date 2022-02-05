@@ -235,7 +235,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
         await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
           'uid': user.uid,
           'fullName': fullName,
-          'id': id,
+          'upmid': id,
           'email': email,
           'phoneNumber': phoneNumber,
           'password': password,

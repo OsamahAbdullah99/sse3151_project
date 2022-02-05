@@ -26,6 +26,9 @@ class dashboardStudent extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
+                // final provider =
+                //     Provider.of<GoogleSignInProvider>(context, listen: false);
+                // provider.logout();
                 FirebaseAuth.instance.signOut();
               },
               child: Image.asset(
