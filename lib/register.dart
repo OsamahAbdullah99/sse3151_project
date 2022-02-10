@@ -331,7 +331,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
           'password': password,
           'role': 'student',
           'image':
-              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/studicon.png?alt=media&token=1b2f2b57-f1e4-456c-bee9-f46786bb9900',
+              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default_studicon.png?alt=media&token=7726cd03-0bb7-47bf-ac35-a86b0b44b457',
         });
       });
       if (result != null) {

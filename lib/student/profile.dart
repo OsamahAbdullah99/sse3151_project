@@ -130,7 +130,7 @@ class _Student_ProfileState extends State<Student_Profile> {
             CircleAvatar(
               radius: 40,
               backgroundImage: NetworkImage(image ??
-                  "https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/stdicon.jpg?alt=media&token=0e64d7bb-9f41-45b0-9eba-3099b680ddc1"),
+                  "https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default2_stdicon.jpg?alt=media&token=2e4518de-036f-47b6-9010-23588e9a6fe4"),
             ),
             SizedBox(height: 8),
             Row(
