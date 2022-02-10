@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:SSE3151_project/provider/googleSignIn.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -82,9 +83,24 @@ class _LoginWidgetState extends State<LoginWidget> {
                     alignment: Alignment.centerRight,
                     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         final String UPMID = MIDCtrl.text.trim();
                         final String password = passwordCtrl.text.trim();
+
+                        if (UPMID.isEmpty) {
+                          print('UPM-ID is empty');
+                        } else if (password.isEmpty) {
+                          print('Password is empty');
+                        } else {
+                          QuerySnapshot snap = await FirebaseFirestore.instance
+                              .collection('students')
+                              .where('upmid', isEqualTo: UPMID)
+                              .get();
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: snap.docs[0]['email'],
+                                  password: password);
+                        }
                       },
                       style: ButtonStyle(
                           padding: MaterialStateProperty.all(EdgeInsets.all(0)),
@@ -115,54 +131,54 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ],
               ),
             ),
+            // Container(
+            //   alignment: Alignment.centerRight,
+            //   margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       final provider =
+            //           Provider.of<GoogleSignInProvider>(context, listen: false);
+            //       provider.googleLogin();
+            //     },
+            //     style: ButtonStyle(
+            //         foregroundColor: MaterialStateProperty.all(Colors.white),
+            //         padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+            //         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            //             RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(80.0),
+            //         ))),
+            //     child: Container(
+            //       alignment: Alignment.center,
+            //       height: 50.0,
+            //       width: size.width * 0.5,
+            //       decoration: new BoxDecoration(
+            //           borderRadius: BorderRadius.circular(80.0),
+            //           gradient: new LinearGradient(colors: [
+            //             Color.fromARGB(255, 255, 136, 34),
+            //             Color.fromARGB(255, 255, 177, 41)
+            //           ])),
+            //       padding: const EdgeInsets.all(0),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Text(
+            //             "Login with Google",
+            //             textAlign: TextAlign.center,
+            //             style: TextStyle(fontWeight: FontWeight.bold),
+            //           ),
+            //           SizedBox(width: 7),
+            //           Image.asset(
+            //             'assets/images/Google1.png',
+            //             scale: 20,
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Container(
               alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-              child: ElevatedButton(
-                onPressed: () {
-                  final provider =
-                      Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.googleLogin();
-                },
-                style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0),
-                    ))),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50.0,
-                  width: size.width * 0.5,
-                  decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(80.0),
-                      gradient: new LinearGradient(colors: [
-                        Color.fromARGB(255, 255, 136, 34),
-                        Color.fromARGB(255, 255, 177, 41)
-                      ])),
-                  padding: const EdgeInsets.all(0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Login with Google",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 7),
-                      Image.asset(
-                        'assets/images/Google1.png',
-                        scale: 20,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerRight,
-              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              margin: EdgeInsets.symmetric(horizontal: 55, vertical: 10),
               child: RichText(
                 text: TextSpan(
                   style: TextStyle(

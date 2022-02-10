@@ -1,5 +1,5 @@
 import 'package:SSE3151_project/services/database.dart';
-import 'package:SSE3151_project/user.dart';
+import 'package:SSE3151_project/student_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,12 +11,12 @@ class GoogleSignInProvider extends ChangeNotifier {
   GoogleSignInAccount? _user;
   GoogleSignInAccount get user => _user!;
 
-  UserUPM? _userfromFirebase(User user) {
-    return user != null ? UserUPM(uid: user.uid) : null;
+  studentUser? _userfromFirebase(User user) {
+    return user != null ? studentUser(uid: user.uid) : null;
   }
 
   // auth change user stream
-  Stream<UserUPM?> get users {
+  Stream<studentUser?> get users {
     return FirebaseAuth.instance
         .authStateChanges()
         .map((User? user) => _userfromFirebase(user!));
@@ -40,8 +40,8 @@ class GoogleSignInProvider extends ChangeNotifier {
           .then((value) async {
         final user = FirebaseAuth.instance.currentUser!;
 
-        await DatabaseService(uid: user.uid)
-            .updateUserGData(googleUser.displayName as String);
+        // await DatabaseService(uid: user.uid)
+        //     .updateUserGData(googleUser.displayName as String);
 
         await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
           'uid': user.uid,

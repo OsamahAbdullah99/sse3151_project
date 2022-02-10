@@ -19,18 +19,40 @@ class RegisterWidget extends StatefulWidget {
 
 class _RegisterWidgetState extends State<RegisterWidget> {
   final formKey = GlobalKey<FormState>();
-  final emailCtrl = TextEditingController();
-  final MIDCtrl = TextEditingController();
-  final passwordCtrl = TextEditingController();
   final FNCtrl = TextEditingController();
+  final MIDCtrl = TextEditingController();
+  final semCtrl = TextEditingController();
   final PNCtrl = TextEditingController();
+  final emailCtrl = TextEditingController();
+  final wcCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
 
-  @override
-  void dispose() {
-    emailCtrl.dispose();
-    passwordCtrl.dispose();
-    super.dispose();
-  }
+  String? _faculty;
+  final List<String> faculties = [
+    'Faculty of Agriculture',
+    'Faculty of Forestry',
+    'Faculty of Veterinary Medicine',
+    'Faculty of Economics and Management',
+    'Faculty of Engineering',
+    'Faculty of Educational Studies',
+    'Faculty of Science',
+    'Faculty of Food Science and Technology',
+    'Faculty of Human Ecology',
+    'Faculty of Modern Languages and Communication',
+    'Faculty of Design and Architecture',
+    'Faculty of Medicine and Health Sciences',
+    'Faculty of Computer Science and Information Technology',
+    'Faculty of Biotechnology and Biomolecular Sciences',
+    'Faculty of Environmental Studies',
+    'Faculty of Agriculture and Food Science',
+  ];
+
+  // @override
+  // void dispose() {
+  //   emailCtrl.dispose();
+  //   passwordCtrl.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,123 +79,182 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   ),
                 ),
                 SizedBox(height: size.height * 0.03),
-                Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.symmetric(horizontal: 40),
-                        child: TextFormField(
-                          controller: FNCtrl,
-                          decoration: InputDecoration(labelText: "Full Name"),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (fullName) =>
-                              fullName != null && fullName.length < 6
-                                  ? 'Enter a full name'
-                                  : null,
+                Container(
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: TextFormField(
+                            controller: FNCtrl,
+                            decoration: InputDecoration(labelText: "Full Name"),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (fullName) =>
+                                fullName != null && fullName.length < 6
+                                    ? 'Enter a full name'
+                                    : null,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: size.height * 0.03),
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.symmetric(horizontal: 40),
-                        child: TextFormField(
-                          controller: MIDCtrl,
-                          decoration: InputDecoration(labelText: "Matric ID"),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (id) => id != null && id.length < 6
-                              ? 'Enter UPM-ID'
-                              : null,
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: TextFormField(
+                            controller: MIDCtrl,
+                            decoration: InputDecoration(labelText: "Matric ID"),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (id) => id != null && id.length < 6
+                                ? 'Enter UPM-ID'
+                                : null,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: size.height * 0.03),
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.symmetric(horizontal: 40),
-                        child: TextFormField(
-                          controller: emailCtrl,
-                          decoration:
-                              InputDecoration(labelText: "Email address"),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (email) =>
-                              email != null && !EmailValidator.validate(email)
-                                  ? 'Enter a valid email'
-                                  : null,
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: TextFormField(
+                            controller: semCtrl,
+                            decoration: InputDecoration(
+                                labelText: "Current Semester",
+                                hintText: "eg. 2021/2022-1"),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (semester) => semester == null
+                                ? 'This field cannot be empty'
+                                : null,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: size.height * 0.03),
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.symmetric(horizontal: 40),
-                        child: TextFormField(
-                          controller: PNCtrl,
-                          decoration:
-                              InputDecoration(labelText: "Mobile number"),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (phoneNumber) =>
-                              phoneNumber != null && phoneNumber.length < 10
-                                  ? 'Enter a phone number'
-                                  : null,
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: DropdownButtonFormField(
+                            isExpanded: true,
+                            decoration: InputDecoration(
+                              labelText: "Faculty",
+                            ),
+                            value: _faculty,
+                            items: faculties.map((faculty) {
+                              return DropdownMenuItem(
+                                value: faculty,
+                                child: Text(faculty),
+                              );
+                            }).toList(),
+                            onChanged: (value) =>
+                                setState(() => _faculty = value.toString()),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: size.height * 0.03),
-                      Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.symmetric(horizontal: 40),
-                        child: TextFormField(
-                          controller: passwordCtrl,
-                          decoration: InputDecoration(labelText: "Password"),
-                          obscureText: true,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (password) =>
-                              password != null && password.length < 8
-                                  ? 'Enter min. 8 characters'
-                                  : null,
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: TextFormField(
+                            controller: emailCtrl,
+                            decoration:
+                                InputDecoration(labelText: "Email Address"),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (email) =>
+                                email != null && !EmailValidator.validate(email)
+                                    ? 'Enter a valid email'
+                                    : null,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: size.height * 0.05),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            signUp();
-                          },
-                          style: ButtonStyle(
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.all(0)),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(80.0),
-                              ))),
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 50.0,
-                            width: size.width * 0.5,
-                            decoration: new BoxDecoration(
-                                borderRadius: BorderRadius.circular(80.0),
-                                gradient: new LinearGradient(colors: [
-                                  Color.fromARGB(255, 255, 136, 34),
-                                  Color.fromARGB(255, 255, 177, 41)
-                                ])),
-                            padding: const EdgeInsets.all(0),
-                            child: Text(
-                              "SIGN UP",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: TextFormField(
+                            controller: wcCtrl,
+                            decoration: InputDecoration(
+                              labelText: "Wechat ID",
+                            ),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (wechat) => wechat == null
+                                ? 'This field cannot be empty'
+                                : null,
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: TextFormField(
+                            controller: PNCtrl,
+                            decoration:
+                                InputDecoration(labelText: "Mobile Number"),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (phoneNumber) =>
+                                phoneNumber != null && phoneNumber.length < 10
+                                    ? 'Enter a phone number'
+                                    : null,
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: TextFormField(
+                            controller: passwordCtrl,
+                            decoration: InputDecoration(labelText: "Password"),
+                            obscureText: true,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (password) =>
+                                password != null && password.length < 8
+                                    ? 'Enter min. 8 characters'
+                                    : null,
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.05),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 10),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              signUp();
+                            },
+                            style: ButtonStyle(
+                                padding: MaterialStateProperty.all(
+                                    EdgeInsets.all(0)),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80.0),
+                                ))),
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 50.0,
+                              width: size.width * 0.5,
+                              decoration: new BoxDecoration(
+                                  borderRadius: BorderRadius.circular(80.0),
+                                  gradient: new LinearGradient(colors: [
+                                    Color.fromARGB(255, 255, 136, 34),
+                                    Color.fromARGB(255, 255, 177, 41)
+                                  ])),
+                              padding: const EdgeInsets.all(0),
+                              child: Text(
+                                "SIGN UP",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Container(
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+                  margin: EdgeInsets.symmetric(horizontal: 55, vertical: 5),
                   child: RichText(
                     text: TextSpan(
                       style: TextStyle(
@@ -222,25 +303,43 @@ class _RegisterWidgetState extends State<RegisterWidget> {
 
     final String fullName = FNCtrl.text.trim();
     final String id = MIDCtrl.text.trim();
+    final String semester = semCtrl.text;
+    final String faculty = _faculty!;
     final String email = emailCtrl.text.trim();
     final String phoneNumber = PNCtrl.text.trim();
+    final String wechat = wcCtrl.text.trim();
     final String password = passwordCtrl.text.trim();
 
     try {
-      await FirebaseAuth.instance
+      dynamic result = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         User user = FirebaseAuth.instance.currentUser!;
 
-        await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
+        await FirebaseFirestore.instance
+            .collection("students")
+            .doc(user.uid)
+            .set({
           'uid': user.uid,
           'fullName': fullName,
           'upmid': id,
+          'semester': semester,
+          'faculty': faculty,
           'email': email,
+          'wechat': wechat,
           'phoneNumber': phoneNumber,
           'password': password,
+          'role': 'student',
+          'image':
+              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/studicon.png?alt=media&token=1b2f2b57-f1e4-456c-bee9-f46786bb9900',
         });
       });
+      if (result != null) {
+        print('Successfully register a student');
+        // Navigator.pop(context);
+      } else {
+        print('Something went wrong.');
+      }
     } on FirebaseAuthException catch (e) {
       print(e);
       Utils.showSnackBar(e.message);

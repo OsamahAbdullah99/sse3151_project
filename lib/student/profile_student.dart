@@ -1,7 +1,7 @@
 import 'package:SSE3151_project/login.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:SSE3151_project/student/DashboardStudent.dart';
-import 'package:SSE3151_project/student/editProfile.dart';
+// import 'package:SSE3151_project/student/editProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -80,8 +80,8 @@ class StudentProfile extends StatelessWidget {
             SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => editProfile()));
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => editProfile()));
               },
               style: ButtonStyle(
                   padding: MaterialStateProperty.all(EdgeInsets.all(0)),
