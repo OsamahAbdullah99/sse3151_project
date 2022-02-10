@@ -16,16 +16,22 @@ class DatabaseService {
   Future studentData(
     String name,
     String upmid,
+    String semester,
+    String faculty,
     String email,
-    int phonenumber,
+    String phonenumber,
+    String wechat,
     String password,
   ) async {
     return await studentCollection
       ..doc(uid).set({
         'fullName': name,
         'upmid': upmid,
+        'semester': semester,
+        'faculty': faculty,
         'email': email,
         'phoneNumber': phonenumber,
+        'wechat': wechat,
         'password': password,
       });
   }
@@ -34,14 +40,22 @@ class DatabaseService {
   Future updateStudentData(
     String name,
     String upmid,
+    String semester,
+    String faculty,
     String email,
-    int phonenumber,
+    String phonenumber,
+    String wechat,
+    String password,
   ) async {
     return await studentCollection.doc(uid).update({
       'fullName': name,
       'upmid': upmid,
+      'semester': semester,
+      'faculty': faculty,
       'email': email,
       'phoneNumber': phonenumber,
+      'wechat': wechat,
+      'password': password,
     });
   }
 
@@ -57,22 +71,25 @@ class DatabaseService {
   // }
 
   // userData from snapshot
-  // studentUserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-  //   return studentUserData(
-  //       uid: uid,
-  //       name: snapshot['fullName'],
-  //       upmid: snapshot['upmid'],
-  //       email: snapshot['email'],
-  //       phoneNumber: snapshot['phoneNumber']);
-  // }
+  studentUserData _studentDataFromSnapshot(DocumentSnapshot snapshot) {
+    return studentUserData(
+        uid: uid,
+        name: snapshot['fullName'],
+        upmid: snapshot['upmid'],
+        semester: snapshot['semester'],
+        faculty: snapshot['faculty'],
+        email: snapshot['email'],
+        wechat: snapshot['wechat'],
+        phoneNumber: snapshot['phoneNumber']);
+  }
 
   // // // get brews stream
   // // Stream<List<UserDisplay>> get users {
   // //   return studentCollection.snapshots().map(_userListFromSnapshot);
   // // }
 
-  // //get user doc stream
-  // Stream<studentUserData> get userData {
-  //   return studentCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
-  // }
+  //get user doc stream
+  Stream<studentUserData> get studentsData {
+    return studentCollection.doc(uid).snapshots().map(_studentDataFromSnapshot);
+  }
 }

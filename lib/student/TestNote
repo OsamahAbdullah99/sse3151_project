@@ -558,3 +558,191 @@
 //                         ),
 //                       ],
 //                     ),
+
+//////////editprofile//////////////////
+ final _formKey = GlobalKey<FormState>();
+
+  //controller
+  final FNCtrl = TextEditingController();
+  final MIDCtrl = TextEditingController();
+  final semCtrl = TextEditingController();
+  final PNCtrl = TextEditingController();
+  final emailCtrl = TextEditingController();
+  final wcCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
+
+  final user = FirebaseAuth.instance.currentUser!;
+
+  String? image;
+  String? name;
+  String? UPMID;
+  String? semester;
+  String? faculty;
+  String? email;
+  String? wechat;
+  String? password;
+  String? phoneNumber;
+
+  String? currentName;
+  String? currentUPMID;
+  String? currentSemester;
+  String? currentFaculty;
+  String? currentEmail;
+  String? currentWechat;
+  String? currentPassword;
+  String? currentPhoneNumber;
+
+  void setVariable() {
+    name = FNCtrl.text;
+    UPMID = MIDCtrl.text;
+    semester = semCtrl.text;
+    // faculty = ;
+    email = emailCtrl.text;
+    wechat = wcCtrl.text;
+    password = passwordCtrl.text;
+    phoneNumber = PNCtrl.text;
+  }
+
+  Future getStudentData() async {
+    final studentInfo = await FirebaseFirestore.instance
+        .collection('students')
+        .doc(user.uid)
+        .get();
+
+    if (mounted) {
+      setState(() {
+        image = studentInfo.get('image');
+        currentName = studentInfo.get('fullName');
+        currentUPMID = studentInfo.get('upmid');
+        currentSemester = studentInfo.get('semester');
+        currentFaculty = studentInfo.get('faculty');
+        currentEmail = studentInfo.get('email');
+        currentWechat = studentInfo.get('wechat');
+        currentPassword = studentInfo.get('password');
+        currentPhoneNumber = studentInfo.get('phoneNumber');
+      });
+    }
+
+    // image = studentInfo.data()!['image'];
+    // currentName = studentInfo.data()!['fullName'];
+    // currentUPMID = studentInfo.data()!['upmid'];
+    // currentSemester = studentInfo.data()!['semester'];
+    // currentFaculty = studentInfo.data()!['faculty'];
+    // currentEmail = studentInfo.data()!['email'];
+    // currentWechat = studentInfo.data()!['wechat'];
+    // currentPassword = studentInfo.data()!['password'];
+    // currentPhoneNumber = studentInfo.data()!['phoneNumber'];
+
+    FNCtrl.text = currentName!;
+    MIDCtrl.text = currentUPMID!;
+    semCtrl.text = currentSemester!;
+    PNCtrl.text = currentPhoneNumber!;
+    emailCtrl.text = currentEmail!;
+    wcCtrl.text = currentWechat!;
+    passwordCtrl.text = currentPassword!;
+
+    print('getting...');
+  }
+
+  studentUser? student = snapshot.data;
+
+  body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Colors.indigoAccent, Colors.blue.shade200, Colors.white],
+              // stops: [0.2, 0.8, 1],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter),
+        ),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 40,
+              backgroundImage: NetworkImage(image ??
+                  'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default2_stdicon.jpg?alt=media&token=2e4518de-036f-47b6-9010-23588e9a6fe4'),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Name: ',
+              style: TextStyle(fontSize: 16),
+            ),
+            TextFormField(
+              initialValue: student?.name,
+              decoration: textInputDecoration,
+              validator: (val) => val!.isEmpty ? 'Please enter a name' : null,
+              onChanged: (val) => setState(() {
+                currentName = val;
+              }),
+            ),
+            // Padding(
+            //   padding:
+            //       EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            //   child: TextFormField(
+            //     initialValue: user.displayName!,
+            //     style: TextStyle(fontSize: 16),
+            //     decoration:
+            //         InputDecoration(border: OutlineInputBorder()),
+            //   ),
+            // ),
+
+            // SizedBox(height: 8),
+            // Text(
+            //   'Email: ' + user.email!,
+            //   style: TextStyle(fontSize: 16),
+            // ),
+            // //phone number is not available for those who sign in through google.
+            // //so, we need the profile that can be edited to update their phone number
+
+            // SizedBox(height: 8),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(
+            //       horizontal: 30, vertical: 10),
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       color: Colors.white70,
+            //       borderRadius: new BorderRadius.circular(10.0),
+            //     ),
+            //     // child: Padding(
+            //     //   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            //     child: TextFormField(
+            //       initialValue: user.displayName!,
+            //       style: TextStyle(fontSize: 16),
+            //       decoration: InputDecoration(
+            //         border: OutlineInputBorder(),
+            //         fillColor: Colors.white,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // ),
+          ],
+        ),
+      ),
+
+      /////////////////////////
+       Future editProfile() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) return;
+
+    name = FNCtrl.text.trim();
+    UPMID = MIDCtrl.text.trim();
+    // final String semester = semCtrl.text;
+    // final String faculty = _faculty!;
+    // final String email = emailCtrl.text.trim();
+    // final String phoneNumber = PNCtrl.text.trim();
+    // final String wechat = wcCtrl.text.trim();
+    // final String password = passwordCtrl.text.trim();
+
+    User user = FirebaseAuth.instance.currentUser!;
+
+    await FirebaseFirestore.instance.collection("users").doc(user.uid).update({
+      'fullName': name,
+      'upmid': UPMID,
+      // 'email': email,
+      // 'phoneNumber': '',
+    });
+
+    Navigator.pop(context);
+  }
