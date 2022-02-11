@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../background.dart';
+import '../loginPage.dart';
 
 class dashboardStudent extends StatelessWidget {
   const dashboardStudent({Key? key}) : super(key: key);
@@ -30,6 +31,12 @@ class dashboardStudent extends StatelessWidget {
                 //     Provider.of<GoogleSignInProvider>(context, listen: false);
                 // provider.logout();
                 FirebaseAuth.instance.signOut();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LoginWidget(
+                              onClickedSignUp: () {},
+                            )));
               },
               child: Image.asset(
                 'assets/images/logoutIcon.png',

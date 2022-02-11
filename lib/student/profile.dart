@@ -1,17 +1,19 @@
-import 'package:SSE3151_project/login.dart';
+import 'package:SSE3151_project/loginPage.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
+import 'package:SSE3151_project/sendEmailPage.dart';
 import 'package:SSE3151_project/student/DashboardStudent.dart';
 import 'package:SSE3151_project/student/editProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-//trial test to see whether the details from google profile can be retrieve or not
-//Result: Success! but only available for google user
-//Feel free to change the UI :)
-//var userD = FirebaseFirestore.instance.collection('users').doc("uid").get();
+//this is just to display whether the info can be retrieve or not
+//Result: success!
+//Feel free to change the UI :D
+
 class Student_Profile extends StatefulWidget {
   Student_Profile({Key? key}) : super(key: key);
 
@@ -34,6 +36,13 @@ class _Student_ProfileState extends State<Student_Profile> {
   String? wsLink;
   String? wcLink;
   String? emailLink;
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((e) =>
+            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
 
   Future setStudentValue() async {
     final studentInfo = await FirebaseFirestore.instance
@@ -60,24 +69,36 @@ class _Student_ProfileState extends State<Student_Profile> {
         email = studentInfo.data()!['email'];
         wechat = studentInfo.data()!['wechat'];
         phoneNumber = studentInfo.data()!['phoneNumber'];
+
+        final Uri emailLaunchUrl = Uri(
+          scheme: 'mailto',
+          path: email,
+          query: encodeQueryParameters(
+              <String, String>{'subject': 'Example Subject'}),
+        );
+
+        wsLink = "https://wa.me/" + phoneNumber!;
+        wcLink = "https://web.wechat.com/" + wechat!;
+        emailLink = emailLaunchUrl.toString();
       });
     }
   }
 
-  // void setStudentLink() {
-  //   wsLink = "https://wa.me/" + phoneNumber!;
-  //   wcLink = "https://wechat.com/" + wechat!;
-  //   emailLink = "https://www.google.com/gmail/";
-  // }
+  void setStudentLink() {
+    wsLink = "https://wa.me/" + phoneNumber!;
+    wcLink = "weixin://dl/chat?" + wechat!;
+    emailLink = "https://www.google.com/gmail/";
+  }
 
-  //   _launchURL(String url) async {
-  //   //const url = 'https://flutter.io';
-  //   if (await canLaunch(url)) {
-  //     await launch(url, forceWebView: true, forceSafariVC: true);
-  //   } else {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
+  //only work on API 31
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url,
+          forceWebView: true, forceSafariVC: true, enableJavaScript: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +129,12 @@ class _Student_ProfileState extends State<Student_Profile> {
                 //     Provider.of<GoogleSignInProvider>(context, listen: false);
                 // provider.logout();
                 FirebaseAuth.instance.signOut();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LoginWidget(
+                              onClickedSignUp: () {},
+                            )));
               },
               child: Image.asset(
                 'assets/images/logoutIcon.png',
@@ -146,7 +173,6 @@ class _Student_ProfileState extends State<Student_Profile> {
                 ),
               ],
             ),
-
             SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -161,7 +187,6 @@ class _Student_ProfileState extends State<Student_Profile> {
                 ),
               ],
             ),
-
             Container(
               padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
               child: Column(
@@ -170,12 +195,52 @@ class _Student_ProfileState extends State<Student_Profile> {
                   Text(UPMID ?? "", style: TextStyle(fontSize: 15)),
                   Text(semester ?? "", style: TextStyle(fontSize: 15)),
                   Text(faculty ?? "", style: TextStyle(fontSize: 15)),
+                  Text(wechat ?? "", style: TextStyle(fontSize: 15)),
                 ],
               ),
             ),
-
-            //phone number is not available for those who sign in through google.
-            //so, we need the profile that can be edited to update their phone number
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  OutlinedButton(
+                      style: OutlinedButton.styleFrom(side: BorderSide.none),
+                      onPressed: () {
+                        _launchURL(wsLink!);
+                      },
+                      child: Image.asset(
+                        'assets/images/ws.png',
+                        height: 24.0,
+                        width: 24.0,
+                      )),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(side: BorderSide.none),
+                    onPressed: () {
+                      _launchURL(wcLink!);
+                    },
+                    child: Image.asset(
+                      'assets/images/wechat.png',
+                      height: 24.0,
+                      width: 24,
+                    ),
+                  ),
+                  OutlinedButton(
+                      style: OutlinedButton.styleFrom(side: BorderSide.none),
+                      onPressed: () {
+                        // _launchURL(emailLink!);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => sendEmailPage()));
+                      },
+                      child: Image.asset(
+                        'assets/images/email.png',
+                        height: 24,
+                        width: 24,
+                      )),
+                ],
+              ),
+            ),
             SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {

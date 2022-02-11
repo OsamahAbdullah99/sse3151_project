@@ -1,8 +1,7 @@
-import 'package:SSE3151_project/login.dart';
+import 'package:SSE3151_project/loginPage.dart';
 import 'package:SSE3151_project/provider/auth_page.dart';
 import 'package:SSE3151_project/student/editProfile.dart';
 import 'package:SSE3151_project/student/profile.dart';
-import 'package:SSE3151_project/student/profile_student.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

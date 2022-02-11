@@ -3,7 +3,7 @@ import 'package:SSE3151_project/services/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
+import 'loginPage.dart';
 import 'background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
@@ -47,12 +47,18 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     'Faculty of Agriculture and Food Science',
   ];
 
-  // @override
-  // void dispose() {
-  //   emailCtrl.dispose();
-  //   passwordCtrl.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    FNCtrl.dispose();
+    MIDCtrl.dispose();
+    semCtrl.dispose();
+    PNCtrl.dispose();
+    emailCtrl.dispose();
+    wcCtrl.dispose();
+    passwordCtrl.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,9 +129,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                 hintText: "eg. 2021/2022-1"),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            validator: (semester) => semester == null
-                                ? 'This field cannot be empty'
-                                : null,
+                            validator: (semester) =>
+                                semester != null && semester.length < 1
+                                    ? 'This field cannot be empty'
+                                    : null,
                           ),
                         ),
                         SizedBox(height: size.height * 0.03),
@@ -175,9 +182,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             ),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            validator: (wechat) => wechat == null
-                                ? 'This field cannot be empty'
-                                : null,
+                            validator: (wechat) =>
+                                wechat != null && wechat.length < 1
+                                    ? 'This field cannot be empty'
+                                    : null,
                           ),
                         ),
                         SizedBox(height: size.height * 0.03),
@@ -328,7 +336,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
           'email': email,
           'wechat': wechat,
           'phoneNumber': phoneNumber,
-          'password': password,
           'role': 'student',
           'image':
               'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default_studicon.png?alt=media&token=7726cd03-0bb7-47bf-ac35-a86b0b44b457',
@@ -336,9 +343,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
       });
       if (result != null) {
         print('Successfully register a student');
-        // Navigator.pop(context);
-      } else {
-        print('Something went wrong.');
+        Navigator.pop(context);
       }
     } on FirebaseAuthException catch (e) {
       print(e);

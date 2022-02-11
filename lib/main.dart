@@ -1,7 +1,7 @@
-import 'package:SSE3151_project/homepage.dart';
+import 'package:SSE3151_project/homePage.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:SSE3151_project/services/utils.dart';
-import 'package:SSE3151_project/student_user.dart';
+import 'package:SSE3151_project/student/student_user.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';

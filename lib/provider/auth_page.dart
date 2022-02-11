@@ -1,5 +1,6 @@
-import 'package:SSE3151_project/login.dart';
-import 'package:SSE3151_project/register.dart';
+import 'package:SSE3151_project/loginPage.dart';
+import 'package:SSE3151_project/registerPage.dart';
+import 'package:SSE3151_project/startPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -14,7 +15,7 @@ class _AuthPageState extends State<AuthPage> {
   bool isLogin = true;
   @override
   Widget build(BuildContext context) => isLogin
-      ? LoginWidget(onClickedSignUp: toggle)
+      ? startLoginPage(onClickedSignUp: toggle)
       : RegisterWidget(onClickedSignIn: toggle);
 
   void toggle() => setState(() {

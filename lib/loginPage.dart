@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:SSE3151_project/ForgotPWPage.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
+import 'package:SSE3151_project/services/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'register.dart';
+import 'registerPage.dart';
 import 'PA/DashboardPA.dart';
 import 'student/DashboardStudent.dart';
 import 'background.dart';
@@ -23,6 +25,7 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
+  bool _isObscure = true;
   final MIDCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
 
@@ -66,16 +69,44 @@ class _LoginWidgetState extends State<LoginWidget> {
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextField(
                       controller: passwordCtrl,
-                      decoration: InputDecoration(labelText: "Password"),
-                      obscureText: true,
+                      obscureText: _isObscure,
+                      decoration: InputDecoration(
+                        labelText: "Password",
+                        suffixIcon: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            _isObscure = !_isObscure;
+                          },
+                        ),
+                      ),
                     ),
                   ),
+                  // GestureDetector(
+                  //   child: Text(
+                  //     'Forgot Password?',
+                  //     style: TextStyle(
+                  //       fontSize: 12,
+                  //       color: Color(0XFF2661FA),
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     alignment: Alignment.centerRight,
                     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                    child: Text(
-                      "Forgot your password?",
-                      style: TextStyle(fontSize: 12, color: Color(0XFF2661FA)),
+                    child: GestureDetector(
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0XFF2661FA),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ForgotPasswordPage()));
+                      },
                     ),
                   ),
                   SizedBox(height: size.height * 0.05),
@@ -83,25 +114,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     alignment: Alignment.centerRight,
                     margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                     child: ElevatedButton(
-                      onPressed: () async {
-                        final String UPMID = MIDCtrl.text.trim();
-                        final String password = passwordCtrl.text.trim();
-
-                        if (UPMID.isEmpty) {
-                          print('UPM-ID is empty');
-                        } else if (password.isEmpty) {
-                          print('Password is empty');
-                        } else {
-                          QuerySnapshot snap = await FirebaseFirestore.instance
-                              .collection('students')
-                              .where('upmid', isEqualTo: UPMID)
-                              .get();
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: snap.docs[0]['email'],
-                                  password: password);
-                        }
-                      },
+                      onPressed: () => signIn(),
                       style: ButtonStyle(
                           padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                           shape:
@@ -212,7 +225,27 @@ class _LoginWidgetState extends State<LoginWidget> {
               //         color: Color(0xFF2661FA)),
               //   ),
               // ),
-            )
+            ),
+            Container(
+              alignment: Alignment.bottomLeft,
+              margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              child: Container(
+                alignment: Alignment.center,
+                height: 40.0,
+                width: 40.0,
+                decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(80.0),
+                    gradient: new LinearGradient(colors: [
+                      Color.fromARGB(255, 255, 136, 34),
+                      Color.fromARGB(255, 255, 177, 41)
+                    ])),
+                padding: const EdgeInsets.all(0),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -220,19 +253,19 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   Future signIn() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
     try {
-      // await FirebaseAuth.instance
-      //     .signInWithEmailAndPassword(email: email, password: password);
-    } catch (e) {
+      final String UPMID = MIDCtrl.text.trim();
+      final String password = passwordCtrl.text.trim();
+
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('students')
+          .where('upmid', isEqualTo: UPMID)
+          .get();
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: snap.docs[0]['email'], password: password);
+    } on FirebaseAuthException catch (e) {
       print(e);
+      Utils.showSnackBar(e.message);
     }
   }
 }
