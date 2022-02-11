@@ -243,7 +243,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                 padding: const EdgeInsets.all(0),
                 child: IconButton(
                   icon: Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(context).pop();
+                  },
                 ),
               ),
             ),
