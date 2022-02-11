@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../background.dart';
-import '../loginPage.dart';
+import 'loginPage.dart';
 
 class dashboardStudent extends StatelessWidget {
   const dashboardStudent({Key? key}) : super(key: key);

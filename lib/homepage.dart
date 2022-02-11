@@ -1,4 +1,4 @@
-import 'package:SSE3151_project/loginPage.dart';
+import 'package:SSE3151_project/student/loginPage.dart';
 import 'package:SSE3151_project/provider/auth_page.dart';
 import 'package:SSE3151_project/student/editProfile.dart';
 import 'package:SSE3151_project/student/profile.dart';
@@ -17,9 +17,11 @@ class HomePage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasData) {
-            return Student_Profile();
-          } else if (snapshot.hasError) {
+          }
+          // else if (snapshot.hasData) {
+          //   return Student_Profile();
+          // }
+          else if (snapshot.hasError) {
             return Center(child: Text('Something Went Wrong'));
           } else {
             return AuthPage();

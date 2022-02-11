@@ -1,5 +1,5 @@
-import 'package:SSE3151_project/loginPage.dart';
-import 'package:SSE3151_project/registerPage.dart';
+import 'package:SSE3151_project/student/loginPage.dart';
+import 'package:SSE3151_project/student/registerPage.dart';
 import 'package:SSE3151_project/startPage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';

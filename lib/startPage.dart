@@ -1,5 +1,5 @@
 import 'package:SSE3151_project/background2.dart';
-import 'package:SSE3151_project/loginPage.dart';
+import 'package:SSE3151_project/student/loginPage.dart';
 import 'package:flutter/material.dart';
 
 class startLoginPage extends StatelessWidget {

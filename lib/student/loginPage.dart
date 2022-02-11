@@ -3,15 +3,16 @@
 import 'package:SSE3151_project/ForgotPWPage.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:SSE3151_project/services/utils.dart';
+import 'package:SSE3151_project/student/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'registerPage.dart';
-import 'PA/DashboardPA.dart';
-import 'student/DashboardStudent.dart';
-import 'background.dart';
+import '../PA/DashboardPA.dart';
+import 'DashboardStudent.dart';
+import '../background.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -263,6 +264,9 @@ class _LoginWidgetState extends State<LoginWidget> {
           .get();
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: snap.docs[0]['email'], password: password);
+
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Student_Profile()));
     } on FirebaseAuthException catch (e) {
       print(e);
       Utils.showSnackBar(e.message);

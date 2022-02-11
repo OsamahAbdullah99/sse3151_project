@@ -1,4 +1,4 @@
-import 'package:SSE3151_project/loginPage.dart';
+import 'package:SSE3151_project/student/loginPage.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:SSE3151_project/services/database.dart';
 import 'package:SSE3151_project/student/student_user.dart';
