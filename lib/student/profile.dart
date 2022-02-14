@@ -3,6 +3,7 @@ import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:SSE3151_project/sendEmailPage.dart';
 import 'package:SSE3151_project/student/DashboardStudent.dart';
 import 'package:SSE3151_project/student/editProfile.dart';
+import 'package:SSE3151_project/student/reports.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -266,6 +267,66 @@ class _Student_ProfileState extends State<Student_Profile> {
                 padding: const EdgeInsets.all(0),
                 child: Text(
                   "Edit Profile",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Reports()));
+              },
+              style: ButtonStyle(
+                  padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80.0),
+                      ))),
+              child: Container(
+                alignment: Alignment.center,
+                height: 50.0,
+                width: size.width * 0.5,
+                decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(80.0),
+                    gradient: new LinearGradient(colors: [
+                      Color.fromARGB(255, 255, 136, 34),
+                      Color.fromARGB(255, 255, 177, 41)
+                    ])),
+                padding: const EdgeInsets.all(0),
+                child: Text(
+                  "My Reports",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => editProfile()));
+              },
+              style: ButtonStyle(
+                  padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80.0),
+                      ))),
+              child: Container(
+                alignment: Alignment.center,
+                height: 50.0,
+                width: size.width * 0.5,
+                decoration: new BoxDecoration(
+                    borderRadius: BorderRadius.circular(80.0),
+                    gradient: new LinearGradient(colors: [
+                      Color.fromARGB(255, 255, 136, 34),
+                      Color.fromARGB(255, 255, 177, 41)
+                    ])),
+                padding: const EdgeInsets.all(0),
+                child: Text(
+                  "Chat",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
