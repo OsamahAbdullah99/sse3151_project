@@ -1,3 +1,4 @@
+import 'package:SSE3151_project/startPage.dart';
 import 'package:SSE3151_project/student/loginPage.dart';
 import 'package:SSE3151_project/provider/auth_page.dart';
 import 'package:SSE3151_project/student/editProfile.dart';
@@ -24,7 +25,7 @@ class HomePage extends StatelessWidget {
           else if (snapshot.hasError) {
             return Center(child: Text('Something Went Wrong'));
           } else {
-            return AuthPage();
+            return startLoginPage();
           }
         },
       ),
