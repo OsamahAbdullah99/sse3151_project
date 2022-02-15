@@ -46,7 +46,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     'Faculty of Computer Science and Information Technology',
     'Faculty of Biotechnology and Biomolecular Sciences',
     'Faculty of Environmental Studies',
-    'Faculty of Agriculture and Food Science',
   ];
 
   @override
