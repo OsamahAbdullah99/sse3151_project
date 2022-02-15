@@ -134,7 +134,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => LoginWidget(
-                              onClickedSignUp: () {},
+                            // onClickedSignUp: () {},
                             )));
               },
               child: Image.asset(
@@ -282,8 +282,8 @@ class _Student_ProfileState extends State<Student_Profile> {
                   padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0),
-                      ))),
+                    borderRadius: BorderRadius.circular(80.0),
+                  ))),
               child: Container(
                 alignment: Alignment.center,
                 height: 50.0,
@@ -312,8 +312,8 @@ class _Student_ProfileState extends State<Student_Profile> {
                   padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0),
-                      ))),
+                    borderRadius: BorderRadius.circular(80.0),
+                  ))),
               child: Container(
                 alignment: Alignment.center,
                 height: 50.0,

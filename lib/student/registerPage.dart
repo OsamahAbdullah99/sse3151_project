@@ -9,9 +9,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 
 class RegisterWidget extends StatefulWidget {
-  final VoidCallback onClickedSignIn;
-  const RegisterWidget({Key? key, required this.onClickedSignIn})
-      : super(key: key);
+  // final VoidCallback onClickedSignIn;
+  const RegisterWidget({
+    Key? key,
+    // required this.onClickedSignIn
+  }) : super(key: key);
 
   @override
   _RegisterWidgetState createState() => _RegisterWidgetState();
@@ -95,7 +97,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           margin: EdgeInsets.symmetric(horizontal: 40),
                           child: TextFormField(
                             controller: FNCtrl,
-                            decoration: InputDecoration(labelText: "Full Name"),
+                            decoration: InputDecoration(
+                              labelText: "Full Name",
+                              labelStyle: TextStyle(color: Colors.black),
+                            ),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (fullName) =>
@@ -110,7 +115,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           margin: EdgeInsets.symmetric(horizontal: 40),
                           child: TextFormField(
                             controller: MIDCtrl,
-                            decoration: InputDecoration(labelText: "Matric ID"),
+                            decoration: InputDecoration(
+                                labelText: "Matric ID",
+                                labelStyle: TextStyle(color: Colors.black),
+                                hintText: "eg. 208192"),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (id) => id != null && id.length < 6
@@ -126,6 +134,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             controller: semCtrl,
                             decoration: InputDecoration(
                                 labelText: "Current Semester",
+                                labelStyle: TextStyle(color: Colors.black),
                                 hintText: "eg. 2021/2022-1"),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -143,6 +152,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             isExpanded: true,
                             decoration: InputDecoration(
                               labelText: "Faculty",
+                              labelStyle: TextStyle(color: Colors.black),
                             ),
                             value: _faculty,
                             items: faculties.map((faculty) {
@@ -161,8 +171,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           margin: EdgeInsets.symmetric(horizontal: 40),
                           child: TextFormField(
                             controller: emailCtrl,
-                            decoration:
-                                InputDecoration(labelText: "Email Address"),
+                            decoration: InputDecoration(
+                                labelText: "Email Address",
+                                labelStyle: TextStyle(color: Colors.black),
+                                hintText: "eg. 208192@student.upm.edu.my"),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (email) =>
@@ -178,8 +190,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           child: TextFormField(
                             controller: wcCtrl,
                             decoration: InputDecoration(
-                              labelText: "Wechat ID",
-                            ),
+                                labelText: "Wechat ID",
+                                labelStyle: TextStyle(color: Colors.black),
+                                hintText: "eg. syna09"),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (wechat) =>
@@ -194,8 +207,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           margin: EdgeInsets.symmetric(horizontal: 40),
                           child: TextFormField(
                             controller: PNCtrl,
-                            decoration:
-                                InputDecoration(labelText: "Mobile Number"),
+                            decoration: InputDecoration(
+                                labelText: "Mobile Number",
+                                labelStyle: TextStyle(color: Colors.black),
+                                hintText: "eg. 0128934700"),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (phoneNumber) =>
@@ -210,7 +225,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           margin: EdgeInsets.symmetric(horizontal: 40),
                           child: TextFormField(
                             controller: passwordCtrl,
-                            decoration: InputDecoration(labelText: "Password"),
+                            decoration: InputDecoration(
+                              labelText: "Password",
+                              labelStyle: TextStyle(color: Colors.black),
+                            ),
                             obscureText: true,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -263,39 +281,50 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 Container(
                   alignment: Alignment.centerRight,
                   margin: EdgeInsets.symmetric(horizontal: 55, vertical: 5),
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        color: Color(0xFF2661FA),
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      text: 'Already Have an Account? ',
-                      children: [
-                        TextSpan(
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = widget.onClickedSignIn,
-                          text: 'Sign In',
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: Color(0xFF2661FA)),
+                  child:
+                      //  RichText(
+                      //   text: TextSpan(
+                      //     style: TextStyle(
+                      //       color: Color(0xFF2661FA),
+                      //       fontSize: 12,
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //     text: 'Already Have an Account? ',
+                      //     children: [
+                      //       TextSpan(
+                      //         recognizer: TapGestureRecognizer()
+                      //           ..onTap = widget.onClickedSignIn,
+                      //         text: 'Sign In',
+                      //         style: TextStyle(
+                      //             decoration: TextDecoration.underline,
+                      //             color: Color(0xFF2661FA)),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      GestureDetector(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Already Have an Account? ',
+                        style: TextStyle(
+                          color: Color(0xFF2661FA),
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
+                        children: [
+                          TextSpan(
+                            text: "Sign In",
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                color: Color(0xFF2661FA)),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  // GestureDetector(
-                  //   onTap: () => {
-                  //     Navigator.push(context,
-                  //         MaterialPageRoute(builder: (context) => AuthPage()))
-                  //   },
-                  //   child: Text(
-                  //     "Already Have an Account? Sign in",
-                  //     style: TextStyle(
-                  //         fontSize: 12,
-                  //         fontWeight: FontWeight.bold,
-                  //         color: Color(0xFF2661FA)),
-                  //   ),
-                  // ),
                 ),
               ],
             ),

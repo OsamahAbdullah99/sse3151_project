@@ -109,7 +109,7 @@ class editProfile extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => LoginWidget(
-                              onClickedSignUp: () {},
+                            // onClickedSignUp: () {},
                             )));
               },
               child: Image.asset(

@@ -3,6 +3,7 @@
 import 'package:SSE3151_project/ForgotPWPage.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:SSE3151_project/services/utils.dart';
+import 'package:SSE3151_project/startPage.dart';
 import 'package:SSE3151_project/student/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,10 +17,12 @@ import '../background.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 class LoginWidget extends StatefulWidget {
-  final VoidCallback onClickedSignUp;
+  // final VoidCallback onClickedSignUp;
 
-  const LoginWidget({Key? key, required this.onClickedSignUp})
-      : super(key: key);
+  const LoginWidget({
+    Key? key,
+    // required this.onClickedSignUp
+  }) : super(key: key);
 
   @override
   _LoginWidgetState createState() => _LoginWidgetState();
@@ -61,7 +64,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextField(
                       controller: MIDCtrl,
-                      decoration: InputDecoration(labelText: "UPM-ID"),
+                      decoration: InputDecoration(
+                          labelText: "UPM-ID", hintText: "eg. 208192"),
                     ),
                   ),
                   SizedBox(height: size.height * 0.03),
@@ -193,39 +197,57 @@ class _LoginWidgetState extends State<LoginWidget> {
             Container(
               alignment: Alignment.centerRight,
               margin: EdgeInsets.symmetric(horizontal: 55, vertical: 10),
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    color: Color(0xFF2661FA),
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  text: 'Don\'t Have an Account? ',
-                  children: [
-                    TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickedSignUp,
-                      text: 'Sign Up',
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Color(0xFF2661FA)),
+              child:
+                  // RichText(
+                  //   text: TextSpan(
+                  //     style: TextStyle(
+                  //       color: Color(0xFF2661FA),
+                  //       fontSize: 12,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //     text: 'Don\'t Have an Account? ',
+                  //     children: [
+                  //       TextSpan(
+                  //         recognizer: TapGestureRecognizer()
+                  //           ..onTap = widget.onClickedSignUp,
+                  //         text: 'Sign Up',
+                  //         style: TextStyle(
+                  //             decoration: TextDecoration.underline,
+                  //             color: Color(0xFF2661FA)),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  GestureDetector(
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterWidget(
+                              // onClickedSignIn: () {},
+                              )))
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Don\'t Have an Account? ',
+                    style: TextStyle(
+                      color: Color(0xFF2661FA),
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
+                    children: [
+                      TextSpan(
+                        text: "Sign Up",
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                            color: Color(0xFF2661FA)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              // GestureDetector(
-              //   onTap: () => {
-              //     Navigator.push(context,
-              //         MaterialPageRoute(builder: (context) => RegisterScreen()))
-              //   },
-              //   child: Text(
-              //     "Don't Have an Account? Sign up",
-              //     style: TextStyle(
-              //         fontSize: 12,
-              //         fontWeight: FontWeight.bold,
-              //         color: Color(0xFF2661FA)),
-              //   ),
-              // ),
             ),
             Container(
               alignment: Alignment.bottomLeft,
@@ -246,6 +268,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
                     Navigator.of(context).pop();
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => startLoginPage()));
                   },
                 ),
               ),
