@@ -9,18 +9,19 @@ import 'package:provider/provider.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // runApp(const MyApp());
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (context) => GoogleSignInProvider(),
-      ),
-      // Provider<studentUserData>(
-      //     create: (context) =>
-      //         studentUserData(uid: '', name: '', upmid: '', email: '', phoneNumber: 0))
-    ],
-    child: MyApp(),
-  ));
+  runApp(const MyApp());
+  // runApp(
+  //   MultiProvider(
+  //   providers: [
+  //     ChangeNotifierProvider(
+  //       create: (context) => GoogleSignInProvider(),
+  //     ),
+  //     // Provider<studentUserData>(
+  //     //     create: (context) =>
+  //     //         studentUserData(uid: '', name: '', upmid: '', email: '', phoneNumber: 0))
+  //   ],
+  //   child: MyApp(),
+  // ));
 }
 
 class MyApp extends StatelessWidget {

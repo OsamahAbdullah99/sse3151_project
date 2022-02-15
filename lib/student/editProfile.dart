@@ -133,73 +133,82 @@ class editProfile extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 8),
+                SizedBox(height: 20),
                 CircleAvatar(
                   radius: 40,
                   backgroundImage: NetworkImage(image ??
                       'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default_studicon.png?alt=media&token=7726cd03-0bb7-47bf-ac35-a86b0b44b457'),
                 ),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: FNCtrl,
-                  decoration: InputDecoration(
-                    labelText: 'Full Name',
-                    hintText: currentName,
+                SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: FNCtrl,
+                        decoration: InputDecoration(
+                          labelText: 'Full Name',
+                          hintText: currentName,
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (val) =>
+                            val!.isEmpty ? 'Please enter a name' : null,
+                      ),
+                      SizedBox(height: 8),
+                      TextFormField(
+                        controller: MIDCtrl,
+                        decoration: InputDecoration(
+                          labelText: 'UPM-ID',
+                          hintText: currentUPMID,
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (val) => val != null && val.length < 6
+                            ? 'This field cannot be empty'
+                            : null,
+                      ),
+                      SizedBox(height: 8),
+                      TextFormField(
+                        controller: semCtrl,
+                        decoration: InputDecoration(
+                            labelText: 'Current Semester',
+                            hintText: currentSemester),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (val) =>
+                            val == null ? 'This field cannot be empty' : null,
+                      ),
+                      SizedBox(height: 8),
+                      TextFormField(
+                        controller: emailCtrl,
+                        decoration: InputDecoration(
+                            labelText: 'Current Email', hintText: currentEmail),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (val) =>
+                            val != null && !EmailValidator.validate(val)
+                                ? 'Enter a valid email'
+                                : null,
+                      ),
+                      SizedBox(height: 8),
+                      TextFormField(
+                        controller: wcCtrl,
+                        decoration: InputDecoration(
+                            labelText: 'Current Wechat ID',
+                            hintText: currentWechat),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (val) =>
+                            val == null ? 'This field cannot be empty' : null,
+                      ),
+                      SizedBox(height: 8),
+                      TextFormField(
+                        controller: PNCtrl,
+                        decoration: InputDecoration(
+                            labelText: 'Current Phone Number',
+                            hintText: currentPhoneNumber),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (val) =>
+                            val == null ? 'This field cannot be empty' : null,
+                      ),
+                    ],
                   ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (val) =>
-                      val!.isEmpty ? 'Please enter a name' : null,
-                ),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: MIDCtrl,
-                  decoration: InputDecoration(
-                    labelText: 'UPM-ID',
-                    hintText: currentUPMID,
-                  ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (val) => val != null && val.length < 6
-                      ? 'This field cannot be empty'
-                      : null,
-                ),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: semCtrl,
-                  decoration: InputDecoration(
-                      labelText: 'Current Semester', hintText: currentSemester),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (val) =>
-                      val == null ? 'This field cannot be empty' : null,
-                ),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: emailCtrl,
-                  decoration: InputDecoration(
-                      labelText: 'Current Email', hintText: currentEmail),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (val) =>
-                      val != null && !EmailValidator.validate(val)
-                          ? 'Enter a valid email'
-                          : null,
-                ),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: wcCtrl,
-                  decoration: InputDecoration(
-                      labelText: 'Current Wechat ID', hintText: currentWechat),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (val) =>
-                      val == null ? 'This field cannot be empty' : null,
-                ),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: PNCtrl,
-                  decoration: InputDecoration(
-                      labelText: 'Current Phone Number',
-                      hintText: currentPhoneNumber),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (val) =>
-                      val == null ? 'This field cannot be empty' : null,
                 ),
                 SizedBox(height: 8),
               ],

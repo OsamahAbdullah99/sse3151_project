@@ -1,29 +1,23 @@
-import 'package:SSE3151_project/provider/auth_page.dart';
 import 'package:SSE3151_project/services/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'loginPage.dart';
 import '../background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 
-class RegisterWidget extends StatefulWidget {
-  // final VoidCallback onClickedSignIn;
-  const RegisterWidget({
+class RegisterWidgetPA extends StatefulWidget {
+  const RegisterWidgetPA({
     Key? key,
-    // required this.onClickedSignIn
   }) : super(key: key);
 
   @override
   _RegisterWidgetState createState() => _RegisterWidgetState();
 }
 
-class _RegisterWidgetState extends State<RegisterWidget> {
+class _RegisterWidgetState extends State<RegisterWidgetPA> {
   final formKey = GlobalKey<FormState>();
   final FNCtrl = TextEditingController();
   final MIDCtrl = TextEditingController();
-  final semCtrl = TextEditingController();
   final PNCtrl = TextEditingController();
   final emailCtrl = TextEditingController();
   final wcCtrl = TextEditingController();
@@ -48,11 +42,128 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     'Faculty of Environmental Studies',
   ];
 
+  String? _dep;
+  List<String> departments = [];
+  final List<String> f1 = [
+    'Department Of Crop Science',
+    'Department of Plant Protection',
+    'Department of Animal Science',
+    'Department of Land Management',
+    'Department of Agri-Business and Bioresources Economics',
+    'Department of Agriculture Technology and Department of Aquaculture',
+  ];
+  final List<String> f2 = [
+    'Department of Forestry Science and Biodiversity',
+    'Department of Natural Resource Industry',
+    'Department of Nature Parks and Recreation',
+    'Department of Environment and Natural Resources Section',
+  ];
+
+  final List<String> f3 = [
+    'Department of Veterinary Pre Clinical Science',
+    'Department of Veterinary Pathology & Microbiology',
+    'Department of Veterinary Clinical Studies',
+    'Department of Veterinary Laboratory Diagnosis',
+    'Department of Companion Animal Medicine & Surgery',
+    'Department of Farm & Exotic Animals Medicine & Surgery',
+  ];
+  final List<String> f4 = [
+    'Department of Economics',
+    'Department of Management and Marketing',
+    'Department of Accounting and Finance',
+  ];
+  final List<String> f5 = [
+    "Department of Aerospace Engineering",
+    "Department of Civil Engineering",
+    "Department of Biological & Agricultural Engineering",
+    "Department of Electrical & Electronic Engineering",
+    "Department of Chemical & Environmental Engineering",
+    "Department of Computer and Communication Systems Engineering",
+    "Department of Process and Food Engineering",
+  ];
+  final List<String> f6 = [
+    'Department of Foundations of Education',
+    'Department of Sport Studies',
+    'Department of Science and Technical Education',
+    'Department of Language and Humanities Education',
+    'Department of Professional Development and Continuing Education',
+    'Department of Counselor Education and Counseling Psychology',
+  ];
+  final List<String> f7 = [
+    'Department of Biology',
+    'Department of Physics',
+    'Department of Chemistry',
+    'Department of Mathematics & Statistics',
+  ];
+  final List<String> f8 = [
+    'Department of Food Science',
+    'Department of Food Technology',
+    'Department of Food Management and Service',
+  ];
+  final List<String> f9 = [
+    'Department of Human Development and Family Studies',
+    'Department of Social Sciences and Development',
+    'Department of Resource Management and Consumer Studies',
+    'Department of Music',
+    'Department of Government and Civilisation',
+  ];
+  final List<String> f10 = [
+    'Department of Malay Language',
+    'Department of English',
+    'Department of Foreign Languages',
+    'Department of Communication',
+  ];
+  final List<String> f11 = [
+    'Department of Landscape Architecture',
+    'Department of Architecture',
+    'Department of Industrial Design',
+  ];
+  final List<String> f12 = [
+    'Department of Biomedical Sciences',
+    'Department of Nutrition',
+    'Department of Dietetic',
+    'Department of Environmental and Occupational Health',
+    'Department of Nursing',
+    'Department of Human Anatomy',
+    'Department of Pathology',
+    'Department of Medical Microbiology',
+    'Department of Family Medicine',
+    'Department of Community Health',
+    'Department of Obstetric and Gynaecology',
+    'Department of Paediatrics',
+    'Department of Radiology',
+    'Department of Orthopaedics',
+    'Department of Rehabilitation Medicine',
+    'Department of Psychiatry',
+    'Department of Medicine',
+    'Department of Neurology',
+    'Department of Surgery',
+    'Department of Anaesthesia and Intensive Care',
+    'Department of Urology',
+    'Department of Ophthalmology',
+    'Department of Otorhinolaryngology-Head and Neck Surgery',
+  ];
+  final List<String> f13 = [
+    'Department of Computer Science',
+    'Department of Multimedia',
+    'Department of Software Engineering and Information System',
+    'Department of Communication Technology and Network',
+  ];
+  final List<String> f14 = [
+    'Department of Microbiology',
+    'Department of Cell & Molecular Biology',
+    'Department of Bioprocess Technology',
+    'Department of Biochemistry',
+  ];
+  final List<String> f15 = [
+    'Department of Environmental Management',
+    'Department of Environmental Science',
+  ];
+
   @override
   void dispose() {
     FNCtrl.dispose();
     MIDCtrl.dispose();
-    semCtrl.dispose();
     PNCtrl.dispose();
     emailCtrl.dispose();
     wcCtrl.dispose();
@@ -64,7 +175,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -77,7 +187,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.symmetric(horizontal: 40),
                   child: Text(
-                    "REGISTER",
+                    "REGISTER PA",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF2661FA),
@@ -115,32 +225,14 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           child: TextFormField(
                             controller: MIDCtrl,
                             decoration: InputDecoration(
-                                labelText: "Matric ID",
+                                labelText: "Staff ID",
                                 labelStyle: TextStyle(color: Colors.black),
-                                hintText: "eg. 208192"),
+                                hintText: "eg. AZ8192"),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (id) => id != null && id.length < 6
                                 ? 'Enter UPM-ID'
                                 : null,
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.03),
-                        Container(
-                          alignment: Alignment.center,
-                          margin: EdgeInsets.symmetric(horizontal: 40),
-                          child: TextFormField(
-                            controller: semCtrl,
-                            decoration: InputDecoration(
-                                labelText: "Current Semester",
-                                labelStyle: TextStyle(color: Colors.black),
-                                hintText: "eg. 2021/2022-1"),
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (semester) =>
-                                semester != null && semester.length < 1
-                                    ? 'This field cannot be empty'
-                                    : null,
                           ),
                         ),
                         SizedBox(height: size.height * 0.03),
@@ -160,8 +252,76 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                 child: Text(faculty),
                               );
                             }).toList(),
+                            onChanged: (value) {
+                              if (value == 'Faculty of Agriculture') {
+                                departments = f1;
+                              } else if (value == 'Faculty of Forestry') {
+                                departments = f2;
+                              } else if (value ==
+                                  'Faculty of Veterinary Medicine') {
+                                departments = f3;
+                              } else if (value ==
+                                  'Faculty of Economics and Management') {
+                                departments = f4;
+                              } else if (value == 'Faculty of Engineering') {
+                                departments = f5;
+                              } else if (value ==
+                                  'Faculty of Educational Studies') {
+                                departments = f6;
+                              } else if (value == 'Faculty of Science') {
+                                departments = f7;
+                              } else if (value ==
+                                  'Faculty of Food Science and Technology') {
+                                departments = f8;
+                              } else if (value == 'Faculty of Human Ecology') {
+                                departments = f9;
+                              } else if (value ==
+                                  'Faculty of Modern Languages and Communication') {
+                                departments = f10;
+                              } else if (value ==
+                                  'Faculty of Design and Architecture') {
+                                departments = f11;
+                              } else if (value ==
+                                  'Faculty of Medicine and Health Sciences') {
+                                departments = f12;
+                              } else if (value ==
+                                  'Faculty of Computer Science and Information Technology') {
+                                departments = f13;
+                              } else if (value ==
+                                  'Faculty of Biotechnology and Biomolecular Sciences') {
+                                departments = f14;
+                              } else if (value ==
+                                  'Faculty of Environmental Studies') {
+                                departments = f15;
+                              } else {
+                                departments = [];
+                              }
+                              setState(() {
+                                _dep = null;
+                                _faculty = value.toString();
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: DropdownButtonFormField(
+                            isExpanded: true,
+                            decoration: InputDecoration(
+                              labelText: "Department",
+                              labelStyle: TextStyle(color: Colors.black),
+                            ),
+                            value: _dep,
+                            items: departments.map((dep) {
+                              return DropdownMenuItem(
+                                value: dep,
+                                child: Text(dep),
+                              );
+                            }).toList(),
                             onChanged: (value) =>
-                                setState(() => _faculty = value.toString()),
+                                setState(() => _dep = value.toString()),
                           ),
                         ),
                         SizedBox(height: size.height * 0.03),
@@ -173,7 +333,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             decoration: InputDecoration(
                                 labelText: "Email Address",
                                 labelStyle: TextStyle(color: Colors.black),
-                                hintText: "eg. 208192@student.upm.edu.my"),
+                                hintText: "eg. name@upm.edu.my"),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (email) =>
@@ -207,14 +367,14 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           child: TextFormField(
                             controller: PNCtrl,
                             decoration: InputDecoration(
-                                labelText: "Mobile Number",
+                                labelText: "Office Number",
                                 labelStyle: TextStyle(color: Colors.black),
-                                hintText: "eg. 0128934700"),
+                                hintText: "eg. 0397014301"),
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             validator: (phoneNumber) =>
                                 phoneNumber != null && phoneNumber.length < 10
-                                    ? 'Enter a phone number'
+                                    ? 'This field cannot be empty'
                                     : null,
                           ),
                         ),
@@ -280,28 +440,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                 Container(
                   alignment: Alignment.centerRight,
                   margin: EdgeInsets.symmetric(horizontal: 55, vertical: 5),
-                  child:
-                      //  RichText(
-                      //   text: TextSpan(
-                      //     style: TextStyle(
-                      //       color: Color(0xFF2661FA),
-                      //       fontSize: 12,
-                      //       fontWeight: FontWeight.bold,
-                      //     ),
-                      //     text: 'Already Have an Account? ',
-                      //     children: [
-                      //       TextSpan(
-                      //         recognizer: TapGestureRecognizer()
-                      //           ..onTap = widget.onClickedSignIn,
-                      //         text: 'Sign In',
-                      //         style: TextStyle(
-                      //             decoration: TextDecoration.underline,
-                      //             color: Color(0xFF2661FA)),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                      GestureDetector(
+                  child: GestureDetector(
                     onTap: () => Navigator.of(context).pop(),
                     child: RichText(
                       text: TextSpan(
@@ -339,7 +478,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
 
     final String fullName = FNCtrl.text.trim();
     final String id = MIDCtrl.text.trim();
-    final String semester = semCtrl.text;
+    final String department = _dep!;
     final String faculty = _faculty!;
     final String email = emailCtrl.text.trim();
     final String phoneNumber = PNCtrl.text.trim();
@@ -347,35 +486,28 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     final String password = passwordCtrl.text.trim();
 
     try {
-      // dynamic result =
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         User user = FirebaseAuth.instance.currentUser!;
 
-        await FirebaseFirestore.instance
-            .collection("students")
-            .doc(user.uid)
-            .set({
+        await FirebaseFirestore.instance.collection("PA").doc(user.uid).set({
           'uid': user.uid,
           'fullName': fullName,
           'upmid': id,
-          'semester': semester,
           'faculty': faculty,
+          'department': department,
           'email': email,
           'wechat': wechat,
           'phoneNumber': phoneNumber,
-          'role': 'student',
+          'role': 'pa',
           'image':
-              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default_studicon.png?alt=media&token=7726cd03-0bb7-47bf-ac35-a86b0b44b457',
+              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon2.png?alt=media&token=b5e1061d-f647-40f5-82bf-5bf55a44d5d7',
         });
       });
-      print('Successfully register a student');
+      print('Successfully register a PA');
+      FirebaseAuth.instance.signOut();
       Navigator.pop(context);
-      // if (result != null) {
-      //   print('Successfully register a student');
-      //   Navigator.pop(context);
-      // }
     } on FirebaseAuthException catch (e) {
       print(e);
       Utils.showSnackBar(e.message);
