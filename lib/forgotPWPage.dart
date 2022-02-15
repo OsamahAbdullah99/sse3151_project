@@ -66,6 +66,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   'Reset Password',
                   style: TextStyle(fontSize: 24),
                 ),
+                style: ElevatedButton.styleFrom(primary: Colors.grey.shade900),
               ),
             ],
           )),
