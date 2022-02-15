@@ -1,12 +1,12 @@
+import 'package:SSE3151_project/PA/loginPage.dart';
 import 'package:SSE3151_project/background2.dart';
 import 'package:SSE3151_project/student/loginPage.dart';
 import 'package:flutter/material.dart';
 
 class startLoginPage extends StatelessWidget {
-  final VoidCallback onClickedSignUp;
-
-  const startLoginPage({Key? key, required this.onClickedSignUp})
-      : super(key: key);
+  const startLoginPage({
+    Key? key,
+  }) : super(key: key);
 
 //change the UI if you want
   @override
@@ -41,8 +41,9 @@ class startLoginPage extends StatelessWidget {
                   onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              LoginWidget(onClickedSignUp: onClickedSignUp))),
+                          builder: (context) => LoginWidget(
+                              // onClickedSignUp: () {}
+                              ))),
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -73,7 +74,8 @@ class startLoginPage extends StatelessWidget {
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginWidgetPA())),
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
