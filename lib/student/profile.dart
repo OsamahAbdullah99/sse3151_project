@@ -188,17 +188,38 @@ class _Student_ProfileState extends State<Student_Profile> {
                 ),
               ],
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(UPMID ?? "", style: TextStyle(fontSize: 15)),
-                  Text(semester ?? "", style: TextStyle(fontSize: 15)),
-                  Text(faculty ?? "", style: TextStyle(fontSize: 15)),
-                  Text(wechat ?? "", style: TextStyle(fontSize: 15)),
-                ],
-              ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('UPM-ID: ', style: TextStyle(fontSize: 16)),
+                Text(UPMID ?? "", style: TextStyle(fontSize: 16)),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Semester: ', style: TextStyle(fontSize: 16)),
+                Text(semester ?? "", style: TextStyle(fontSize: 16)),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Faculty: ', style: TextStyle(fontSize: 16)),
+                Flexible(
+                    child: Text(faculty ?? "", style: TextStyle(fontSize: 16))),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Wechat ID: ', style: TextStyle(fontSize: 16)),
+                Text(wechat ?? "", style: TextStyle(fontSize: 16)),
+              ],
             ),
             Container(
               child: Row(
