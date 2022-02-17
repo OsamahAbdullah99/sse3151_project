@@ -36,6 +36,7 @@ dependencies:
   google_fonts: ^2.2.0
   email_validator: ^2.0.1
   url_launcher: ^6.0.20
+  flutter_slidable: any
 
 dev_dependencies:
   flutter_test:
