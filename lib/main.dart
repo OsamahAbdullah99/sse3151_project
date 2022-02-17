@@ -1,6 +1,7 @@
-import 'package:SSE3151_project/homePage.dart';
+import 'package:SSE3151_project/student/homePage.dart';
 import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:SSE3151_project/services/utils.dart';
+import 'package:SSE3151_project/startPage.dart';
 import 'package:SSE3151_project/student/student_user.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: Utils.messengerKey,
       title: 'PAdvisor',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: startLoginPage(),
       //Consumer<GoogleSignInProvider>(builder: (context, notifier, child) {
       //   return notifier.user != null ? Student_Profile() : AuthPage();
       // }),

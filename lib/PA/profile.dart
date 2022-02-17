@@ -48,19 +48,19 @@ class _PA_ProfileState extends State<PA_Profile> {
   }
 
   Future setPAValue() async {
-    final studentInfo =
+    final PAInfo =
         await FirebaseFirestore.instance.collection('PA').doc(user?.uid).get();
 
     if (mounted) {
       setState(() {
-        name = studentInfo.data()!['fullName'];
-        image = studentInfo.data()!['image'];
-        UPMID = studentInfo.data()!['upmid'];
-        department = studentInfo.data()!['department'];
-        faculty = studentInfo.data()!['faculty'];
-        email = studentInfo.data()!['email'];
-        wechat = studentInfo.data()!['wechat'];
-        phoneNumber = studentInfo.data()!['phoneNumber'];
+        name = PAInfo.data()!['fullName'];
+        image = PAInfo.data()!['image'];
+        UPMID = PAInfo.data()!['upmid'];
+        department = PAInfo.data()!['department'];
+        faculty = PAInfo.data()!['faculty'];
+        email = PAInfo.data()!['email'];
+        wechat = PAInfo.data()!['wechat'];
+        phoneNumber = PAInfo.data()!['phoneNumber'];
 
         // final Uri emailLaunchUrl = Uri(
         //   scheme: 'mailto',

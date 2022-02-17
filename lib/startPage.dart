@@ -1,6 +1,6 @@
-import 'package:SSE3151_project/PA/loginPage.dart';
+import 'package:SSE3151_project/PA/homePage.dart';
 import 'package:SSE3151_project/background2.dart';
-import 'package:SSE3151_project/student/loginPage.dart';
+import 'package:SSE3151_project/student/homePage.dart';
 import 'package:flutter/material.dart';
 
 class startLoginPage extends StatelessWidget {
@@ -40,10 +40,11 @@ class startLoginPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () => Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => LoginWidget(
-                              // onClickedSignUp: () {}
-                              ))),
+                      MaterialPageRoute(builder: (context) => HomePage_Student()
+                          // LoginWidget(
+                          //     // onClickedSignUp: () {}
+                          //     )
+                          )),
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -75,7 +76,7 @@ class startLoginPage extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: ElevatedButton(
                   onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginWidgetPA())),
+                      MaterialPageRoute(builder: (context) => HomePage_PA())),
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(

@@ -1,6 +1,9 @@
+import 'package:SSE3151_project/background2.dart';
+import 'package:SSE3151_project/services/menu_item.dart';
+import 'package:SSE3151_project/services/menu_lists.dart';
+import 'package:SSE3151_project/student/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../background.dart';
 import 'loginPage.dart';
 
 class dashboardStudent extends StatelessWidget {
@@ -12,39 +15,48 @@ class dashboardStudent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back, color: Colors.blue[300]),
-        //   onPressed: () => Navigator.of(context).pop(),
-        // ),
+        backgroundColor: Colors.indigo,
+        automaticallyImplyLeading: false,
         title: Text(
           "Dashboard",
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         actions: [
-          TextButton(
-              onPressed: () {
-                // final provider =
-                //     Provider.of<GoogleSignInProvider>(context, listen: false);
-                // provider.logout();
-                FirebaseAuth.instance.signOut();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LoginWidget(
-                            // onClickedSignUp: () {},
-                            )));
-              },
-              child: Image.asset(
-                'assets/images/logoutIcon.png',
-                scale: 20,
-              )),
+          PopupMenuButton<MenuItem>(
+            onSelected: (item) => onSelected(context, item),
+            itemBuilder: (context) => [
+              ...MenuLists.itemLists.map(buildItem).toList(),
+              PopupMenuDivider(),
+              ...MenuLists.itemSecList.map(buildItem).toList(),
+            ],
+            color: Colors.white,
+            // icon: new Icon(Icons.add, color: Colors.amber),
+          ),
+          // TextButton(
+          //     onPressed: () {
+          //       // final provider =
+          //       //     Provider.of<GoogleSignInProvider>(context, listen: false);
+          //       // provider.logout();
+          //       FirebaseAuth.instance.signOut();
+          //       Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //               builder: (context) => LoginWidget(
+          //                   // onClickedSignUp: () {},
+          //                   )));
+          //     },
+          //     child: Image.asset(
+          //       'assets/images/logoutIcon.png',
+          //       scale: 20,
+          //     )),
         ],
       ),
-      body: Background(
+      body: Background2(
         child: Card(
           margin: EdgeInsets.all(20),
           child: SingleChildScrollView(
@@ -59,8 +71,8 @@ class dashboardStudent extends StatelessWidget {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF2661FA),
-                        fontSize: 36),
-                    textAlign: TextAlign.left,
+                        fontSize: 27),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -153,5 +165,42 @@ class dashboardStudent extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  PopupMenuItem<MenuItem> buildItem(MenuItem item) {
+    return PopupMenuItem<MenuItem>(
+      value: item,
+      child: Row(
+        children: [
+          Icon(
+            item.icon,
+            color: Colors.black,
+            size: 25,
+          ),
+          const SizedBox(
+            width: 12,
+          ),
+          Text(item.text),
+        ],
+      ),
+    );
+  }
+
+  void onSelected(BuildContext context, MenuItem item) {
+    switch (item) {
+      case MenuLists.itemProfile:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => Student_Profile()),
+        );
+        break;
+      case MenuLists.itemLogOut:
+        FirebaseAuth.instance.signOut();
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoginWidget()),
+          (route) => false,
+        );
+        break;
+      default:
+    }
   }
 }

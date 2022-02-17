@@ -209,7 +209,7 @@ class _LoginWidgetState extends State<LoginWidgetPA> {
           email: snap.docs[0]['email'], password: password);
 
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => PA_Profile()));
+          context, MaterialPageRoute(builder: (context) => dashboardPA()));
     } on FirebaseAuthException catch (e) {
       print(e);
       Utils.showSnackBar(e.message);

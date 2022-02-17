@@ -293,7 +293,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           email: snap.docs[0]['email'], password: password);
 
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Student_Profile()));
+          context, MaterialPageRoute(builder: (context) => dashboardStudent()));
     } on FirebaseAuthException catch (e) {
       print(e);
       Utils.showSnackBar(e.message);
