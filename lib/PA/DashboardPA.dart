@@ -1,5 +1,12 @@
+import 'package:SSE3151_project/PA/AdviseeList.dart';
+import 'package:SSE3151_project/PA/addAdvisee.dart';
+import 'package:SSE3151_project/PA/profile.dart';
+import 'package:SSE3151_project/background2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../background.dart';
+import '../services/menu_item.dart';
+import '../services/menu_lists.dart';
+import '../student/loginPage.dart';
 
 class dashboardPA extends StatelessWidget {
   const dashboardPA({Key? key}) : super(key: key);
@@ -10,20 +17,30 @@ class dashboardPA extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.blue[300]),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        backgroundColor: Colors.indigo,
+        automaticallyImplyLeading: false,
         title: Text(
           "Dashboard",
-          style: TextStyle(color: Colors.blue),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
+        actions: [
+          PopupMenuButton<MenuItem>(
+            onSelected: (item) => onSelected(context, item),
+            itemBuilder: (context) => [
+              ...MenuLists.itemPALists.map(buildItem).toList(),
+              PopupMenuDivider(),
+              ...MenuLists.itemSecList.map(buildItem).toList(),
+            ],
+            color: Colors.white,
+            // icon: new Icon(Icons.add, color: Colors.amber),
+          ),
+        ],
       ),
-      body: Background(
+      body: Background2(
         child: Card(
           margin: EdgeInsets.all(20),
           child: SingleChildScrollView(
@@ -137,12 +154,54 @@ class dashboardPA extends StatelessWidget {
                       child: new Icon(Icons.add),
                     )
                   ],
-                )
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  PopupMenuItem<MenuItem> buildItem(MenuItem item) {
+    return PopupMenuItem<MenuItem>(
+      value: item,
+      child: Row(
+        children: [
+          Icon(
+            item.icon,
+            color: Colors.black,
+            size: 25,
+          ),
+          const SizedBox(
+            width: 12,
+          ),
+          Text(item.text),
+        ],
+      ),
+    );
+  }
+
+  void onSelected(BuildContext context, MenuItem item) {
+    switch (item) {
+      case MenuLists.itemProfile:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => PA_Profile()),
+        );
+        break;
+      case MenuLists.itemAdvisee:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => adviseeList()),
+        );
+        break;
+      case MenuLists.itemLogOut:
+        FirebaseAuth.instance.signOut();
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoginWidget()),
+          (route) => false,
+        );
+        break;
+      default:
+    }
   }
 }

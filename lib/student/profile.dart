@@ -119,8 +119,9 @@ class _Student_ProfileState extends State<Student_Profile> {
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => dashboardStudent())),
+          onPressed: () => Navigator.pop(context),
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => dashboardStudent())),
         ),
         actions: [
           TextButton(
