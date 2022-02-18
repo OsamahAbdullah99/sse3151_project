@@ -7,8 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../services/menu_item.dart';
-import '../services/menu_lists.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class adviseeList extends StatefulWidget {
   const adviseeList({Key? key}) : super(key: key);
@@ -20,6 +19,12 @@ class adviseeList extends StatefulWidget {
 final user = FirebaseAuth.instance.currentUser;
 
 class _adviseeListState extends State<adviseeList> {
+  String? wsLink;
+  String? wcLink;
+  final toCtrl = TextEditingController();
+  final subjectCtrl = TextEditingController();
+  final msgCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final db = FirebaseFirestore.instance
@@ -86,14 +91,27 @@ class _adviseeListState extends State<adviseeList> {
                         SlidableAction(
                           onPressed: (BuildContext context) async {
                             String upmid = doc.get('upmid');
-                            QuerySnapshot matricStream = await studentInfo
+                            QuerySnapshot upmID_Stream = await studentInfo
                                 .where('upmid', isEqualTo: upmid)
                                 .get();
-                            List<QueryDocumentSnapshot> matricStreamList =
-                                matricStream.docs;
-                            String upm_id = matricStreamList.first.get('upmid');
+                            List<QueryDocumentSnapshot> upmID_StreamList =
+                                upmID_Stream.docs;
+                            String upm_id = upmID_StreamList.first.get('upmid');
+                            String role = upmID_StreamList.first.get('role');
                             String fullName =
-                                matricStreamList.first.get('fullName');
+                                upmID_StreamList.first.get('fullName');
+                            String image = upmID_StreamList.first.get('image');
+                            String faculty =
+                                upmID_StreamList.first.get('faculty');
+                            String dept =
+                                upmID_StreamList.first.get('department');
+                            String semester =
+                                upmID_StreamList.first.get('semester');
+                            String email = upmID_StreamList.first.get('email');
+                            String wechat =
+                                upmID_StreamList.first.get('wechat');
+                            String phoneNumber =
+                                upmID_StreamList.first.get('phoneNumber');
 
                             FirebaseFirestore.instance
                                 .collection('Advisee_Advisor')
@@ -107,7 +125,18 @@ class _adviseeListState extends State<adviseeList> {
                                 .doc(user?.uid)
                                 .collection('students')
                                 .doc(upm_id)
-                                .set({'upmid': upm_id, 'fullName': fullName});
+                                .set({
+                              'upmid': upm_id,
+                              'role': role,
+                              'fullName': fullName,
+                              'image': image,
+                              'semester': semester,
+                              'faculty': faculty,
+                              'department': dept,
+                              'email': email,
+                              'wechat': wechat,
+                              'phoneNumber': phoneNumber,
+                            });
                           },
                           autoClose: true,
                           backgroundColor: Color(0xFF434BC0),
@@ -130,12 +159,6 @@ class _adviseeListState extends State<adviseeList> {
                           subtitle: Text(doc.get('fullName')),
                           // title: Text(doc.get('upmid')),
                           // subtitle: Text(doc.get('fullName')),
-<<<<<<< Updated upstream
-                          // onTap: () {
-                          //   Navigator.of(context).push(MaterialPageRoute(
-                          //       // builder: (context) => showStudentProfile()));
-                          // },
-=======
                           onTap: () async {
                             String upmid = doc.get('upmid');
                             QuerySnapshot upmID_Stream = await studentInfo
@@ -144,6 +167,7 @@ class _adviseeListState extends State<adviseeList> {
                             List<QueryDocumentSnapshot> upmID_StreamList =
                                 upmID_Stream.docs;
                             String upm_id = upmID_StreamList.first.get('upmid');
+
                             String fullName =
                                 upmID_StreamList.first.get('fullName');
                             String image = upmID_StreamList.first.get('image');
@@ -171,7 +195,6 @@ class _adviseeListState extends State<adviseeList> {
                                     wechat,
                                     phoneNumber)));
                           },
->>>>>>> Stashed changes
                         ),
                       ),
                     );
@@ -282,6 +305,15 @@ class _adviseeListState extends State<adviseeList> {
         });
   }
 
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url,
+          forceWebView: true, forceSafariVC: true, enableJavaScript: false);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   Future getStudentProfile(
       String upm_id,
       String fullName,
@@ -300,6 +332,7 @@ class _adviseeListState extends State<adviseeList> {
         .get();
     setState(() {
       upm_id = db.data()!['upmid'];
+
       fullName = db.data()!['fullName'];
       image = db.data()!['image'];
       faculty = db.data()!['faculty'];
@@ -308,6 +341,9 @@ class _adviseeListState extends State<adviseeList> {
       email = db.data()!['email'];
       wechat = db.data()!['wechat'];
       phoneNumber = db.data()!['phoneNumber'];
+
+      wsLink = "https://wa.me/" + phoneNumber;
+      wcLink = "https://web.wechat.com/" + wechat;
     });
   }
 
@@ -349,30 +385,166 @@ class _adviseeListState extends State<adviseeList> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              CircleAvatar(
+                radius: 40,
+                backgroundImage: NetworkImage(image),
+              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('UPM-ID: ', style: TextStyle(fontSize: 16)),
                   Text(upm_id, style: TextStyle(fontSize: 16)),
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Name: ', style: TextStyle(fontSize: 16)),
                   Text(fullName, style: TextStyle(fontSize: 16)),
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Faculty: ', style: TextStyle(fontSize: 16)),
                   Flexible(
                       child: Text(faculty, style: TextStyle(fontSize: 16))),
                 ],
               ),
+              Row(
+                children: [
+                  Text('Department: ', style: TextStyle(fontSize: 16)),
+                  Flexible(child: Text(dept, style: TextStyle(fontSize: 16))),
+                ],
+              ),
+              SizedBox(height: 10),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    OutlinedButton(
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        onPressed: () {
+                          _launchURL(wsLink!);
+                        },
+                        child: Image.asset(
+                          'assets/images/ws.png',
+                          height: 24.0,
+                          width: 24.0,
+                        )),
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(side: BorderSide.none),
+                      onPressed: () {
+                        _launchURL(wcLink!);
+                      },
+                      child: Image.asset(
+                        'assets/images/wechat.png',
+                        height: 24.0,
+                        width: 24,
+                      ),
+                    ),
+                    OutlinedButton(
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        onPressed: () {
+                          // _launchURL(emailLink!);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      sendEmailtoStudentPage(upm_id, email)));
+                        },
+                        child: Image.asset(
+                          'assets/images/email.png',
+                          height: 24,
+                          width: 24,
+                        )),
+                  ],
+                ),
+              ),
             ],
           ),
         ));
+  }
+
+  Future getStudentEmail(String upm_id, String email) async {
+    final db = await FirebaseFirestore.instance
+        .collection('Advisee_Advisor')
+        .doc(user?.uid)
+        .collection('students')
+        .doc(upm_id)
+        .get();
+    setState(() {
+      upm_id = db.data()!['upmid'];
+      email = db.data()!['email'];
+
+      toCtrl.text = email;
+    });
+  }
+
+  sendEmailtoStudentPage(String upm_id, String email) {
+    getStudentEmail(upm_id, email);
+    Widget buildTextField({
+      required String title,
+      required TextEditingController ctrl,
+      int maxLines = 1,
+    }) =>
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            TextField(
+              controller: ctrl,
+              maxLines: maxLines,
+              decoration: InputDecoration(border: OutlineInputBorder()),
+            ),
+          ],
+        );
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Email Sender'),
+        centerTitle: true,
+        backgroundColor: Colors.indigo,
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            buildTextField(title: 'To', ctrl: toCtrl),
+            SizedBox(height: 16),
+            buildTextField(title: 'Subject', ctrl: subjectCtrl),
+            SizedBox(height: 16),
+            buildTextField(title: 'Message', ctrl: msgCtrl, maxLines: 8),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => launchEmail(
+          toEmail: toCtrl.text,
+          subject: subjectCtrl.text,
+          message: msgCtrl.text,
+        ),
+        label: Text('SEND',
+            style: TextStyle(
+              fontSize: 16,
+            )),
+        icon: Icon(Icons.send_rounded),
+        backgroundColor: Colors.indigo,
+      ),
+    );
+  }
+
+  Future launchEmail({
+    required String toEmail,
+    required String subject,
+    required String message,
+  }) async {
+    final url =
+        'mailto:$toEmail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
   }
 }

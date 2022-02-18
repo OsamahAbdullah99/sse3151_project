@@ -7,6 +7,7 @@ class paUser {
   String? umpid;
   String? semester;
   String? faculty;
+  String? dept;
   String? email;
   String? wechat;
   String? phoneNumber;
@@ -18,6 +19,7 @@ class paUserData {
   final String upmid;
   final String semester;
   final String faculty;
+  final String dept;
   final String email;
   final String wechat;
   final String phoneNumber;
@@ -28,6 +30,7 @@ class paUserData {
       required this.upmid,
       required this.semester,
       required this.faculty,
+      required this.dept,
       required this.email,
       required this.wechat,
       required this.phoneNumber});

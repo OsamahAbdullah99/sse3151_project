@@ -149,7 +149,16 @@ class _addAdviseeState extends State<addAdvisee> {
                       List<QueryDocumentSnapshot> upmID_StreamList =
                           upmID_Stream.docs;
                       String upm_id = upmID_StreamList.first.get('upmid');
+                      String role = upmID_StreamList.first.get('role');
                       String fullName = upmID_StreamList.first.get('fullName');
+                      String image = upmID_StreamList.first.get('image');
+                      String faculty = upmID_StreamList.first.get('faculty');
+                      String dept = upmID_StreamList.first.get('department');
+                      String semester = upmID_StreamList.first.get('semester');
+                      String email = upmID_StreamList.first.get('email');
+                      String wechat = upmID_StreamList.first.get('wechat');
+                      String phoneNumber =
+                          upmID_StreamList.first.get('phoneNumber');
                       // Future setAAValue() async {
                       //   final AAData = FirebaseFirestore.instance
                       //       .collection('Advisee_Advisor')
@@ -173,7 +182,8 @@ class _addAdviseeState extends State<addAdvisee> {
                         // print('.........................');
 
                         setState(() {
-                          regAdvisee(upm_id, fullName);
+                          regAdvisee(upm_id, role, fullName, image, semester,
+                              faculty, dept, email, wechat, phoneNumber);
                           successTVisibility = true;
                         });
                         await Future.delayed(Duration(milliseconds: 500));
@@ -270,13 +280,35 @@ class _addAdviseeState extends State<addAdvisee> {
     // );
   }
 
-  Future regAdvisee(String upmID, String name) async {
+  Future regAdvisee(
+    String upmID,
+    String role,
+    String name,
+    String image,
+    String semester,
+    String faculty,
+    String dept,
+    String email,
+    String wechat,
+    String phoneNumber,
+  ) async {
     await FirebaseFirestore.instance
         .collection("Advisee_Advisor")
         .doc(user?.uid)
         .collection('students')
         .doc(upmID)
-        .set({'upmid': upmID, 'fullName': name});
+        .set({
+      'upmid': upmID,
+      'role': role,
+      'fullName': name,
+      'image': image,
+      'semester': semester,
+      'faculty': faculty,
+      'department': dept,
+      'email': email,
+      'wechat': wechat,
+      'phoneNumber': phoneNumber,
+    });
   }
 
   // Future getName(String upmid) async {
