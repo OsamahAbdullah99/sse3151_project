@@ -27,7 +27,6 @@ class editProfile extends StatelessWidget {
   String? name;
   String? UPMID;
   String? semester;
-  String? faculty;
   String? email;
   String? wechat;
   String? phoneNumber;
