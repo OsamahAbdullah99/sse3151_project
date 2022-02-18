@@ -100,6 +100,8 @@ class _adviseeListState extends State<adviseeList> {
                                   upmID_Stream.docs;
                               String upm_id =
                                   upmID_StreamList.first.get('upmid');
+                              String cohort =
+                                  upmID_StreamList.first.get('cohort');
                               String role = upmID_StreamList.first.get('role');
                               String fullName =
                                   upmID_StreamList.first.get('fullName');
@@ -132,6 +134,7 @@ class _adviseeListState extends State<adviseeList> {
                                   .doc(upm_id)
                                   .set({
                                 'upmid': upm_id,
+                                'cohort': cohort,
                                 'role': role,
                                 'fullName': fullName,
                                 'image': image,
@@ -160,7 +163,12 @@ class _adviseeListState extends State<adviseeList> {
                               Text(doc.get('upmid')),
                             ],
                           ),
-                          subtitle: Text(doc.get('fullName')),
+                          subtitle: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(doc.get('fullName')),
+                                Text(doc.get('cohort'))
+                              ]),
                           // title: Text(doc.get('upmid')),
                           // subtitle: Text(doc.get('fullName')),
                           onTap: () async {
@@ -171,7 +179,8 @@ class _adviseeListState extends State<adviseeList> {
                             List<QueryDocumentSnapshot> upmID_StreamList =
                                 upmID_Stream.docs;
                             String upm_id = upmID_StreamList.first.get('upmid');
-
+                            String cohort =
+                                upmID_StreamList.first.get('cohort');
                             String fullName =
                                 upmID_StreamList.first.get('fullName');
                             String image = upmID_StreamList.first.get('image');
@@ -190,6 +199,7 @@ class _adviseeListState extends State<adviseeList> {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => showStudentProfile(
                                     upm_id,
+                                    cohort,
                                     fullName,
                                     semester,
                                     faculty,
@@ -320,6 +330,7 @@ class _adviseeListState extends State<adviseeList> {
 
   Future getStudentProfile(
       String upm_id,
+      String cohort,
       String fullName,
       String semester,
       String faculty,
@@ -336,7 +347,7 @@ class _adviseeListState extends State<adviseeList> {
         .get();
     setState(() {
       upm_id = db.data()!['upmid'];
-
+      cohort = db.data()!['cohort'];
       fullName = db.data()!['fullName'];
       image = db.data()!['image'];
       faculty = db.data()!['faculty'];
@@ -353,6 +364,7 @@ class _adviseeListState extends State<adviseeList> {
 
   showStudentProfile(
       String upm_id,
+      String cohort,
       String fullName,
       String semester,
       String faculty,
@@ -361,8 +373,8 @@ class _adviseeListState extends State<adviseeList> {
       String email,
       String wechat,
       String phoneNumber) {
-    getStudentProfile(upm_id, fullName, semester, faculty, dept, image, email,
-        wechat, phoneNumber);
+    getStudentProfile(upm_id, cohort, fullName, semester, faculty, dept, image,
+        email, wechat, phoneNumber);
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -403,6 +415,12 @@ class _adviseeListState extends State<adviseeList> {
                 children: [
                   Text('Name: ', style: TextStyle(fontSize: 16)),
                   Text(fullName, style: TextStyle(fontSize: 16)),
+                ],
+              ),
+              Row(
+                children: [
+                  Text('Cohort: ', style: TextStyle(fontSize: 16)),
+                  Text(cohort, style: TextStyle(fontSize: 16)),
                 ],
               ),
               Row(

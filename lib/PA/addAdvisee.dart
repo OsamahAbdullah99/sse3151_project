@@ -149,6 +149,7 @@ class _addAdviseeState extends State<addAdvisee> {
                       List<QueryDocumentSnapshot> upmID_StreamList =
                           upmID_Stream.docs;
                       String upm_id = upmID_StreamList.first.get('upmid');
+                      String cohort = upmID_StreamList.first.get('cohort');
                       String role = upmID_StreamList.first.get('role');
                       String fullName = upmID_StreamList.first.get('fullName');
                       String image = upmID_StreamList.first.get('image');
@@ -182,8 +183,18 @@ class _addAdviseeState extends State<addAdvisee> {
                         // print('.........................');
 
                         setState(() {
-                          regAdvisee(upm_id, role, fullName, image, semester,
-                              faculty, dept, email, wechat, phoneNumber);
+                          regAdvisee(
+                              upm_id,
+                              cohort,
+                              role,
+                              fullName,
+                              image,
+                              semester,
+                              faculty,
+                              dept,
+                              email,
+                              wechat,
+                              phoneNumber);
                           successTVisibility = true;
                         });
                         await Future.delayed(Duration(milliseconds: 500));
@@ -282,6 +293,7 @@ class _addAdviseeState extends State<addAdvisee> {
 
   Future regAdvisee(
     String upmID,
+    String cohort,
     String role,
     String name,
     String image,
@@ -299,6 +311,7 @@ class _addAdviseeState extends State<addAdvisee> {
         .doc(upmID)
         .set({
       'upmid': upmID,
+      'cohort': cohort,
       'role': role,
       'fullName': name,
       'image': image,

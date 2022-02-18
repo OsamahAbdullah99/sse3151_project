@@ -28,6 +28,7 @@ class _Student_ProfileState extends State<Student_Profile> {
   String? name;
   String? image;
   String? UPMID;
+  String? cohort;
   String? semester;
   String? faculty;
   String? dept;
@@ -66,6 +67,7 @@ class _Student_ProfileState extends State<Student_Profile> {
         name = studentInfo.data()!['fullName'];
         image = studentInfo.data()!['image'];
         UPMID = studentInfo.data()!['upmid'];
+        cohort = studentInfo.data()!['cohort'];
         semester = studentInfo.data()!['semester'];
         faculty = studentInfo.data()!['faculty'];
         dept = studentInfo.data()!['department'];
@@ -220,6 +222,26 @@ class _Student_ProfileState extends State<Student_Profile> {
                         fontWeight: FontWeight.bold,
                       )),
                   Text(UPMID ?? "",
+                      style: TextStyle(
+                        color: Colors.indigo,
+                        letterSpacing: 2,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Cohort: ',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        letterSpacing: 2,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Text(cohort ?? "",
                       style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,

@@ -56,6 +56,8 @@ class _archivedListState extends State<archivedList> {
                                   upmID_Stream.docs;
                               String upm_id =
                                   upmID_StreamList.first.get('upmid');
+                              String cohort =
+                                  upmID_StreamList.first.get('cohort');
                               String role = upmID_StreamList.first.get('role');
                               String fullName =
                                   upmID_StreamList.first.get('fullName');
@@ -88,6 +90,7 @@ class _archivedListState extends State<archivedList> {
                                   .doc(upm_id)
                                   .set({
                                 'upmid': upm_id,
+                                'cohort': cohort,
                                 'role': role,
                                 'fullName': fullName,
                                 'image': image,
@@ -116,7 +119,12 @@ class _archivedListState extends State<archivedList> {
                               Text(doc.get('upmid')),
                             ],
                           ),
-                          subtitle: Text(doc.get('fullName')),
+                          subtitle: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(doc.get('fullName')),
+                                Text(doc.get('cohort'))
+                              ]),
                         ),
                       ),
                     );

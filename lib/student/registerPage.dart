@@ -23,6 +23,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   final formKey = GlobalKey<FormState>();
   final FNCtrl = TextEditingController();
   final MIDCtrl = TextEditingController();
+  final cohortCtrl = TextEditingController();
   final semCtrl = TextEditingController();
   final PNCtrl = TextEditingController();
   final emailCtrl = TextEditingController();
@@ -169,6 +170,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   void dispose() {
     FNCtrl.dispose();
     MIDCtrl.dispose();
+    cohortCtrl.dispose();
     semCtrl.dispose();
     PNCtrl.dispose();
     emailCtrl.dispose();
@@ -240,6 +242,24 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             validator: (id) => id != null && id.length < 6
                                 ? 'Enter UPM-ID'
                                 : null,
+                          ),
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: TextFormField(
+                            controller: cohortCtrl,
+                            decoration: InputDecoration(
+                                labelText: "Cohort",
+                                labelStyle: TextStyle(color: Colors.black),
+                                hintText: "eg. 2019/2023"),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (cohort) =>
+                                cohort != null && cohort.length < 6
+                                    ? 'This field cannot be empty'
+                                    : null,
                           ),
                         ),
                         SizedBox(height: size.height * 0.03),
@@ -524,6 +544,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
 
     final String fullName = FNCtrl.text.trim();
     final String id = MIDCtrl.text.trim();
+    final String cohort = cohortCtrl.text.trim();
     final String semester = semCtrl.text;
     final String faculty = _faculty!;
     final String department = _dep!;
@@ -546,6 +567,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
           'uid': user.uid,
           'fullName': fullName,
           'upmid': id,
+          'cohort': cohort,
           'semester': semester,
           'faculty': faculty,
           'department': department,

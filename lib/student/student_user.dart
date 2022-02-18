@@ -5,6 +5,7 @@ class studentUser {
 
   String? name;
   String? umpid;
+  String? cohort;
   String? semester;
   String? faculty;
   String? department;
@@ -28,6 +29,7 @@ class studentUserData {
   final String uid;
   final String name;
   final String upmid;
+  final String cohort;
   final String semester;
   final String faculty;
   final String department;
@@ -39,6 +41,7 @@ class studentUserData {
       {required this.uid,
       required this.name,
       required this.upmid,
+      required this.cohort,
       required this.semester,
       required this.faculty,
       required this.department,
