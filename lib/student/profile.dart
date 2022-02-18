@@ -97,7 +97,7 @@ class _Student_ProfileState extends State<Student_Profile> {
   _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url,
-          forceWebView: true, forceSafariVC: true, enableJavaScript: true);
+          forceWebView: true, forceSafariVC: true, enableJavaScript: false);
     } else {
       throw 'Could not launch $url';
     }
