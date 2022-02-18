@@ -500,7 +500,7 @@ class _RegisterWidgetState extends State<RegisterWidgetPA> {
           'email': email,
           'wechat': wechat,
           'phoneNumber': phoneNumber,
-          'role': 'pa',
+          'role': 'Academic Advisor',
           'image':
               'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon2.png?alt=media&token=b5e1061d-f647-40f5-82bf-5bf55a44d5d7',
         });
