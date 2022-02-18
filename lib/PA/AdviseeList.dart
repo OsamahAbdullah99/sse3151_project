@@ -1,6 +1,6 @@
 import 'package:SSE3151_project/PA/addAdvisee.dart';
 import 'package:SSE3151_project/PA/archivedList.dart';
-import 'package:SSE3151_project/PA/showStudentProfile.dart';
+// import 'package:SSE3151_project/PA/showStudentProfile.dart';
 import 'package:SSE3151_project/background2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -129,10 +129,10 @@ class _adviseeListState extends State<adviseeList> {
                           subtitle: Text(doc.get('fullName')),
                           // title: Text(doc.get('upmid')),
                           // subtitle: Text(doc.get('fullName')),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => showStudentProfile()));
-                          },
+                          // onTap: () {
+                          //   Navigator.of(context).push(MaterialPageRoute(
+                          //       // builder: (context) => showStudentProfile()));
+                          // },
                         ),
                       ),
                     );
