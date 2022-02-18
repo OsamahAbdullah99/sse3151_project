@@ -30,6 +30,7 @@ class _Student_ProfileState extends State<Student_Profile> {
   String? UPMID;
   String? semester;
   String? faculty;
+  String? dept;
   String? email;
   String? wechat;
   String? phoneNumber;
@@ -67,6 +68,7 @@ class _Student_ProfileState extends State<Student_Profile> {
         UPMID = studentInfo.data()!['upmid'];
         semester = studentInfo.data()!['semester'];
         faculty = studentInfo.data()!['faculty'];
+        dept = studentInfo.data()!['department'];
         email = studentInfo.data()!['email'];
         wechat = studentInfo.data()!['wechat'];
         phoneNumber = studentInfo.data()!['phoneNumber'];
@@ -117,37 +119,16 @@ class _Student_ProfileState extends State<Student_Profile> {
             style:
                 GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w600)),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => dashboardStudent())),
-        ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                //need to be fix: if user using google & if user using normal email
-                // final provider =
-                //     Provider.of<GoogleSignInProvider>(context, listen: false);
-                // provider.logout();
-                FirebaseAuth.instance.signOut();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LoginWidget(
-                            // onClickedSignUp: () {},
-                            )));
-              },
-              child: Image.asset(
-                'assets/images/logoutIcon.png',
-                scale: 20,
-              )),
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.indigoAccent, Colors.blue.shade200, Colors.white],
+                colors: [
+                  Colors.indigoAccent,
+                  Colors.blue.shade200,
+                  Colors.white
+                ],
                 // stops: [0.2, 0.8, 1],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter),
@@ -157,7 +138,7 @@ class _Student_ProfileState extends State<Student_Profile> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             //crossAxisAlignment: CrossAxisAlignment.start,
-            
+
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -169,7 +150,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                   ),
                 ],
               ),
-              
+
               Divider(
                 height: 50,
                 color: Colors.black,
@@ -190,14 +171,13 @@ class _Student_ProfileState extends State<Student_Profile> {
               //SizedBox(height: 10),
               Row(
                 children: [
-                  Text(
-                    name ?? "",
-                    style: TextStyle(
-                  color: Colors.indigo,
-                  letterSpacing: 2,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,)
-                  ),
+                  Text(name ?? "",
+                      style: TextStyle(
+                        color: Colors.indigo,
+                        letterSpacing: 2,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
                 ],
               ),
               SizedBox(height: 20),
@@ -216,82 +196,117 @@ class _Student_ProfileState extends State<Student_Profile> {
               ),
               Row(
                 children: [
-                  Text(
-                    email ?? "",
-                    style: TextStyle(
-                  color: Colors.indigo,
-                  letterSpacing: 2,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,)
-                  ),
+                  Text(email ?? "",
+                      style: TextStyle(
+                        color: Colors.indigo,
+                        letterSpacing: 2,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
                 ],
               ),
-                Divider(
+              Divider(
                 height: 30,
                 color: Colors.black,
               ),
               Row(
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('UPM-ID: ', style: TextStyle(
+                  Text('UPM-ID: ',
+                      style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,)),
-                  Text(UPMID ?? "", style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Text(UPMID ?? "",
+                      style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,)),
+                        fontWeight: FontWeight.bold,
+                      )),
                 ],
               ),
               SizedBox(height: 10),
               Row(
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Semester: ', style: TextStyle(
+                  Text('Semester: ',
+                      style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,)),
-                  Text(semester ?? "", style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Text(semester ?? "",
+                      style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,)),
+                        fontWeight: FontWeight.bold,
+                      )),
                 ],
               ),
               SizedBox(height: 20),
               Row(
-               // mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Faculty: ', style: TextStyle(
+                  Text('Faculty: ',
+                      style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,)),
+                        fontWeight: FontWeight.bold,
+                      )),
                   Flexible(
-                      child: Text(faculty ?? "", style: TextStyle(
-                        color: Colors.indigo,
+                      child: Text(faculty ?? "",
+                          style: TextStyle(
+                            color: Colors.indigo,
+                            letterSpacing: 2,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ))),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text('Department: ',
+                      style: TextStyle(
+                        color: Colors.black87,
                         letterSpacing: 2,
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,))),
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Flexible(
+                      child: Text(dept ?? "",
+                          style: TextStyle(
+                            color: Colors.indigo,
+                            letterSpacing: 2,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ))),
                 ],
               ),
               SizedBox(height: 20),
               Row(
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Wechat ID: ', style: TextStyle(
+                  Text('Wechat ID: ',
+                      style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,)),
-                  Text(wechat ?? "", style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Text(wechat ?? "",
+                      style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,)),
+                        fontWeight: FontWeight.bold,
+                      )),
                 ],
               ),
               SizedBox(height: 10),
