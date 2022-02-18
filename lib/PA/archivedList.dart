@@ -41,67 +41,71 @@ class _archivedListState extends State<archivedList> {
               } else {
                 return ListView(
                   children: snapshot.data!.docs.map((doc) {
-                    return new Slidable(
-                      endActionPane:
-                          ActionPane(motion: BehindMotion(), children: [
-                        SlidableAction(
-                          onPressed: (BuildContext context) async {
-                            String upmid = doc.get('upmid');
-                            QuerySnapshot upmID_Stream = await studentInfo
-                                .where('upmid', isEqualTo: upmid)
-                                .get();
-                            List<QueryDocumentSnapshot> upmID_StreamList =
-                                upmID_Stream.docs;
-                            String upm_id = upmID_StreamList.first.get('upmid');
-                            String role = upmID_StreamList.first.get('role');
-                            String fullName =
-                                upmID_StreamList.first.get('fullName');
-                            String image = upmID_StreamList.first.get('image');
-                            String faculty =
-                                upmID_StreamList.first.get('faculty');
-                            String dept =
-                                upmID_StreamList.first.get('department');
-                            String semester =
-                                upmID_StreamList.first.get('semester');
-                            String email = upmID_StreamList.first.get('email');
-                            String wechat =
-                                upmID_StreamList.first.get('wechat');
-                            String phoneNumber =
-                                upmID_StreamList.first.get('phoneNumber');
+                    return Card(
+                      margin: EdgeInsets.fromLTRB(12, 8, 12, 0),
+                      child: new Slidable(
+                        endActionPane:
+                            ActionPane(motion: BehindMotion(), children: [
+                          SlidableAction(
+                            onPressed: (BuildContext context) async {
+                              String upmid = doc.get('upmid');
+                              QuerySnapshot upmID_Stream = await studentInfo
+                                  .where('upmid', isEqualTo: upmid)
+                                  .get();
+                              List<QueryDocumentSnapshot> upmID_StreamList =
+                                  upmID_Stream.docs;
+                              String upm_id =
+                                  upmID_StreamList.first.get('upmid');
+                              String role = upmID_StreamList.first.get('role');
+                              String fullName =
+                                  upmID_StreamList.first.get('fullName');
+                              String image =
+                                  upmID_StreamList.first.get('image');
+                              String faculty =
+                                  upmID_StreamList.first.get('faculty');
+                              String dept =
+                                  upmID_StreamList.first.get('department');
+                              String semester =
+                                  upmID_StreamList.first.get('semester');
+                              String email =
+                                  upmID_StreamList.first.get('email');
+                              String wechat =
+                                  upmID_StreamList.first.get('wechat');
+                              String phoneNumber =
+                                  upmID_StreamList.first.get('phoneNumber');
 
-                            FirebaseFirestore.instance
-                                .collection('Archived_Advisee')
-                                .doc(user?.uid)
-                                .collection('students')
-                                .doc(upm_id)
-                                .delete();
+                              FirebaseFirestore.instance
+                                  .collection('Archived_Advisee')
+                                  .doc(user?.uid)
+                                  .collection('students')
+                                  .doc(upm_id)
+                                  .delete();
 
-                            FirebaseFirestore.instance
-                                .collection("Advisee_Advisor")
-                                .doc(user?.uid)
-                                .collection('students')
-                                .doc(upm_id)
-                                .set({
-                              'upmid': upm_id,
-                              'role': role,
-                              'fullName': fullName,
-                              'image': image,
-                              'semester': semester,
-                              'faculty': faculty,
-                              'department': dept,
-                              'email': email,
-                              'wechat': wechat,
-                              'phoneNumber': phoneNumber,
-                            });
-                          },
-                          autoClose: true,
-                          backgroundColor: Color(0xFF434BC0),
-                          foregroundColor: Colors.white,
-                          icon: Icons.archive,
-                          label: 'Unarchive',
-                        )
-                      ]),
-                      child: Card(
+                              FirebaseFirestore.instance
+                                  .collection("Advisee_Advisor")
+                                  .doc(user?.uid)
+                                  .collection('students')
+                                  .doc(upm_id)
+                                  .set({
+                                'upmid': upm_id,
+                                'role': role,
+                                'fullName': fullName,
+                                'image': image,
+                                'semester': semester,
+                                'faculty': faculty,
+                                'department': dept,
+                                'email': email,
+                                'wechat': wechat,
+                                'phoneNumber': phoneNumber,
+                              });
+                            },
+                            autoClose: true,
+                            backgroundColor: Color(0xFF434BC0),
+                            foregroundColor: Colors.white,
+                            icon: Icons.archive,
+                            label: 'Unarchive',
+                          )
+                        ]),
                         child: ListTile(
                           title: Row(
                             children: [
