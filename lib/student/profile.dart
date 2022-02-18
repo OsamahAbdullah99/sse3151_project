@@ -11,7 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class Student_Profile extends StatefulWidget {
   Student_Profile({Key? key}) : super(key: key);
 
@@ -101,7 +100,6 @@ class _Student_ProfileState extends State<Student_Profile> {
       throw 'Could not launch $url';
     }
   }
-
   @override
   Widget build(BuildContext context) {
     setStudentValue();
@@ -161,7 +159,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                     style: TextStyle(
                       color: Colors.black87,
                       letterSpacing: 2,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -174,7 +172,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                       style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       )),
                 ],
@@ -187,7 +185,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                     style: TextStyle(
                       color: Colors.black87,
                       letterSpacing: 2,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -199,7 +197,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                       style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       )),
                 ],
@@ -215,14 +213,14 @@ class _Student_ProfileState extends State<Student_Profile> {
                       style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       )),
                   Text(UPMID ?? "",
                       style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       )),
                 ],
@@ -235,14 +233,14 @@ class _Student_ProfileState extends State<Student_Profile> {
                       style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       )),
                   Text(cohort ?? "",
                       style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       )),
                 ],
@@ -255,14 +253,14 @@ class _Student_ProfileState extends State<Student_Profile> {
                       style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       )),
                   Text(semester ?? "",
                       style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       )),
                 ],
@@ -275,7 +273,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                       style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       )),
                   Flexible(
@@ -283,7 +281,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                           style: TextStyle(
                             color: Colors.indigo,
                             letterSpacing: 2,
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ))),
                 ],
@@ -295,7 +293,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                       style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       )),
                   Flexible(
@@ -303,7 +301,7 @@ class _Student_ProfileState extends State<Student_Profile> {
                           style: TextStyle(
                             color: Colors.indigo,
                             letterSpacing: 2,
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ))),
                 ],
@@ -316,14 +314,14 @@ class _Student_ProfileState extends State<Student_Profile> {
                       style: TextStyle(
                         color: Colors.black87,
                         letterSpacing: 2,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       )),
                   Text(wechat ?? "",
                       style: TextStyle(
                         color: Colors.indigo,
                         letterSpacing: 2,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       )),
                 ],
