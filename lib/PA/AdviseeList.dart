@@ -1,4 +1,6 @@
 import 'package:SSE3151_project/PA/addAdvisee.dart';
+import 'package:SSE3151_project/PA/archivedList.dart';
+import 'package:SSE3151_project/PA/showStudentProfile.dart';
 import 'package:SSE3151_project/background2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,14 +16,17 @@ class adviseeList extends StatefulWidget {
   _adviseeListState createState() => _adviseeListState();
 }
 
+final user = FirebaseAuth.instance.currentUser;
+
 class _adviseeListState extends State<adviseeList> {
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
     final db = FirebaseFirestore.instance
         .collection('Advisee_Advisor')
         .doc(user?.uid)
-        .collection('student');
+        .collection('students');
+    final CollectionReference studentInfo =
+        FirebaseFirestore.instance.collection('students');
 
     // Future getAdviseeLists() async {
     //   Query<Map<String, dynamic>> advisees =
@@ -47,7 +52,10 @@ class _adviseeListState extends State<adviseeList> {
           //   label: const Text('Add'),
           //   onPressed: () => _showPanel(),
           // ),
-          IconButton(onPressed: () {}, icon: Icon(Icons.archive_rounded)),
+          IconButton(
+              onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => archivedList())),
+              icon: Icon(Icons.archive_rounded)),
           // PopupMenuButton<MenuItem>(
           //   onSelected: (item) => onSelected(context, item),
           //   itemBuilder: (context) => [
@@ -75,7 +83,31 @@ class _adviseeListState extends State<adviseeList> {
                       endActionPane:
                           ActionPane(motion: BehindMotion(), children: [
                         SlidableAction(
-                          onPressed: addToArchive(),
+                          onPressed: (BuildContext context) async {
+                            String upmid = doc.get('upmid');
+                            QuerySnapshot matricStream = await studentInfo
+                                .where('upmid', isEqualTo: upmid)
+                                .get();
+                            List<QueryDocumentSnapshot> matricStreamList =
+                                matricStream.docs;
+                            String upm_id = matricStreamList.first.get('upmid');
+                            String fullName =
+                                matricStreamList.first.get('fullName');
+
+                            FirebaseFirestore.instance
+                                .collection('Advisee_Advisor')
+                                .doc(user?.uid)
+                                .collection('students')
+                                .doc(upm_id)
+                                .delete();
+
+                            FirebaseFirestore.instance
+                                .collection("Archived_Advisee")
+                                .doc(user?.uid)
+                                .collection('students')
+                                .doc(upm_id)
+                                .set({'upmid': upm_id, 'fullName': fullName});
+                          },
                           autoClose: true,
                           backgroundColor: Color(0xFF434BC0),
                           foregroundColor: Colors.white,
@@ -97,6 +129,10 @@ class _adviseeListState extends State<adviseeList> {
                           subtitle: Text(doc.get('fullName')),
                           // title: Text(doc.get('upmid')),
                           // subtitle: Text(doc.get('fullName')),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => showStudentProfile()));
+                          },
                         ),
                       ),
                     );
@@ -130,63 +166,63 @@ class _adviseeListState extends State<adviseeList> {
     );
   }
 
-  PopupMenuItem<MenuItem> buildItem(MenuItem item) {
-    return PopupMenuItem<MenuItem>(
-      value: item,
-      child: Row(
-        children: [
-          Icon(
-            item.icon,
-            color: Colors.black,
-            size: 25,
-          ),
-          const SizedBox(
-            width: 12,
-          ),
-          Text(item.text),
-        ],
-      ),
-    );
-  }
+  // PopupMenuItem<MenuItem> buildItem(MenuItem item) {
+  //   return PopupMenuItem<MenuItem>(
+  //     value: item,
+  //     child: Row(
+  //       children: [
+  //         Icon(
+  //           item.icon,
+  //           color: Colors.black,
+  //           size: 25,
+  //         ),
+  //         const SizedBox(
+  //           width: 12,
+  //         ),
+  //         Text(item.text),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  void onSelected(BuildContext context, MenuItem item) {
-    switch (item) {
-      case MenuLists.itemAddAdvisee:
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(builder: (context) => _showPanel()),
-        // );
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) {
-            return GestureDetector(
-              onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 60.0),
-                        child: addAdvisee(),
-                      );
-                    });
-              },
-            );
-          }),
-        );
-        //        Navigator.push(context, MaterialPageRoute<bool>(
-        // builder: (BuildContext context) {
-        //   return Center(
-        //     child: GestureDetector(
-        //       child: Text('OK'),
-        //       onTap: ));}));
-        break;
-      // case MenuLists.itemArchivedAdvisee:
-      //   Navigator.of(context).push(
-      //     MaterialPageRoute(builder: (context) => adviseeList()),
-      //   );
-      //   break;
-      default:
-    }
-  }
+  // void onSelected(BuildContext context, MenuItem item) {
+  //   switch (item) {
+  //     case MenuLists.itemAddAdvisee:
+  //       // Navigator.of(context).push(
+  //       //   MaterialPageRoute(builder: (context) => _showPanel()),
+  //       // );
+  //       Navigator.of(context).push(
+  //         MaterialPageRoute(builder: (context) {
+  //           return GestureDetector(
+  //             onTap: () {
+  //               showModalBottomSheet(
+  //                   context: context,
+  //                   builder: (context) {
+  //                     return Container(
+  //                       padding: const EdgeInsets.symmetric(
+  //                           vertical: 20.0, horizontal: 60.0),
+  //                       child: addAdvisee(),
+  //                     );
+  //                   });
+  //             },
+  //           );
+  //         }),
+  //       );
+  //       //        Navigator.push(context, MaterialPageRoute<bool>(
+  //       // builder: (BuildContext context) {
+  //       //   return Center(
+  //       //     child: GestureDetector(
+  //       //       child: Text('OK'),
+  //       //       onTap: ));}));
+  //       break;
+  //     // case MenuLists.itemArchivedAdvisee:
+  //     //   Navigator.of(context).push(
+  //     //     MaterialPageRoute(builder: (context) => adviseeList()),
+  //     //   );
+  //     //   break;
+  //     default:
+  //   }
+  // }
 
   _showPanel() {
     showModalBottomSheet(
@@ -207,5 +243,3 @@ class _adviseeListState extends State<adviseeList> {
         });
   }
 }
-
-addToArchive() {}

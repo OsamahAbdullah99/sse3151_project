@@ -12,57 +12,57 @@ class addAdvisee extends StatefulWidget {
 class _addAdviseeState extends State<addAdvisee> {
   final user = FirebaseAuth.instance.currentUser;
   String? upmID;
-  String? facultyPA;
-  String? facultyStudent;
-  String? student;
-  String? _advisee;
+  // String? upmIDA;
+  // String? facultyStudent;
+  // String? student;
   bool successTVisibility = false;
   bool errorTVisibility = false;
-  bool avTVisibility = false;
-  List<String> students = [];
+  // bool avTVisibility = false;
+  bool _validate = false;
+  // List<String> students = [];
 
-  final CollectionReference PAInfo =
-      FirebaseFirestore.instance.collection('PA');
+  // final CollectionReference PAInfo =
+  //     FirebaseFirestore.instance.collection('PA');
   final CollectionReference studentInfo =
       FirebaseFirestore.instance.collection('students');
 
-  Future setPAValue() async {
-    final PAData =
-        await FirebaseFirestore.instance.collection('PA').doc(user?.uid).get();
+  // Future setPAValue() async {
+  //   final PAData =
+  //       await FirebaseFirestore.instance.collection('PA').doc(user?.uid).get();
 
-    if (mounted) {
-      setState(() {
-        facultyPA = PAData.data()!['faculty'];
-      });
-    }
-  }
+  //   if (mounted) {
+  //     setState(() {
+  //       facultyPA = PAData.data()!['faculty'];
+  //     });
+  //   }
+  // }
   // Stream<QuerySnapshot> get studentData {
   //   return studentInfo.snapshots();
   // }
 
-  getData() async {
-    final PAData =
-        await FirebaseFirestore.instance.collection('PA').doc(user?.uid).get();
-    final studentData = await FirebaseFirestore.instance
-        .collection('student')
-        .doc(user?.uid)
-        .get();
-    if (PAData.data()!['faculty'] == studentData.data()!['faculty']) {
-      return PAData.data()!['fullName'];
-    } else {
-      return null;
-    }
-  }
+  // getData() async {
+  //   final PAData =
+  //       await FirebaseFirestore.instance.collection('PA').doc(user?.uid).get();
+  //   final studentData = await FirebaseFirestore.instance
+  //       .collection('student')
+  //       .doc(user?.uid)
+  //       .get();
+  //   if (PAData.data()!['faculty'] == studentData.data()!['faculty']) {
+  //     return PAData.data()!['fullName'];
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   final MIDCtrl = TextEditingController();
 
   // @override
   @override
   Widget build(BuildContext context) {
-    final db = FirebaseFirestore.instance
-        .collection('Advisee_Advisor')
-        .doc(user?.uid)
-        .collection('student');
+    // final db = FirebaseFirestore.instance
+    //     .collection('Advisee_Advisor')
+    //     .doc(user?.uid)
+    //     .collection('student');
 
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('students').snapshots(),
@@ -109,6 +109,7 @@ class _addAdviseeState extends State<addAdvisee> {
                   controller: MIDCtrl,
                   decoration: InputDecoration(
                     hintText: 'Enter UPM-ID ',
+                    errorText: _validate ? 'This field cannot be empty' : null,
                     focusedBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Colors.black, width: 1.9)),
@@ -133,46 +134,73 @@ class _addAdviseeState extends State<addAdvisee> {
                     color: Colors.white,
                   ),
                   onPressed: () async {
-                    upmID = MIDCtrl.text.trim();
-                    QuerySnapshot upmID_Stream = await studentInfo
-                        .where('upmid', isEqualTo: upmID)
-                        .get();
+                    upmID = MIDCtrl.text;
+                    setState(() {
+                      upmID!.isEmpty ? _validate = true : _validate = false;
+                    });
+                    if (_validate == false) {
+                      QuerySnapshot upmID_Stream = await studentInfo
+                          .where('upmid', isEqualTo: upmID)
+                          .get();
+                      // QuerySnapshot upmIDA_Stream = await studentInfo
+                      //     .where('upmid', isEqualTo: upmID)
+                      //     .get();
 
-                    if (upmID_Stream != null &&
-                        (getName(upmID as String) != upmID_Stream)) {
                       List<QueryDocumentSnapshot> upmID_StreamList =
                           upmID_Stream.docs;
                       String upm_id = upmID_StreamList.first.get('upmid');
                       String fullName = upmID_StreamList.first.get('fullName');
-                      print('$db.doc($upmID)');
-                      print('.........................');
+                      // Future setAAValue() async {
+                      //   final AAData = FirebaseFirestore.instance
+                      //       .collection('Advisee_Advisor')
+                      //       .doc(user?.uid)
+                      //       .collection('student')
+                      //       .snapshots();
+                      //   List<QueryDocumentSnapshot<Object?>> data =
+                      //       snapshot.data!.docs;
+                      //   // upmIDA = data.first.get('upmid');
+                      //   return upmIDA = data.first.get('upmid');
+                      // }
 
-                      setState(() {
-                        regAdvisee(upm_id, fullName);
-                        successTVisibility = true;
-                      });
-                      await Future.delayed(Duration(milliseconds: 500));
-                      Navigator.pop(context);
-                      //snapshots().toString()
-                      //doc(user?.uid).get().d
-                    } else if (upmID_Stream ==
-                        db.doc(upmID).collection('upmid').get()) {
-                      setState(() {
-                        avTVisibility = true;
-                      });
-                    } else {
-                      setState(() {
-                        errorTVisibility = true;
-                      });
-                      await Future.delayed(Duration(milliseconds: 700));
-                      Navigator.pop(context);
-                      // await Future.delayed(Duration(milliseconds: 700));
-                      // MIDCtrl.clear();
+                      if (upmID_Stream != null
+                          //  && setAAValue() != upmID
+                          // &&
+                          //     // upmID!.isNotEmpty &&
+                          //     // upmID == upmID_Stream &&
+                          //     (getName(upmID as String) != upmID_Stream)
+                          ) {
+                        // print('$db.doc($upmID)');
+                        // print('.........................');
 
-                      // await Future.delayed(Duration(milliseconds: 650));
-                      // setState(() {
-                      //   errorTVisibility = false;
-                      // });
+                        setState(() {
+                          regAdvisee(upm_id, fullName);
+                          successTVisibility = true;
+                        });
+                        await Future.delayed(Duration(milliseconds: 500));
+                        Navigator.pop(context);
+                        //snapshots().toString()
+                        //doc(user?.uid).get().d
+                      }
+                      // else if (upmID_Stream ==
+                      //     db.doc(upmID).collection('upmid').get()) {
+                      //   setState(() {
+                      //     avTVisibility = true;
+                      //   });
+                      // }
+                      else {
+                        setState(() {
+                          errorTVisibility = true;
+                        });
+                        await Future.delayed(Duration(milliseconds: 750));
+                        Navigator.pop(context);
+                        // await Future.delayed(Duration(milliseconds: 700));
+                        // MIDCtrl.clear();
+
+                        // await Future.delayed(Duration(milliseconds: 650));
+                        // setState(() {
+                        //   errorTVisibility = false;
+                        // });
+                      }
                     }
                   },
                 ),
@@ -192,14 +220,14 @@ class _addAdviseeState extends State<addAdvisee> {
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.w400),
                   )),
-              Visibility(
-                  visible: avTVisibility,
-                  child: Text(
-                    'UPM-ID Already Exists',
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w400),
-                  )),
-              // ElevatedButton(
+              // Visibility(
+              //     visible: avTVisibility,
+              //     child: Text(
+              //       'UPM-ID Already Exists',
+              //       style: TextStyle(
+              //           color: Colors.black, fontWeight: FontWeight.w400),
+              //     )),
+              // // ElevatedButton(
               //   style: ElevatedButton.styleFrom(
               //       primary: Colors.red,
               //       minimumSize: Size(150, 32),
@@ -246,34 +274,34 @@ class _addAdviseeState extends State<addAdvisee> {
     await FirebaseFirestore.instance
         .collection("Advisee_Advisor")
         .doc(user?.uid)
-        .collection('student')
+        .collection('students')
         .doc(upmID)
         .set({'upmid': upmID, 'fullName': name});
   }
 
-  Future getName(String upmid) async {
-    final studID = await FirebaseFirestore.instance
-        .collection("Advisee_Advisor")
-        .doc(user?.uid)
-        .collection('student')
-        .doc(upmid)
-        .get();
-    upmid = studID.data()!['upmid'];
-    print(upmid);
-    return upmid;
-  }
+  // Future getName(String upmid) async {
+  //   final studID = await FirebaseFirestore.instance
+  //       .collection("Advisee_Advisor")
+  //       .doc(user?.uid)
+  //       .collection('student')
+  //       .doc(upmid)
+  //       .get();
+  //   upmid = studID.data()!['upmid'];
+  //   print(upmid);
+  //   return upmid;
+  // }
 
-  getDatas() async {
-    final PAData =
-        await FirebaseFirestore.instance.collection('PA').doc(user?.uid).get();
-    final studentData = await FirebaseFirestore.instance
-        .collection('student')
-        .doc(user?.uid)
-        .get();
-    if (PAData.data()!['faculty'] == studentData.data()!['faculty']) {
-      return PAData.data()!['fullName'];
-    } else {
-      return null;
-    }
-  }
+  // getDatas() async {
+  //   final PAData =
+  //       await FirebaseFirestore.instance.collection('PA').doc(user?.uid).get();
+  //   final studentData = await FirebaseFirestore.instance
+  //       .collection('student')
+  //       .doc(user?.uid)
+  //       .get();
+  //   if (PAData.data()!['faculty'] == studentData.data()!['faculty']) {
+  //     return PAData.data()!['fullName'];
+  //   } else {
+  //     return null;
+  //   }
+  // }
 }
