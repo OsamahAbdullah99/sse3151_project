@@ -47,6 +47,123 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     'Faculty of Biotechnology and Biomolecular Sciences',
     'Faculty of Environmental Studies',
   ];
+  String? _dep;
+  List<String> departments = [];
+  final List<String> f1 = [
+    'Department Of Crop Science',
+    'Department of Plant Protection',
+    'Department of Animal Science',
+    'Department of Land Management',
+    'Department of Agri-Business and Bioresources Economics',
+    'Department of Agriculture Technology and Department of Aquaculture',
+  ];
+  final List<String> f2 = [
+    'Department of Forestry Science and Biodiversity',
+    'Department of Natural Resource Industry',
+    'Department of Nature Parks and Recreation',
+    'Department of Environment and Natural Resources Section',
+  ];
+
+  final List<String> f3 = [
+    'Department of Veterinary Pre Clinical Science',
+    'Department of Veterinary Pathology & Microbiology',
+    'Department of Veterinary Clinical Studies',
+    'Department of Veterinary Laboratory Diagnosis',
+    'Department of Companion Animal Medicine & Surgery',
+    'Department of Farm & Exotic Animals Medicine & Surgery',
+  ];
+  final List<String> f4 = [
+    'Department of Economics',
+    'Department of Management and Marketing',
+    'Department of Accounting and Finance',
+  ];
+  final List<String> f5 = [
+    "Department of Aerospace Engineering",
+    "Department of Civil Engineering",
+    "Department of Biological & Agricultural Engineering",
+    "Department of Electrical & Electronic Engineering",
+    "Department of Chemical & Environmental Engineering",
+    "Department of Computer and Communication Systems Engineering",
+    "Department of Process and Food Engineering",
+  ];
+  final List<String> f6 = [
+    'Department of Foundations of Education',
+    'Department of Sport Studies',
+    'Department of Science and Technical Education',
+    'Department of Language and Humanities Education',
+    'Department of Professional Development and Continuing Education',
+    'Department of Counselor Education and Counseling Psychology',
+  ];
+  final List<String> f7 = [
+    'Department of Biology',
+    'Department of Physics',
+    'Department of Chemistry',
+    'Department of Mathematics & Statistics',
+  ];
+  final List<String> f8 = [
+    'Department of Food Science',
+    'Department of Food Technology',
+    'Department of Food Management and Service',
+  ];
+  final List<String> f9 = [
+    'Department of Human Development and Family Studies',
+    'Department of Social Sciences and Development',
+    'Department of Resource Management and Consumer Studies',
+    'Department of Music',
+    'Department of Government and Civilisation',
+  ];
+  final List<String> f10 = [
+    'Department of Malay Language',
+    'Department of English',
+    'Department of Foreign Languages',
+    'Department of Communication',
+  ];
+  final List<String> f11 = [
+    'Department of Landscape Architecture',
+    'Department of Architecture',
+    'Department of Industrial Design',
+  ];
+  final List<String> f12 = [
+    'Department of Biomedical Sciences',
+    'Department of Nutrition',
+    'Department of Dietetic',
+    'Department of Environmental and Occupational Health',
+    'Department of Nursing',
+    'Department of Human Anatomy',
+    'Department of Pathology',
+    'Department of Medical Microbiology',
+    'Department of Family Medicine',
+    'Department of Community Health',
+    'Department of Obstetric and Gynaecology',
+    'Department of Paediatrics',
+    'Department of Radiology',
+    'Department of Orthopaedics',
+    'Department of Rehabilitation Medicine',
+    'Department of Psychiatry',
+    'Department of Medicine',
+    'Department of Neurology',
+    'Department of Surgery',
+    'Department of Anaesthesia and Intensive Care',
+    'Department of Urology',
+    'Department of Ophthalmology',
+    'Department of Otorhinolaryngology-Head and Neck Surgery',
+  ];
+  final List<String> f13 = [
+    'Department of Computer Science',
+    'Department of Multimedia',
+    'Department of Software Engineering and Information System',
+    'Department of Communication Technology and Network',
+  ];
+  final List<String> f14 = [
+    'Department of Microbiology',
+    'Department of Cell & Molecular Biology',
+    'Department of Bioprocess Technology',
+    'Department of Biochemistry',
+  ];
+  final List<String> f15 = [
+    'Department of Environmental Management',
+    'Department of Environmental Science',
+  ];
 
   @override
   void dispose() {
@@ -148,20 +265,88 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.symmetric(horizontal: 40),
                           child: DropdownButtonFormField(
+                              isExpanded: true,
+                              decoration: InputDecoration(
+                                labelText: "Faculty",
+                                labelStyle: TextStyle(color: Colors.black),
+                              ),
+                              value: _faculty,
+                              items: faculties.map((faculty) {
+                                return DropdownMenuItem(
+                                  value: faculty,
+                                  child: Text(faculty),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                if (value == 'Faculty of Agriculture') {
+                                  departments = f1;
+                                } else if (value == 'Faculty of Forestry') {
+                                  departments = f2;
+                                } else if (value ==
+                                    'Faculty of Veterinary Medicine') {
+                                  departments = f3;
+                                } else if (value ==
+                                    'Faculty of Economics and Management') {
+                                  departments = f4;
+                                } else if (value == 'Faculty of Engineering') {
+                                  departments = f5;
+                                } else if (value ==
+                                    'Faculty of Educational Studies') {
+                                  departments = f6;
+                                } else if (value == 'Faculty of Science') {
+                                  departments = f7;
+                                } else if (value ==
+                                    'Faculty of Food Science and Technology') {
+                                  departments = f8;
+                                } else if (value ==
+                                    'Faculty of Human Ecology') {
+                                  departments = f9;
+                                } else if (value ==
+                                    'Faculty of Modern Languages and Communication') {
+                                  departments = f10;
+                                } else if (value ==
+                                    'Faculty of Design and Architecture') {
+                                  departments = f11;
+                                } else if (value ==
+                                    'Faculty of Medicine and Health Sciences') {
+                                  departments = f12;
+                                } else if (value ==
+                                    'Faculty of Computer Science and Information Technology') {
+                                  departments = f13;
+                                } else if (value ==
+                                    'Faculty of Biotechnology and Biomolecular Sciences') {
+                                  departments = f14;
+                                } else if (value ==
+                                    'Faculty of Environmental Studies') {
+                                  departments = f15;
+                                } else {
+                                  departments = [];
+                                }
+                                setState(() {
+                                  _dep = null;
+                                  _faculty = value.toString();
+                                });
+                              }),
+                        ),
+                        SizedBox(height: size.height * 0.03),
+                        Container(
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.symmetric(horizontal: 40),
+                          child: DropdownButtonFormField(
                             isExpanded: true,
                             decoration: InputDecoration(
-                              labelText: "Faculty",
+                              labelText: "Department",
                               labelStyle: TextStyle(color: Colors.black),
                             ),
-                            value: _faculty,
-                            items: faculties.map((faculty) {
+                            value: _dep,
+                            items: departments.map((dep) {
                               return DropdownMenuItem(
-                                value: faculty,
-                                child: Text(faculty),
+                                value: dep,
+                                child: Text(dep),
                               );
                             }).toList(),
                             onChanged: (value) =>
-                                setState(() => _faculty = value.toString()),
+                                setState(() => _dep = value.toString()),
                           ),
                         ),
                         SizedBox(height: size.height * 0.03),
@@ -341,6 +526,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     final String id = MIDCtrl.text.trim();
     final String semester = semCtrl.text;
     final String faculty = _faculty!;
+    final String department = _dep!;
     final String email = emailCtrl.text.trim();
     final String phoneNumber = PNCtrl.text.trim();
     final String wechat = wcCtrl.text.trim();
@@ -362,6 +548,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
           'upmid': id,
           'semester': semester,
           'faculty': faculty,
+          'department': department,
           'email': email,
           'wechat': wechat,
           'phoneNumber': phoneNumber,
