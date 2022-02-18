@@ -11,9 +11,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-//this is just to display whether the info can be retrieve or not
-//Result: success!
-//Feel free to change the UI :D
 
 class Student_Profile extends StatefulWidget {
   Student_Profile({Key? key}) : super(key: key);
