@@ -58,7 +58,8 @@ class _LoginWidgetState extends State<LoginWidgetPA> {
                     margin: EdgeInsets.symmetric(horizontal: 40),
                     child: TextField(
                       controller: MIDCtrl,
-                      decoration: InputDecoration(labelText: "UPM-ID"),
+                      decoration: InputDecoration(
+                          labelText: "UPM-ID", hintText: "eg. AZ8192"),
                     ),
                   ),
                   SizedBox(height: size.height * 0.03),
