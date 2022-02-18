@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../services/menu_item.dart';
 import '../services/menu_lists.dart';
 
@@ -129,10 +130,48 @@ class _adviseeListState extends State<adviseeList> {
                           subtitle: Text(doc.get('fullName')),
                           // title: Text(doc.get('upmid')),
                           // subtitle: Text(doc.get('fullName')),
+<<<<<<< Updated upstream
                           // onTap: () {
                           //   Navigator.of(context).push(MaterialPageRoute(
                           //       // builder: (context) => showStudentProfile()));
                           // },
+=======
+                          onTap: () async {
+                            String upmid = doc.get('upmid');
+                            QuerySnapshot upmID_Stream = await studentInfo
+                                .where('upmid', isEqualTo: upmid)
+                                .get();
+                            List<QueryDocumentSnapshot> upmID_StreamList =
+                                upmID_Stream.docs;
+                            String upm_id = upmID_StreamList.first.get('upmid');
+                            String fullName =
+                                upmID_StreamList.first.get('fullName');
+                            String image = upmID_StreamList.first.get('image');
+                            String faculty =
+                                upmID_StreamList.first.get('faculty');
+                            String dept =
+                                upmID_StreamList.first.get('department');
+                            String semester =
+                                upmID_StreamList.first.get('semester');
+                            String email = upmID_StreamList.first.get('email');
+                            String wechat =
+                                upmID_StreamList.first.get('wechat');
+                            String phoneNumber =
+                                upmID_StreamList.first.get('phoneNumber');
+
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => showStudentProfile(
+                                    upm_id,
+                                    fullName,
+                                    semester,
+                                    faculty,
+                                    dept,
+                                    image,
+                                    email,
+                                    wechat,
+                                    phoneNumber)));
+                          },
+>>>>>>> Stashed changes
                         ),
                       ),
                     );
@@ -241,5 +280,99 @@ class _adviseeListState extends State<adviseeList> {
             child: addAdvisee(),
           );
         });
+  }
+
+  Future getStudentProfile(
+      String upm_id,
+      String fullName,
+      String semester,
+      String faculty,
+      String dept,
+      String image,
+      String email,
+      String wechat,
+      String phoneNumber) async {
+    final db = await FirebaseFirestore.instance
+        .collection('Advisee_Advisor')
+        .doc(user?.uid)
+        .collection('students')
+        .doc(upm_id)
+        .get();
+    setState(() {
+      upm_id = db.data()!['upmid'];
+      fullName = db.data()!['fullName'];
+      image = db.data()!['image'];
+      faculty = db.data()!['faculty'];
+      dept = db.data()!['department'];
+      semester = db.data()!['semester'];
+      email = db.data()!['email'];
+      wechat = db.data()!['wechat'];
+      phoneNumber = db.data()!['phoneNumber'];
+    });
+  }
+
+  showStudentProfile(
+      String upm_id,
+      String fullName,
+      String semester,
+      String faculty,
+      String dept,
+      String image,
+      String email,
+      String wechat,
+      String phoneNumber) {
+    getStudentProfile(upm_id, fullName, semester, faculty, dept, image, email,
+        wechat, phoneNumber);
+    return Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: Text("Profile",
+              style: GoogleFonts.poppins(
+                  fontSize: 25, fontWeight: FontWeight.w600)),
+          centerTitle: true,
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [
+                  Colors.indigoAccent,
+                  Colors.blue.shade200,
+                  Colors.white
+                ],
+                // stops: [0.2, 0.8, 1],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter),
+          ),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('UPM-ID: ', style: TextStyle(fontSize: 16)),
+                  Text(upm_id, style: TextStyle(fontSize: 16)),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Name: ', style: TextStyle(fontSize: 16)),
+                  Text(fullName, style: TextStyle(fontSize: 16)),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Faculty: ', style: TextStyle(fontSize: 16)),
+                  Flexible(
+                      child: Text(faculty, style: TextStyle(fontSize: 16))),
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 }
