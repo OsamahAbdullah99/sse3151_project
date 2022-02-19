@@ -7,6 +7,7 @@ import 'package:SSE3151_project/background2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../chats/chatRoomsPage.dart';
 import '../services/menu_item.dart';
 import '../services/menu_lists.dart';
 
@@ -270,6 +271,11 @@ class dashboardPA extends StatelessWidget {
       case MenuLists.itemAdvisee:
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => adviseeList()),
+        );
+        break;
+      case MenuLists.itemChat:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => ChatRoomsPage()),
         );
         break;
       case MenuLists.itemLogOut:

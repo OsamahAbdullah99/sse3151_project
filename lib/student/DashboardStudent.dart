@@ -1,4 +1,5 @@
 import 'package:SSE3151_project/background2.dart';
+import 'package:SSE3151_project/chats/chatRoomsPage.dart';
 import 'package:SSE3151_project/services/menu_item.dart';
 import 'package:SSE3151_project/services/menu_lists.dart';
 import 'package:SSE3151_project/student/profile.dart';
@@ -234,11 +235,19 @@ class dashboardStudent extends StatelessWidget {
           MaterialPageRoute(builder: (context) => Reports()),
         );
         break;
+<<<<<<< Updated upstream
     // case MenuLists.itemChat:
     // Navigator.of(context).push(
     //   MaterialPageRoute(builder: (context) => Student_Profile()),
     // );
     // break;
+=======
+      case MenuLists.itemChat:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => ChatRoomsPage()),
+        );
+        break;
+>>>>>>> Stashed changes
       case MenuLists.itemLogOut:
         FirebaseAuth.instance.signOut();
         Navigator.of(context).pushAndRemoveUntil(

@@ -8,7 +8,11 @@ class MenuLists {
     itemChat
   ];
   static const List<MenuItem> itemSecList = [itemLogOut];
-  static const List<MenuItem> itemPALists = [itemProfile, itemAdvisee];
+  static const List<MenuItem> itemPALists = [
+    itemProfile,
+    itemAdvisee,
+    itemChat
+  ];
   static const List<MenuItem> itemAdviseeLists = [
     itemAddAdvisee,
     itemArchivedAdvisee
