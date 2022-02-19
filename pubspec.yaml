@@ -38,6 +38,18 @@ dependencies:
   url_launcher: ^6.0.20
   flutter_slidable: any
   awesome_notifications: ^0.6.21
+  flutter_firebase_chat_core: ^1.5.2
+  flutter_chat_types: ^3.3.0
+  flutter_chat_ui: ^1.5.5
+  firebase_storage: ^10.2.7
+  file_picker: ^4.4.0
+  http: ^0.13.4
+  image_picker: ^0.8.4+9
+  mime: ^1.0.1
+  open_file: ^3.2.1
+  path_provider: ^2.0.9
+  intl: ^0.17.0
+  
 
 dev_dependencies:
   flutter_test:
