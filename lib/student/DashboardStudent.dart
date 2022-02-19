@@ -299,6 +299,9 @@ Widget postDetails(
         itemCount: postList.length,
         itemBuilder: ((context, index) {
           return Card(
+            shape:RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
             elevation: 10,
             child: Container(
               width: 300,

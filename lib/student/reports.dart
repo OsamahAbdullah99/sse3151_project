@@ -1,3 +1,4 @@
+import 'package:SSE3151_project/student/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -62,7 +63,7 @@ class _ReportsState extends State<Reports> {
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Reports()));
+                              MaterialPageRoute(builder: (context) => Report_page()));
                         },
                         style: ButtonStyle(
                             padding: MaterialStateProperty.all(EdgeInsets.all(0)),
@@ -121,7 +122,7 @@ class _ReportsState extends State<Reports> {
                       SizedBox(height: 20),
                       Container(
                         alignment: Alignment.bottomRight,
-                        // margin: EdgeInsets.symmetric(horizontal: 20, vertical: 120),
+                        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 120),
                         child: Container(
                           //alignment: Alignment.center,
                           // height: 40.0,
