@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
 class RegisterWidgetPA extends StatefulWidget {
   const RegisterWidgetPA({
@@ -486,25 +488,31 @@ class _RegisterWidgetState extends State<RegisterWidgetPA> {
     final String password = passwordCtrl.text.trim();
 
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) async {
-        User user = FirebaseAuth.instance.currentUser!;
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User user = FirebaseAuth.instance.currentUser!;
 
-        await FirebaseFirestore.instance.collection("PA").doc(user.uid).set({
-          'uid': user.uid,
-          'fullName': fullName,
-          'upmid': id,
-          'faculty': faculty,
-          'department': department,
-          'email': email,
-          'wechat': wechat,
-          'phoneNumber': phoneNumber,
-          'role': 'Academic Advisor',
-          'image':
-              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon2.png?alt=media&token=b5e1061d-f647-40f5-82bf-5bf55a44d5d7',
-        });
+      await FirebaseFirestore.instance.collection("PA").doc(user.uid).set({
+        'uid': user.uid,
+        'fullName': fullName,
+        'upmid': id,
+        'faculty': faculty,
+        'department': department,
+        'email': email,
+        'wechat': wechat,
+        'phoneNumber': phoneNumber,
+        'role': 'Academic Advisor',
+        'image':
+            'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon2.png?alt=media&token=b5e1061d-f647-40f5-82bf-5bf55a44d5d7',
       });
+      await FirebaseChatCore.instance.createUserInFirestore(
+        types.User(
+          firstName: fullName,
+          id: credential.user!.uid,
+          imageUrl:
+              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon2.png?alt=media&token=b5e1061d-f647-40f5-82bf-5bf55a44d5d7?u=$id',
+        ),
+      );
       print('Successfully register a PA');
       FirebaseAuth.instance.signOut();
       Navigator.pop(context);

@@ -7,6 +7,8 @@ import 'loginPage.dart';
 import '../background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
 class RegisterWidget extends StatefulWidget {
   // final VoidCallback onClickedSignIn;
@@ -554,31 +556,36 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     final String password = passwordCtrl.text.trim();
 
     try {
-      // dynamic result =
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) async {
-        User user = FirebaseAuth.instance.currentUser!;
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User user = FirebaseAuth.instance.currentUser!;
 
-        await FirebaseFirestore.instance
-            .collection("students")
-            .doc(user.uid)
-            .set({
-          'uid': user.uid,
-          'fullName': fullName,
-          'upmid': id,
-          'cohort': cohort,
-          'semester': semester,
-          'faculty': faculty,
-          'department': department,
-          'email': email,
-          'wechat': wechat,
-          'phoneNumber': phoneNumber,
-          'role': 'Student',
-          'image':
-              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default_studicon.png?alt=media&token=7726cd03-0bb7-47bf-ac35-a86b0b44b457',
-        });
+      await FirebaseFirestore.instance
+          .collection("students")
+          .doc(user.uid)
+          .set({
+        'uid': user.uid,
+        'fullName': fullName,
+        'upmid': id,
+        'cohort': cohort,
+        'semester': semester,
+        'faculty': faculty,
+        'department': department,
+        'email': email,
+        'wechat': wechat,
+        'phoneNumber': phoneNumber,
+        'role': 'Student',
+        'image':
+            'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default_studicon.png?alt=media&token=7726cd03-0bb7-47bf-ac35-a86b0b44b457',
       });
+      await FirebaseChatCore.instance.createUserInFirestore(
+        types.User(
+          firstName: fullName,
+          id: credential.user!.uid,
+          imageUrl:
+              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default_studicon.png?alt=media&token=7726cd03-0bb7-47bf-ac35-a86b0b44b457?u=$id',
+        ),
+      );
       print('Successfully register a student');
       Navigator.pop(context);
       // if (result != null) {
