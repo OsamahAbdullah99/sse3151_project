@@ -75,29 +75,31 @@ class _NewReportState extends State<NewReport> {
                     ),
                   ),
                   SizedBox(height: 40,),
-                  ElevatedButton(
+                  Container(
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                      child: Text('Upload a document'),
+                      style: ElevatedButton.styleFrom(
+                        elevation: 5,
 
-                    child: Text('Upload Document'),
-                    style: ElevatedButton.styleFrom(
-                      elevation: 5,
-
-                      primary: Colors.orange[600],
-                      onPrimary: Colors.white,
-                      textStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 40,
-                          fontStyle: FontStyle.italic
+                        primary: Colors.orange[600],
+                        onPrimary: Colors.white,
+                        textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontStyle: FontStyle.italic
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      print('Pressed');
-                    },
+                      onPressed: () {
+                        print('Pressed');
+                      },
 
+                    ),
                   ),
                   SizedBox(height: 40,),
                   Container(
                     alignment: Alignment.bottomRight,
-                    margin: EdgeInsets.symmetric(horizontal: 30, vertical: 100),
+                    // margin: EdgeInsets.symmetric(horizontal: 10, vertical: 120),
                     child: Container(
                       // alignment: Alignment.bottomRight,
                       // height: 40.0,

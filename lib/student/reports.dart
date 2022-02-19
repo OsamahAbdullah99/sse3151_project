@@ -121,7 +121,7 @@ class _ReportsState extends State<Reports> {
                       SizedBox(height: 20),
                       Container(
                         alignment: Alignment.bottomRight,
-                        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 120),
+                        // margin: EdgeInsets.symmetric(horizontal: 20, vertical: 120),
                         child: Container(
                           //alignment: Alignment.center,
                           // height: 40.0,
