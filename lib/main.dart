@@ -6,10 +6,21 @@ import 'package:SSE3151_project/student/student_user.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  AwesomeNotifications().initialize('resource://drawable/res_noti_app_icon', [
+    NotificationChannel(
+      channelKey: 'basic_channel',
+      channelName: 'Basic Notifications',
+      channelDescription: 'Notification channel for basic tests',
+      defaultColor: Colors.indigo,
+      importance: NotificationImportance.High,
+      channelShowBadge: true,
+    )
+  ]);
   runApp(const MyApp());
   // runApp(
   //   MultiProvider(

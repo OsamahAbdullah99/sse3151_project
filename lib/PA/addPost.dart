@@ -1,7 +1,10 @@
 import 'package:SSE3151_project/PA/DashboardPA.dart';
 import 'package:SSE3151_project/background2.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import '../services/notiUtils.dart';
 
 class addPost extends StatefulWidget {
   const addPost({Key? key}) : super(key: key);
@@ -170,15 +173,26 @@ class _addPostState extends State<addPost> {
 
   Future addPost(
       String postTo, String postTitle, String postContent, int index) async {
-    return await postColl.doc('Posts').collection('Announcement Lists').add({
+    await postColl.doc('Posts').collection('Announcement Lists').add({
       'postTo': postTo,
       'postTitle': postTitle,
       'postContent': postContent,
       'postIndex': index,
     });
+    sendPostNoti();
   }
 
   Future addCurrentIndex(int index) async {
     return await postColl.doc('Current Index').set({'index': index});
+  }
+
+  Future<void> sendPostNoti() async {
+    await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: createUniqueID(),
+            channelKey: 'basic_channel',
+            title: postTitle,
+            body: postContent,
+            notificationLayout: NotificationLayout.BigText));
   }
 }

@@ -1,14 +1,21 @@
 import 'package:SSE3151_project/PA/homePage.dart';
 import 'package:SSE3151_project/background2.dart';
 import 'package:SSE3151_project/student/homePage.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
-class startLoginPage extends StatelessWidget {
+class startLoginPage extends StatefulWidget {
   const startLoginPage({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<startLoginPage> createState() => _startLoginPageState();
+}
+
+class _startLoginPageState extends State<startLoginPage> {
 //change the UI if you want
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -37,6 +37,7 @@ dependencies:
   email_validator: ^2.0.1
   url_launcher: ^6.0.20
   flutter_slidable: any
+  awesome_notifications: ^0.6.21
 
 dev_dependencies:
   flutter_test:
