@@ -175,13 +175,15 @@ class _Student_ProfileState extends State<Student_Profile> {
               //SizedBox(height: 10),
               Row(
                 children: [
-                  Text(name ?? "",
-                      style: TextStyle(
-                        color: Colors.indigo,
-                        letterSpacing: 2,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  Flexible(
+                    child: Text(name ?? "",
+                        style: TextStyle(
+                          color: Colors.indigo,
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
                 ],
               ),
               SizedBox(height: 10),

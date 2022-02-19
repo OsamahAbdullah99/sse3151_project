@@ -86,32 +86,41 @@ class UsersPage extends StatelessWidget {
                     ),
                     child: Container(
                       padding: EdgeInsets.all(15),
-                      child: Wrap(
-                        // alignment: WrapAlignment.spaceEvenly,
-                        children: [
-                          _buildAvatar(user),
-                          Chip(
-                            // shape: RoundedRectangleBorder(
-                            //   borderRadius: BorderRadius.circular(10.0),
-                            //   // side: BorderSide(
-                            //   //     color: Color(0x15FFFFFF), width: 3.8),
-                            // ),
-                            label: Text(
-                              getUserName(user),
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          // alignment: WrapAlignment.spaceEvenly,
+                          children: [
+                            _buildAvatar(user),
+                            // Text(
+                            //     getUserName(user),
+                            //     style:
+                            //         TextStyle(color: Colors.white, fontSize: 16),
+                            //   ),
+                            Chip(
+                              // shape: RoundedRectangleBorder(
+                              //   borderRadius: BorderRadius.circular(10.0),
+                              //   // side: BorderSide(
+                              //   //     color: Color(0x15FFFFFF), width: 3.8),
+                              // ),
+                              label: Text(
+                                getUserName(user),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                              backgroundColor: Colors.indigoAccent,
                             ),
-                            backgroundColor: Colors.indigoAccent,
-                          ),
-                          // Chip(
-                          //   label: Text(
-                          //     getUPMID(user),
-                          //     style:
-                          //         TextStyle(color: Colors.white, fontSize: 16),
-                          //   ),
-                          //   backgroundColor: Colors.indigoAccent,
-                          // ),
-                        ],
+
+                            // Chip(
+                            //   label: Text(
+                            //     getUPMID(user),
+                            //     style:
+                            //         TextStyle(color: Colors.white, fontSize: 16),
+                            //   ),
+                            //   backgroundColor: Colors.indigoAccent,
+                            // ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -108,6 +108,12 @@ class _PA_ProfileState extends State<PA_Profile> {
             style:
                 GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w600)),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => editProfile_PA())),
+              icon: Icon(Icons.edit)),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -151,13 +157,15 @@ class _PA_ProfileState extends State<PA_Profile> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    name ?? "",
-                    style: TextStyle(
-                        color: Colors.indigo,
-                        letterSpacing: 2,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                  Flexible(
+                    child: Text(
+                      name ?? "",
+                      style: TextStyle(
+                          color: Colors.indigo,
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),
@@ -269,7 +277,7 @@ class _PA_ProfileState extends State<PA_Profile> {
                       )),
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -335,100 +343,6 @@ class _PA_ProfileState extends State<PA_Profile> {
                           ),
                         )),
                   ],
-                ),
-              ),
-              SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => editProfile_PA()));
-                },
-                style: ButtonStyle(
-                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0),
-                    ))),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50.0,
-                  width: size.width * 0.5,
-                  decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(80.0),
-                      gradient: new LinearGradient(colors: [
-                        Color.fromARGB(255, 255, 136, 34),
-                        Color.fromARGB(255, 255, 177, 41)
-                      ])),
-                  padding: const EdgeInsets.all(0),
-                  child: Text(
-                    "Edit Profile",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Reports()));
-                },
-                style: ButtonStyle(
-                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0),
-                    ))),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50.0,
-                  width: size.width * 0.5,
-                  decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(80.0),
-                      gradient: new LinearGradient(colors: [
-                        Color.fromARGB(255, 255, 136, 34),
-                        Color.fromARGB(255, 255, 177, 41)
-                      ])),
-                  padding: const EdgeInsets.all(0),
-                  child: Text(
-                    "My Reports",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => editProfile_PA()));
-                },
-                style: ButtonStyle(
-                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0),
-                    ))),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50.0,
-                  width: size.width * 0.5,
-                  decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.circular(80.0),
-                      gradient: new LinearGradient(colors: [
-                        Color.fromARGB(255, 255, 136, 34),
-                        Color.fromARGB(255, 255, 177, 41)
-                      ])),
-                  padding: const EdgeInsets.all(0),
-                  child: Text(
-                    "Chat",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
                 ),
               ),
             ],

@@ -187,24 +187,27 @@ class _ChatRoomsPageState extends State<ChatRoomsPage> {
                             //   horizontal: 16,
                             //   vertical: 8,
                             // ),
-                            child: Row(
-                              children: [
-                                _buildAvatar(room),
-                                Text(
-                                  room.name ?? '',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 18),
-                                ),
-                                // Chip(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  _buildAvatar(room),
+                                  Text(
+                                    room.name ?? '',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                  // Chip(
 
-                                //   label: Text(
-                                //     room.name ?? '',
-                                //     style: TextStyle(
-                                //         color: Colors.white, fontSize: 16),
-                                //   ),
-                                //   backgroundColor: Colors.indigoAccent,
-                                // )
-                              ],
+                                  //   label: Text(
+                                  //     room.name ?? '',
+                                  //     style: TextStyle(
+                                  //         color: Colors.white, fontSize: 16),
+                                  //   ),
+                                  //   backgroundColor: Colors.indigoAccent,
+                                  // )
+                                ],
+                              ),
                             ),
                           ),
                         ),
