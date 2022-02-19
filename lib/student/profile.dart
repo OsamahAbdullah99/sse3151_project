@@ -111,7 +111,7 @@ class _Student_ProfileState extends State<Student_Profile> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        elevation: 0,
+        elevation: 2,
         backgroundColor: Colors.transparent,
         title: Text("Profile",
             style:
