@@ -1,3 +1,4 @@
+import 'package:SSE3151_project/student/reports.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import './DashboardStudent.dart';
@@ -25,7 +26,7 @@ class _NewReportState extends State<NewReport> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => NewPost())),
+              MaterialPageRoute(builder: (context) => Reports())),
         ),
       ),
 

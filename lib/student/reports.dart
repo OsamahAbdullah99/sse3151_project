@@ -134,7 +134,7 @@ class _ReportsState extends State<Reports> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => NewReport()));
+                                builder: (context) => dashboardStudent()));
                       },
                     ),
                   ),
