@@ -72,7 +72,24 @@ class dashboardStudent extends StatelessWidget {
                   //     )),
                 ],
               ),
-              body: Background2(
+              body:
+              //Background2(
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [
+                        Colors.indigoAccent,
+                        Colors.blue.shade200,
+                        Colors.white
+                      ],
+                      // stops: [0.2, 0.8, 1],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter
+                  ),
+                ),
+                alignment: Alignment.center,
+                //padding: EdgeInsets.fromLTRB(30, 100, 30, 0),
+
                 child: postList(context, snapshot),
                 // Card(
                 //   margin: EdgeInsets.all(20),
@@ -217,16 +234,16 @@ class dashboardStudent extends StatelessWidget {
           MaterialPageRoute(builder: (context) => Reports()),
         );
         break;
-      // case MenuLists.itemChat:
-      // Navigator.of(context).push(
-      //   MaterialPageRoute(builder: (context) => Student_Profile()),
-      // );
-      // break;
+    // case MenuLists.itemChat:
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(builder: (context) => Student_Profile()),
+    // );
+    // break;
       case MenuLists.itemLogOut:
         FirebaseAuth.instance.signOut();
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginWidget()),
-          (route) => false,
+              (route) => false,
         );
         break;
       default:
@@ -257,66 +274,70 @@ class dashboardStudent extends StatelessWidget {
 // }
 
 Widget postList(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-  return Card(
-    margin: EdgeInsets.all(20),
-    child: Container(
-      width: 350,
-      padding: EdgeInsets.all(20),
-      margin: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: Colors.white60,
-      ),
-      child: postDetails(context, snapshot),
-    ),
-  );
+  return postDetails(context, snapshot);
+  // Card(
+  //   margin: EdgeInsets.all(20),
+  //   child: Container(
+  //     width: 350,
+  //     padding: EdgeInsets.all(20),
+  //     margin: EdgeInsets.all(5),
+  //     decoration: BoxDecoration(
+  //       color: Colors.white60,
+  //     ),
+  //     child: postDetails(context, snapshot),
+  //   ),
+  // );
 }
 
 Widget postDetails(
     BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
   final postList = snapshot.data!.docs.toList();
-  return ListView.separated(
-      separatorBuilder: (context, index) => SizedBox(height: 4),
-      itemCount: postList.length,
-      itemBuilder: ((context, index) {
-        return Card(
-          elevation: 10,
-          child: Container(
-            width: 300,
-            padding: EdgeInsets.all(20),
-            margin: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Colors.white60,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 5,
-                  ),
-                  child: Text(
-                    postList[index]['postTitle'],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                      fontSize: 20,
+  return Container(
+    margin: EdgeInsets.all(20),
+    child: ListView.separated(
+        separatorBuilder: (context, index) => SizedBox(height: 3),
+        itemCount: postList.length,
+        itemBuilder: ((context, index) {
+          return Card(
+            elevation: 10,
+            child: Container(
+              width: 300,
+              padding: EdgeInsets.all(20),
+              margin: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.white60,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 5,
+                    ),
+                    child: Text(
+                      postList[index]['postTitle'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  child: Text(
-                    postList[index]['postContent'],
-                    style: TextStyle(
-                      fontSize: 16,
+                  SizedBox(height: 10),
+                  Container(
+                    child: Text(
+                      postList[index]['postContent'],
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
-              ],
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
-        );
-      }));
+          );
+        })),
+  );
 }
