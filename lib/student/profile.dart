@@ -100,6 +100,7 @@ class _Student_ProfileState extends State<Student_Profile> {
       throw 'Could not launch $url';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     setStudentValue();
@@ -193,17 +194,20 @@ class _Student_ProfileState extends State<Student_Profile> {
               ),
               Row(
                 children: [
-                  Text(email ?? "",
-                      style: TextStyle(
-                        color: Colors.indigo,
-                        letterSpacing: 2,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  Flexible(
+                    child: Text(email ?? "",
+                        style: TextStyle(
+                          color: Colors.indigo,
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
                 ],
               ),
               Divider(
                 height: 30,
+                thickness: 0.8,
                 color: Colors.black,
               ),
               Row(
@@ -336,22 +340,37 @@ class _Student_ProfileState extends State<Student_Profile> {
                         onPressed: () {
                           _launchURL(wsLink!);
                         },
-                        child: Image.asset(
-                          'assets/images/ws.png',
-                          height: 24.0,
-                          width: 24.0,
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: Image.asset(
+                                'assets/images/ws.png',
+                              )),
                         )),
                     OutlinedButton(
-                      style: OutlinedButton.styleFrom(side: BorderSide.none),
-                      onPressed: () {
-                        _launchURL(wcLink!);
-                      },
-                      child: Image.asset(
-                        'assets/images/wechat.png',
-                        height: 24.0,
-                        width: 24,
-                      ),
-                    ),
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        onPressed: () {
+                          _launchURL(wcLink!);
+                        },
+                        child: Card(
+                          elevation: 10,
+                          color: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: Image.asset(
+                              'assets/images/wechat.png',
+                            ),
+                          ),
+                        )),
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(side: BorderSide.none),
                         onPressed: () {
@@ -361,10 +380,20 @@ class _Student_ProfileState extends State<Student_Profile> {
                               MaterialPageRoute(
                                   builder: (context) => sendEmailPage()));
                         },
-                        child: Image.asset(
-                          'assets/images/email.png',
-                          height: 24,
-                          width: 24,
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: Icon(
+                              Icons.email_rounded,
+                              color: Colors.black,
+                              size: 19,
+                            ),
+                          ),
                         )),
                   ],
                 ),

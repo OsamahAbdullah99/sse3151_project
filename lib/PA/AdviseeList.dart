@@ -398,42 +398,153 @@ class _adviseeListState extends State<adviseeList> {
                 end: Alignment.bottomCenter),
           ),
           alignment: Alignment.center,
+          padding: EdgeInsets.fromLTRB(30, 100, 30, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 40,
-                backgroundImage: NetworkImage(image),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(image),
+                  ),
+                ],
+              ),
+              Divider(
+                height: 50,
+                thickness: 0.6,
+                color: Colors.black,
               ),
               Row(
                 children: [
-                  Text('UPM-ID: ', style: TextStyle(fontSize: 16)),
-                  Text(upm_id, style: TextStyle(fontSize: 16)),
+                  Text('Name: ',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          letterSpacing: 2,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                  Text(fullName,
+                      style: TextStyle(
+                          color: Colors.indigo,
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text('UPM-ID: ',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          letterSpacing: 2,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                  Text(upm_id,
+                      style: TextStyle(
+                          color: Colors.indigo,
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text('Email: ',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          letterSpacing: 2,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
               Row(
                 children: [
-                  Text('Name: ', style: TextStyle(fontSize: 16)),
-                  Text(fullName, style: TextStyle(fontSize: 16)),
-                ],
-              ),
-              Row(
-                children: [
-                  Text('Cohort: ', style: TextStyle(fontSize: 16)),
-                  Text(cohort, style: TextStyle(fontSize: 16)),
-                ],
-              ),
-              Row(
-                children: [
-                  Text('Faculty: ', style: TextStyle(fontSize: 16)),
                   Flexible(
-                      child: Text(faculty, style: TextStyle(fontSize: 16))),
+                    child: Text(email,
+                        style: TextStyle(
+                            color: Colors.indigo,
+                            letterSpacing: 2,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
+                  ),
                 ],
+              ),
+              Divider(
+                height: 50,
+                thickness: 0.6,
+                color: Colors.black,
               ),
               Row(
                 children: [
-                  Text('Department: ', style: TextStyle(fontSize: 16)),
-                  Flexible(child: Text(dept, style: TextStyle(fontSize: 16))),
+                  Text('Cohort: ',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          letterSpacing: 2,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                  Text(cohort,
+                      style: TextStyle(
+                          color: Colors.indigo,
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Semester: ',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          letterSpacing: 2,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                  Text(semester,
+                      style: TextStyle(
+                          color: Colors.indigo,
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text('Faculty: ',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          letterSpacing: 2,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                  Flexible(
+                      child: Text(faculty,
+                          style: TextStyle(
+                              color: Colors.indigo,
+                              letterSpacing: 2,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold))),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text('Department: ',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          letterSpacing: 2,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                  Flexible(
+                      child: Text(dept,
+                          style: TextStyle(
+                              color: Colors.indigo,
+                              letterSpacing: 2,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold))),
                 ],
               ),
               SizedBox(height: 10),
@@ -446,22 +557,37 @@ class _adviseeListState extends State<adviseeList> {
                         onPressed: () {
                           _launchURL(wsLink!);
                         },
-                        child: Image.asset(
-                          'assets/images/ws.png',
-                          height: 24.0,
-                          width: 24.0,
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: Image.asset(
+                                'assets/images/ws.png',
+                              )),
                         )),
                     OutlinedButton(
-                      style: OutlinedButton.styleFrom(side: BorderSide.none),
-                      onPressed: () {
-                        _launchURL(wcLink!);
-                      },
-                      child: Image.asset(
-                        'assets/images/wechat.png',
-                        height: 24.0,
-                        width: 24,
-                      ),
-                    ),
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        onPressed: () {
+                          _launchURL(wcLink!);
+                        },
+                        child: Card(
+                          elevation: 10,
+                          color: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: Image.asset(
+                              'assets/images/wechat.png',
+                            ),
+                          ),
+                        )),
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(side: BorderSide.none),
                         onPressed: () {
@@ -472,11 +598,33 @@ class _adviseeListState extends State<adviseeList> {
                                   builder: (context) =>
                                       sendEmailtoStudentPage(upm_id, email)));
                         },
-                        child: Image.asset(
-                          'assets/images/email.png',
-                          height: 24,
-                          width: 24,
-                        )),
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: Icon(
+                              Icons.email_rounded,
+                              color: Colors.black,
+                              size: 19,
+                            ),
+                          ),
+                        )
+                        //  Stack(
+                        //   children: [
+                        //     Positioned(
+                        //       left: 2.0,
+                        //       top: 2.0,
+                        //       child: Icon(Icons.email_rounded,
+                        //           color: Colors.indigo),
+                        //     ),
+                        //     Icon(Icons.email_rounded, color: Colors.white)
+                        //   ],
+                        // )
+                        ),
                   ],
                 ),
               ),

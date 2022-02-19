@@ -97,25 +97,6 @@ class editProfile extends StatelessWidget {
             style:
                 GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w600)),
         centerTitle: true,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.pop(context)),
-        actions: [
-          TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LoginWidget(
-                            // onClickedSignUp: () {},
-                            )));
-              },
-              child: Image.asset(
-                'assets/images/logoutIcon.png',
-                scale: 20,
-              )),
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(

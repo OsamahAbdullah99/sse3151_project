@@ -108,237 +108,331 @@ class _PA_ProfileState extends State<PA_Profile> {
             style:
                 GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w600)),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => dashboardPA())),
-        ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginWidgetPA()));
-              },
-              child: Image.asset(
-                'assets/images/logoutIcon.png',
-                scale: 20,
-              )),
-        ],
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Colors.indigoAccent, Colors.blue.shade200, Colors.white],
-              // stops: [0.2, 0.8, 1],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter),
-        ),
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 40,
-              backgroundImage: NetworkImage(image ??
-                  "https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default2_stdicon.jpg?alt=media&token=2e4518de-036f-47b6-9010-23588e9a6fe4"),
-            ),
-            SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Name: ',
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  name ?? "",
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-            SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Email: ',
-                  style: TextStyle(fontSize: 16),
-                ),
-                Text(
-                  email ?? "",
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-            SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('UPM-ID: ', style: TextStyle(fontSize: 16)),
-                Text(UPMID ?? "", style: TextStyle(fontSize: 16)),
-              ],
-            ),
-            SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Faculty: ', style: TextStyle(fontSize: 16)),
-                Flexible(
-                    child: Text(faculty ?? "", style: TextStyle(fontSize: 16))),
-              ],
-            ),
-            SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Department: ', style: TextStyle(fontSize: 16)),
-                Flexible(
-                    child:
-                        Text(department ?? "", style: TextStyle(fontSize: 16))),
-              ],
-            ),
-            SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Wechat ID: ', style: TextStyle(fontSize: 16)),
-                Text(wechat ?? "", style: TextStyle(fontSize: 16)),
-              ],
-            ),
-            Container(
-              child: Row(
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [
+                  Colors.indigoAccent,
+                  Colors.blue.shade200,
+                  Colors.white
+                ],
+                // stops: [0.2, 0.8, 1],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter),
+          ),
+          alignment: Alignment.center,
+          padding: EdgeInsets.fromLTRB(30, 100, 30, 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  OutlinedButton(
-                      style: OutlinedButton.styleFrom(side: BorderSide.none),
-                      onPressed: () {
-                        _launchURL(wsLink!);
-                      },
-                      child: Image.asset(
-                        'assets/images/ws.png',
-                        height: 24.0,
-                        width: 24.0,
-                      )),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(side: BorderSide.none),
-                    onPressed: () {
-                      _launchURL(wcLink!);
-                    },
-                    child: Image.asset(
-                      'assets/images/wechat.png',
-                      height: 24.0,
-                      width: 24,
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(image ??
+                        "https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default2_stdicon.jpg?alt=media&token=2e4518de-036f-47b6-9010-23588e9a6fe4"),
+                  ),
+                ],
+              ),
+              Divider(
+                height: 50,
+                color: Colors.black,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Name: ',
+                    style: TextStyle(
+                        color: Colors.black87,
+                        letterSpacing: 2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    name ?? "",
+                    style: TextStyle(
+                        color: Colors.indigo,
+                        letterSpacing: 2,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text(
+                    'Email: ',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      letterSpacing: 2,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  OutlinedButton(
-                      style: OutlinedButton.styleFrom(side: BorderSide.none),
-                      onPressed: () {
-                        // _launchURL(emailLink!);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => sendEmailPage()));
-                      },
-                      child: Image.asset(
-                        'assets/images/email.png',
-                        height: 24,
-                        width: 24,
+                ],
+              ),
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(email ?? "",
+                        style: TextStyle(
+                          color: Colors.indigo,
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
+                ],
+              ),
+              Divider(
+                height: 30,
+                thickness: 0.4,
+                color: Colors.black,
+              ),
+              Row(
+                children: [
+                  Text('UPM-ID: ',
+                      style: TextStyle(
+                          color: Colors.black87,
+                          letterSpacing: 2,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                  Text(UPMID ?? "",
+                      style: TextStyle(
+                          color: Colors.indigo,
+                          letterSpacing: 2,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold)),
+                ],
+              ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Text('Faculty: ',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        letterSpacing: 2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Flexible(
+                      child: Text(faculty ?? "",
+                          style: TextStyle(
+                            color: Colors.indigo,
+                            letterSpacing: 2,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ))),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Text('Department: ',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        letterSpacing: 2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Flexible(
+                      child: Text(department ?? "",
+                          style: TextStyle(
+                            color: Colors.indigo,
+                            letterSpacing: 2,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ))),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Wechat ID: ',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        letterSpacing: 2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Text(wechat ?? "",
+                      style: TextStyle(
+                        color: Colors.indigo,
+                        letterSpacing: 2,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       )),
                 ],
               ),
-            ),
-            SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => editProfile_PA()));
-              },
-              style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0),
-                  ))),
-              child: Container(
-                alignment: Alignment.center,
-                height: 50.0,
-                width: size.width * 0.5,
-                decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.circular(80.0),
-                    gradient: new LinearGradient(colors: [
-                      Color.fromARGB(255, 255, 136, 34),
-                      Color.fromARGB(255, 255, 177, 41)
-                    ])),
-                padding: const EdgeInsets.all(0),
-                child: Text(
-                  "Edit Profile",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              SizedBox(height: 10),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    OutlinedButton(
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        onPressed: () {
+                          _launchURL(wsLink!);
+                        },
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: Image.asset(
+                                'assets/images/ws.png',
+                              )),
+                        )),
+                    OutlinedButton(
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        onPressed: () {
+                          _launchURL(wcLink!);
+                        },
+                        child: Card(
+                          elevation: 10,
+                          color: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: Image.asset(
+                              'assets/images/wechat.png',
+                            ),
+                          ),
+                        )),
+                    OutlinedButton(
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        onPressed: () {
+                          // _launchURL(emailLink!);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => sendEmailPage()));
+                        },
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: Icon(
+                              Icons.email_rounded,
+                              color: Colors.black,
+                              size: 19,
+                            ),
+                          ),
+                        )),
+                  ],
                 ),
               ),
-            ),
-            SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Reports()));
-              },
-              style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0),
-                  ))),
-              child: Container(
-                alignment: Alignment.center,
-                height: 50.0,
-                width: size.width * 0.5,
-                decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.circular(80.0),
-                    gradient: new LinearGradient(colors: [
-                      Color.fromARGB(255, 255, 136, 34),
-                      Color.fromARGB(255, 255, 177, 41)
-                    ])),
-                padding: const EdgeInsets.all(0),
-                child: Text(
-                  "My Reports",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => editProfile_PA()));
+                },
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80.0),
+                    ))),
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 50.0,
+                  width: size.width * 0.5,
+                  decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.circular(80.0),
+                      gradient: new LinearGradient(colors: [
+                        Color.fromARGB(255, 255, 136, 34),
+                        Color.fromARGB(255, 255, 177, 41)
+                      ])),
+                  padding: const EdgeInsets.all(0),
+                  child: Text(
+                    "Edit Profile",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => editProfile_PA()));
-              },
-              style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0),
-                  ))),
-              child: Container(
-                alignment: Alignment.center,
-                height: 50.0,
-                width: size.width * 0.5,
-                decoration: new BoxDecoration(
-                    borderRadius: BorderRadius.circular(80.0),
-                    gradient: new LinearGradient(colors: [
-                      Color.fromARGB(255, 255, 136, 34),
-                      Color.fromARGB(255, 255, 177, 41)
-                    ])),
-                padding: const EdgeInsets.all(0),
-                child: Text(
-                  "Chat",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Reports()));
+                },
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80.0),
+                    ))),
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 50.0,
+                  width: size.width * 0.5,
+                  decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.circular(80.0),
+                      gradient: new LinearGradient(colors: [
+                        Color.fromARGB(255, 255, 136, 34),
+                        Color.fromARGB(255, 255, 177, 41)
+                      ])),
+                  padding: const EdgeInsets.all(0),
+                  child: Text(
+                    "My Reports",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => editProfile_PA()));
+                },
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80.0),
+                    ))),
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 50.0,
+                  width: size.width * 0.5,
+                  decoration: new BoxDecoration(
+                      borderRadius: BorderRadius.circular(80.0),
+                      gradient: new LinearGradient(colors: [
+                        Color.fromARGB(255, 255, 136, 34),
+                        Color.fromARGB(255, 255, 177, 41)
+                      ])),
+                  padding: const EdgeInsets.all(0),
+                  child: Text(
+                    "Chat",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
