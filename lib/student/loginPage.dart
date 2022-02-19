@@ -100,7 +100,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     // ),
                     Container(
                       alignment: Alignment.centerRight,
-                      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                       child: GestureDetector(
                         child: Text(
                           'Forgot Password?',
@@ -118,14 +119,15 @@ class _LoginWidgetState extends State<LoginWidget> {
                     SizedBox(height: size.height * 0.05),
                     Container(
                       alignment: Alignment.centerRight,
-                      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                       child: ElevatedButton(
                         onPressed: () => signIn(),
                         style: ButtonStyle(
-                            padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
+                            padding:
+                                MaterialStateProperty.all(EdgeInsets.all(0)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(80.0),
                             ))),
                         child: Container(
