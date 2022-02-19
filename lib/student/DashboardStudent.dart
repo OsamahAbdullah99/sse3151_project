@@ -2,6 +2,7 @@ import 'package:SSE3151_project/background2.dart';
 import 'package:SSE3151_project/services/menu_item.dart';
 import 'package:SSE3151_project/services/menu_lists.dart';
 import 'package:SSE3151_project/student/profile.dart';
+import 'package:SSE3151_project/student/reports.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class dashboardStudent extends StatelessWidget {
                   PopupMenuButton<MenuItem>(
                     onSelected: (item) => onSelected(context, item),
                     itemBuilder: (context) => [
-                      ...MenuLists.itemLists.map(buildItem).toList(),
+                      ...MenuLists.itemStudentLists.map(buildItem).toList(),
                       PopupMenuDivider(),
                       ...MenuLists.itemSecList.map(buildItem).toList(),
                     ],
@@ -211,11 +212,21 @@ class dashboardStudent extends StatelessWidget {
           MaterialPageRoute(builder: (context) => Student_Profile()),
         );
         break;
+      case MenuLists.itemReport:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => Reports()),
+        );
+        break;
+      // case MenuLists.itemChat:
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(builder: (context) => Student_Profile()),
+      // );
+      // break;
       case MenuLists.itemLogOut:
         FirebaseAuth.instance.signOut();
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginWidget()),
-              (route) => false,
+          (route) => false,
         );
         break;
       default:
