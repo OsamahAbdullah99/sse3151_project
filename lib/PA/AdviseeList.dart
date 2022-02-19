@@ -30,7 +30,8 @@ class _adviseeListState extends State<adviseeList> {
     final db = FirebaseFirestore.instance
         .collection('Advisee_Advisor')
         .doc(user?.uid)
-        .collection('students');
+        .collection('students')
+        .orderBy('cohort', descending: true);
     final CollectionReference studentInfo =
         FirebaseFirestore.instance.collection('students');
 

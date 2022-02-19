@@ -19,7 +19,8 @@ class _archivedListState extends State<archivedList> {
     final db = FirebaseFirestore.instance
         .collection('Archived_Advisee')
         .doc(user?.uid)
-        .collection('students');
+        .collection('students')
+        .orderBy('cohort', descending: true);
     final CollectionReference studentInfo =
         FirebaseFirestore.instance.collection('students');
 
