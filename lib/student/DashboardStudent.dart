@@ -74,8 +74,8 @@ class dashboardStudent extends StatelessWidget {
                 ],
               ),
               body:
-              //Background2(
-              Container(
+                  //Background2(
+                  Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                       colors: [
@@ -85,8 +85,7 @@ class dashboardStudent extends StatelessWidget {
                       ],
                       // stops: [0.2, 0.8, 1],
                       begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter
-                  ),
+                      end: Alignment.bottomCenter),
                 ),
                 alignment: Alignment.center,
                 //padding: EdgeInsets.fromLTRB(30, 100, 30, 0),
@@ -235,24 +234,16 @@ class dashboardStudent extends StatelessWidget {
           MaterialPageRoute(builder: (context) => Reports()),
         );
         break;
-<<<<<<< Updated upstream
-    // case MenuLists.itemChat:
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(builder: (context) => Student_Profile()),
-    // );
-    // break;
-=======
       case MenuLists.itemChat:
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => ChatRoomsPage()),
         );
         break;
->>>>>>> Stashed changes
       case MenuLists.itemLogOut:
         FirebaseAuth.instance.signOut();
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginWidget()),
-              (route) => false,
+          (route) => false,
         );
         break;
       default:
@@ -308,7 +299,7 @@ Widget postDetails(
         itemCount: postList.length,
         itemBuilder: ((context, index) {
           return Card(
-            shape:RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
             elevation: 10,
