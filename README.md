@@ -2,7 +2,7 @@
 
 A new Flutter project. 
 
-## Getting Started
+## PAdvisor
 
 This project is about an application that provide connections to fours users which are Students, Academic Advisor(PA), Academic Advisor(PA) Coordinator and Head of Department(HOD). This app allow the users to interact with each other by Chat function. 
 
