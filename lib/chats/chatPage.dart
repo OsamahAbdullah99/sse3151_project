@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,61 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text('Allow Notifications'),
+                  content: Text('Our app would like to send you notifications'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'Don\'t Allow',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => AwesomeNotifications()
+                          .requestPermissionToSendNotifications()
+                          .then((_) => Navigator.pop(context)),
+                      child: Text(
+                        'Allow',
+                        style: TextStyle(
+                          color: Colors.indigo,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  ],
+                ));
+      }
+    });
+
+    AwesomeNotifications().createdStream.listen((noti) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Notification Created on ${noti.channelKey}')));
+    });
+
+    // AwesomeNotifications().actionStream.listen((event) {
+    //   Navigator.pushAndRemoveUntil(
+    //       context,
+    //       MaterialPageRoute(builder: (_) => ChatPage(room: FirebaseChatCore.instance.room(widget.room.id))),
+    //       (route) => route.isFirst);
+    // });
+  }
+
   bool _isAttachmentUploading = false;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _handleAtachmentPressed() {
     showModalBottomSheet<void>(

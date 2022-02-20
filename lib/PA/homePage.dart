@@ -53,6 +53,18 @@ class _HomePage_PAState extends State<HomePage_PA> {
                 ));
       }
     });
+
+    // AwesomeNotifications().createdStream.listen((noti) {
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //       content: Text('Notification Created on ${noti.channelKey}')));
+    // });
+
+    // AwesomeNotifications().actionStream.listen((event) {
+    //   Navigator.pushAndRemoveUntil(
+    //       context,
+    //       MaterialPageRoute(builder: (_) => dashboardPA()),
+    //       (route) => route.isFirst);
+    // });
   }
 
   @override

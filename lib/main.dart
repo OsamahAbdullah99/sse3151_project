@@ -19,7 +19,15 @@ Future main() async {
       defaultColor: Colors.indigo,
       importance: NotificationImportance.High,
       channelShowBadge: true,
-    )
+    ),
+    NotificationChannel(
+      channelKey: 'scheduled_channel',
+      channelName: 'Scheduled Notifications',
+      channelDescription: 'Notification channel for basic tests',
+      defaultColor: Colors.indigo,
+      importance: NotificationImportance.High,
+      channelShowBadge: true,
+    ),
   ]);
   runApp(const MyApp());
   // runApp(
