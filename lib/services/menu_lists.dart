@@ -13,6 +13,9 @@ class MenuLists {
     itemAdvisee,
     itemChat
   ];
+  static const List<MenuItem> itemPACLists = [itemProfile, itemPA, itemChat];
+
+  static const List<MenuItem> itemHODLists = [itemProfile, itemPAC, itemChat];
   static const List<MenuItem> itemAdviseeLists = [
     itemAddAdvisee,
     itemArchivedAdvisee
@@ -21,6 +24,9 @@ class MenuLists {
   static const itemProfile = MenuItem(text: 'Profile', icon: Icons.person);
   static const itemAdvisee =
       MenuItem(text: 'Advisee List', icon: Icons.people_alt);
+  static const itemPA = MenuItem(text: 'PA List', icon: Icons.people_alt);
+  static const itemPAC =
+      MenuItem(text: 'PA Coordinator List', icon: Icons.people_alt);
   static const itemAddAdvisee =
       MenuItem(text: 'Add Advisee', icon: Icons.person_add_alt_1_rounded);
   static const itemArchivedAdvisee =

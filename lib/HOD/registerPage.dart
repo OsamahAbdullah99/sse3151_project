@@ -7,16 +7,14 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
-class RegisterWidgetPA extends StatefulWidget {
-  const RegisterWidgetPA({
-    Key? key,
-  }) : super(key: key);
+class RegisterWidgetHOD extends StatefulWidget {
+  const RegisterWidgetHOD({Key? key}) : super(key: key);
 
   @override
-  _RegisterWidgetState createState() => _RegisterWidgetState();
+  _RegisterWidgetHODState createState() => _RegisterWidgetHODState();
 }
 
-class _RegisterWidgetState extends State<RegisterWidgetPA> {
+class _RegisterWidgetHODState extends State<RegisterWidgetHOD> {
   final formKey = GlobalKey<FormState>();
   final FNCtrl = TextEditingController();
   final MIDCtrl = TextEditingController();
@@ -189,7 +187,7 @@ class _RegisterWidgetState extends State<RegisterWidgetPA> {
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.symmetric(horizontal: 40),
                   child: Text(
-                    "REGISTER PA",
+                    "REGISTER",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF2661FA),
@@ -492,7 +490,7 @@ class _RegisterWidgetState extends State<RegisterWidgetPA> {
           .createUserWithEmailAndPassword(email: email, password: password);
       User user = FirebaseAuth.instance.currentUser!;
 
-      await FirebaseFirestore.instance.collection("PA").doc(user.uid).set({
+      await FirebaseFirestore.instance.collection("HOD").doc(user.uid).set({
         'uid': user.uid,
         'fullName': fullName,
         'upmid': id,
@@ -501,19 +499,19 @@ class _RegisterWidgetState extends State<RegisterWidgetPA> {
         'email': email,
         'wechat': wechat,
         'phoneNumber': phoneNumber,
-        'role': 'Academic Advisor (PA)',
+        'role': 'Head of Department (HOD)',
         'image':
-            'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon2.png?alt=media&token=b5e1061d-f647-40f5-82bf-5bf55a44d5d7',
+            'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon3.png?alt=media&token=bfc1368c-d1bb-4b27-af4e-cd7b03bbdb69',
       });
       await FirebaseChatCore.instance.createUserInFirestore(
         types.User(
           firstName: fullName,
           id: credential.user!.uid,
           imageUrl:
-              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon2.png?alt=media&token=b5e1061d-f647-40f5-82bf-5bf55a44d5d7?u=$id',
+              'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon3.png?alt=media&token=bfc1368c-d1bb-4b27-af4e-cd7b03bbdb69?u=$id',
         ),
       );
-      print('Successfully register a PA');
+      print('Successfully register a HOD');
       FirebaseAuth.instance.signOut();
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {

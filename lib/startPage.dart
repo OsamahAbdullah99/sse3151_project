@@ -1,8 +1,10 @@
+import 'package:SSE3151_project/HOD/homePage.dart';
 import 'package:SSE3151_project/PA/homePage.dart';
 import 'package:SSE3151_project/background2.dart';
 import 'package:SSE3151_project/student/homePage.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+
+import 'PACoordinator/homePage.dart';
 
 class startLoginPage extends StatefulWidget {
   const startLoginPage({
@@ -114,7 +116,8 @@ class _startLoginPageState extends State<startLoginPage> {
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage_PAC())),
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -145,7 +148,8 @@ class _startLoginPageState extends State<startLoginPage> {
                 alignment: Alignment.center,
                 margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage_HOD())),
                   style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(0)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(

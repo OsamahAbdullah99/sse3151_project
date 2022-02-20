@@ -52,7 +52,7 @@ class dashboardPA extends StatelessWidget {
             .collection('Announcement')
             .doc('Posts')
             .collection('Announcement Lists')
-            .where('postTo', isEqualTo: 'Academic Advisor')
+            .where('postTo', isEqualTo: 'Academic Advisor (PA)')
             .snapshots(),
         initialData: null,
         builder: (context, snapshot) {
@@ -323,49 +323,66 @@ Widget postDetails(
   //           postDetails(value["postTile"], value["postContent"]);
   //         }
   //       }));
-  return ListView.separated(
-      separatorBuilder: (context, index) => SizedBox(height: 4),
-      itemCount: postList.length,
-      itemBuilder: ((context, index) {
-        return Card(
-          elevation: 10,
-          child: Container(
-            width: 300,
-            padding: EdgeInsets.all(20),
-            margin: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Colors.white60,
+  return Container(
+    margin: EdgeInsets.all(5),
+    child: ListView.separated(
+        separatorBuilder: (context, index) => SizedBox(height: 15),
+        itemCount: postList.length,
+        itemBuilder: ((context, index) {
+          return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 5,
-                  ),
-                  child: Text(
-                    postList[index]['postTitle'].toString(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                      fontSize: 20,
+            elevation: 10,
+            child: Container(
+              width: 300,
+              padding: EdgeInsets.all(20),
+              margin: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.white60,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 5,
+                    ),
+                    child:
+                        // Text(
+                        //   postList[index]['postTitle'].toString(),
+                        //   style: TextStyle(
+                        //     fontWeight: FontWeight.bold,
+                        //     fontStyle: FontStyle.italic,
+                        //     fontSize: 20,
+                        //   ),
+                        // ),
+                        Text(
+                      postList[index]['postTitle'],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  child: Text(
-                    postList[index]['postContent'].toString(),
-                    style: TextStyle(
-                      fontSize: 16,
+                  // SizedBox(height: 10),
+                  Divider(height: 20, color: Colors.black),
+                  Container(
+                    child: Text(
+                      postList[index]['postContent'],
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20),
-              ],
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
-          ),
-        );
-      }));
+          );
+        })),
+  );
 }

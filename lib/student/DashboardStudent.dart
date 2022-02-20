@@ -295,7 +295,7 @@ Widget postDetails(
   return Container(
     margin: EdgeInsets.all(20),
     child: ListView.separated(
-        separatorBuilder: (context, index) => SizedBox(height: 3),
+        separatorBuilder: (context, index) => SizedBox(height: 15),
         itemCount: postList.length,
         itemBuilder: ((context, index) {
           return Card(
@@ -314,20 +314,31 @@ Widget postDetails(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(
                       vertical: 10,
                       horizontal: 5,
                     ),
-                    child: Text(
+                    child:
+                        // Text(
+                        //   postList[index]['postTitle'],
+                        //   style: TextStyle(
+                        //     fontWeight: FontWeight.bold,
+                        //     fontStyle: FontStyle.italic,
+                        //     fontSize: 20,
+                        //   ),
+                        // ),
+                        Text(
                       postList[index]['postTitle'],
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 20,
+                        fontSize: 18,
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  // SizedBox(height: 10),
+                  Divider(height: 20, color: Colors.black),
                   Container(
                     child: Text(
                       postList[index]['postContent'],

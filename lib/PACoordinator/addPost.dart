@@ -1,4 +1,4 @@
-import 'package:SSE3151_project/PA/DashboardPA.dart';
+import 'dashboardPAC.dart';
 import 'package:SSE3151_project/background2.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,18 +16,13 @@ class addPost extends StatefulWidget {
 class _addPostState extends State<addPost> {
   final CollectionReference postColl =
       FirebaseFirestore.instance.collection('Announcement');
-  final CollectionReference studentInfo =
-      FirebaseFirestore.instance.collection('students');
-  final CollectionReference PAInfo =
-      FirebaseFirestore.instance.collection('PA');
-  // final CollectionReference annListColl = FirebaseFirestore.instance.collection('Announcement');
 
   String postTitle = '';
   String postContent = '';
   String postTo = '';
   String holder = '';
   String defaultVal = 'Student';
-  List<String> toList = ['Student'];
+  List<String> toList = ['Student', 'Academic Advisor (PA)'];
 
   final _titleCtrl = TextEditingController();
   final _contentCtrl = TextEditingController();
@@ -47,11 +42,9 @@ class _addPostState extends State<addPost> {
         child: Container(
           padding: EdgeInsets.all(16),
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 32.0),
               Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'To:',
@@ -122,7 +115,7 @@ class _addPostState extends State<addPost> {
             }
           });
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => dashboardPA()));
+              .push(MaterialPageRoute(builder: (context) => dashboardPAC()));
         },
         label: Text('POST',
             style: TextStyle(

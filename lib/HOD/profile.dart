@@ -1,27 +1,19 @@
-import 'package:SSE3151_project/PA/DashboardPA.dart';
-import 'package:SSE3151_project/PA/loginPage.dart';
-import 'package:SSE3151_project/sendEmailPage.dart';
-import 'package:SSE3151_project/PA/editProfile.dart';
-import 'package:SSE3151_project/student/reports.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-//this is just to display whether the info can be retrieve or not
-//Result: success!
-//Feel free to change the UI :D
+import 'editProfile.dart';
 
-class PA_Profile extends StatefulWidget {
-  PA_Profile({Key? key}) : super(key: key);
+class HOD_Profile extends StatefulWidget {
+  const HOD_Profile({Key? key}) : super(key: key);
 
   @override
-  State<PA_Profile> createState() => _PA_ProfileState();
+  _HOD_ProfileState createState() => _HOD_ProfileState();
 }
 
-class _PA_ProfileState extends State<PA_Profile> {
+class _HOD_ProfileState extends State<HOD_Profile> {
   final user = FirebaseAuth.instance.currentUser;
 
   String? name;
@@ -37,49 +29,27 @@ class _PA_ProfileState extends State<PA_Profile> {
   String? wcLink;
   String? emailLink;
 
-  String? encodeQueryParameters(Map<String, String> params) {
-    return params.entries
-        .map((e) =>
-            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-        .join('&');
-  }
-
-  Future setPAValue() async {
-    final PAInfo =
-        await FirebaseFirestore.instance.collection('PA').doc(user?.uid).get();
+  Future setHODValue() async {
+    final HODInfo =
+        await FirebaseFirestore.instance.collection('HOD').doc(user?.uid).get();
 
     if (mounted) {
       setState(() {
-        name = PAInfo.data()!['fullName'];
-        image = PAInfo.data()!['image'];
-        UPMID = PAInfo.data()!['upmid'];
-        department = PAInfo.data()!['department'];
-        faculty = PAInfo.data()!['faculty'];
-        email = PAInfo.data()!['email'];
-        wechat = PAInfo.data()!['wechat'];
-        phoneNumber = PAInfo.data()!['phoneNumber'];
-
-        // final Uri emailLaunchUrl = Uri(
-        //   scheme: 'mailto',
-        //   path: email,
-        //   query: encodeQueryParameters(
-        //       <String, String>{'subject': 'Example Subject'}),
-        // );
+        name = HODInfo.data()!['fullName'];
+        image = HODInfo.data()!['image'];
+        UPMID = HODInfo.data()!['upmid'];
+        department = HODInfo.data()!['department'];
+        faculty = HODInfo.data()!['faculty'];
+        email = HODInfo.data()!['email'];
+        wechat = HODInfo.data()!['wechat'];
+        phoneNumber = HODInfo.data()!['phoneNumber'];
 
         wsLink = "https://wa.me/" + phoneNumber!;
         wcLink = "https://web.wechat.com/" + wechat!;
-        // emailLink = emailLaunchUrl.toString();
       });
     }
   }
 
-  // void setPALink() {
-  //   wsLink = "https://wa.me/" + phoneNumber!;
-  //   wcLink = "weixin://dl/chat?" + wechat!;
-  //   emailLink = "https://www.google.com/gmail/";
-  // }
-
-  //only work on API 31
   _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url, forceWebView: true, forceSafariVC: true);
@@ -90,10 +60,7 @@ class _PA_ProfileState extends State<PA_Profile> {
 
   @override
   Widget build(BuildContext context) {
-    setPAValue();
-    // setStudentLink();
-
-    Size size = MediaQuery.of(context).size;
+    setHODValue();
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -107,7 +74,7 @@ class _PA_ProfileState extends State<PA_Profile> {
         actions: [
           IconButton(
               onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => editProfile_PA())),
+                  MaterialPageRoute(builder: (context) => editProfile_HOD())),
               icon: Icon(Icons.edit)),
         ],
       ),
@@ -135,7 +102,7 @@ class _PA_ProfileState extends State<PA_Profile> {
                   CircleAvatar(
                     radius: 40,
                     backgroundImage: NetworkImage(image ??
-                        "https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default2_stdicon.jpg?alt=media&token=2e4518de-036f-47b6-9010-23588e9a6fe4"),
+                        "https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon3.png?alt=media&token=bfc1368c-d1bb-4b27-af4e-cd7b03bbdb69"),
                   ),
                 ],
               ),
@@ -274,6 +241,49 @@ class _PA_ProfileState extends State<PA_Profile> {
                 ],
               ),
               SizedBox(height: 20),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    OutlinedButton(
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        onPressed: () {
+                          _launchURL(wsLink!);
+                        },
+                        child: Card(
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: Image.asset(
+                                'assets/images/ws.png',
+                              )),
+                        )),
+                    OutlinedButton(
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        onPressed: () {
+                          _launchURL(wcLink!);
+                        },
+                        child: Card(
+                          elevation: 10,
+                          color: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(35.0),
+                          ),
+                          child: SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: Image.asset(
+                              'assets/images/wechat.png',
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

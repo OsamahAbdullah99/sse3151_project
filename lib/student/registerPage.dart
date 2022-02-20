@@ -1,4 +1,3 @@
-import 'package:SSE3151_project/provider/auth_page.dart';
 import 'package:SSE3151_project/services/utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';

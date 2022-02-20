@@ -1,11 +1,7 @@
-import 'package:SSE3151_project/student/homePage.dart';
-import 'package:SSE3151_project/provider/googleSignIn.dart';
 import 'package:SSE3151_project/services/utils.dart';
 import 'package:SSE3151_project/startPage.dart';
-import 'package:SSE3151_project/student/student_user.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:provider/provider.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 Future main() async {
@@ -15,14 +11,6 @@ Future main() async {
     NotificationChannel(
       channelKey: 'basic_channel',
       channelName: 'Basic Notifications',
-      channelDescription: 'Notification channel for basic tests',
-      defaultColor: Colors.indigo,
-      importance: NotificationImportance.High,
-      channelShowBadge: true,
-    ),
-    NotificationChannel(
-      channelKey: 'scheduled_channel',
-      channelName: 'Scheduled Notifications',
       channelDescription: 'Notification channel for basic tests',
       defaultColor: Colors.indigo,
       importance: NotificationImportance.High,

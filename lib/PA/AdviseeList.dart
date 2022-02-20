@@ -1,13 +1,19 @@
+import 'dart:io';
+
 import 'package:SSE3151_project/PA/addAdvisee.dart';
 import 'package:SSE3151_project/PA/archivedList.dart';
-// import 'package:SSE3151_project/PA/showStudentProfile.dart';
 import 'package:SSE3151_project/background2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:path/path.dart' as path;
+import '../pdfViewerPage.dart';
+import '../services/firebase_file.dart';
 
 class adviseeList extends StatefulWidget {
   const adviseeList({Key? key}) : super(key: key);
@@ -329,6 +335,7 @@ class _adviseeListState extends State<adviseeList> {
     }
   }
 
+  //start of developing for advisee's profile
   Future getStudentProfile(
       String upm_id,
       String cohort,
@@ -399,7 +406,7 @@ class _adviseeListState extends State<adviseeList> {
                 end: Alignment.bottomCenter),
           ),
           alignment: Alignment.center,
-          padding: EdgeInsets.fromLTRB(30, 100, 30, 0),
+          padding: EdgeInsets.fromLTRB(30, 50, 30, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -626,6 +633,33 @@ class _adviseeListState extends State<adviseeList> {
                         //   ],
                         // )
                         ),
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(side: BorderSide.none),
+                      onPressed: () {
+                        // _launchURL(emailLink!);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    showStudentReport(upm_id)));
+                      },
+                      child: Card(
+                        color: Colors.amber,
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(35.0),
+                        ),
+                        child: SizedBox(
+                          width: 35,
+                          height: 35,
+                          child: Icon(
+                            Icons.assignment_sharp,
+                            color: Colors.black,
+                            size: 19,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -634,6 +668,7 @@ class _adviseeListState extends State<adviseeList> {
         ));
   }
 
+//start of developing for sending email to respective advisee
   Future getStudentEmail(String upm_id, String email) async {
     final db = await FirebaseFirestore.instance
         .collection('Advisee_Advisor')
@@ -718,4 +753,230 @@ class _adviseeListState extends State<adviseeList> {
       await launch(url);
     }
   }
+
+//start of developing for advisee's uploaded reports
+  Future getStudentID(String upm_id) async {
+    final db = await FirebaseFirestore.instance
+        .collection('Advisee_Advisor')
+        .doc(user?.uid)
+        .collection('students')
+        .doc(upm_id)
+        .get();
+    setState(() {
+      upm_id = db.data()!['upmid'];
+    });
+  }
+
+  showStudentReport(String upm_id) {
+    getStudentID(upm_id);
+    late Future<List<FirebaseFile>> futureFiles;
+
+    futureFiles = listAll(upm_id);
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 2,
+        backgroundColor: Colors.transparent,
+        title: Text('$upm_id | Reports',
+            style:
+                GoogleFonts.poppins(fontSize: 25, fontWeight: FontWeight.w600)),
+        centerTitle: true,
+      ),
+      body: FutureBuilder<List<FirebaseFile>>(
+          future: futureFiles,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasError) {
+                  return Center(child: Text('Some error occured!'));
+                } else {
+                  final files = snapshot.data!;
+                  return Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [
+                            Colors.indigoAccent,
+                            Colors.blue.shade200,
+                            Colors.white
+                          ],
+                          // stops: [0.2, 0.8, 1],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter),
+                    ),
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 100,
+                          ),
+                          CircleAvatar(
+                            radius: 70,
+                            child: ClipRRect(
+                              child: Image.asset('assets/images/avatar.png'),
+                              borderRadius: BorderRadius.circular(60.0),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const SizedBox(height: 5),
+                                  Expanded(
+                                    child: ListView.separated(
+                                        padding: EdgeInsets.all(18),
+                                        separatorBuilder: (context, index) =>
+                                            SizedBox(height: 20),
+                                        itemCount: files.length,
+                                        itemBuilder: (context, index) {
+                                          final file = files[index];
+                                          return buildFile(
+                                              context, file, upm_id);
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_downward,
+                            size: 25,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+            }
+          }),
+    );
+  }
+
+  buildFile(BuildContext context, FirebaseFile file, String upm_id) =>
+      ElevatedButton(
+        onPressed: () {
+          final isImage = ['.jpeg', '.jpg', '.png'].any(file.name.contains);
+          final isPDF = ['.pdf'].any(file.name.contains);
+          if (isImage) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => imageView(context, file)));
+          } else if (isPDF) {
+            loadPDF(context, file, upm_id);
+          }
+        },
+        style: ButtonStyle(
+            padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(80.0),
+            ))),
+        child: Container(
+          alignment: Alignment.center,
+          height: 50.0,
+          width: 350,
+          decoration: new BoxDecoration(
+              borderRadius: BorderRadius.circular(80.0),
+              gradient: new LinearGradient(colors: [
+                Color.fromARGB(255, 255, 136, 34),
+                Color.fromARGB(255, 255, 177, 41)
+              ])),
+          padding: const EdgeInsets.all(0),
+          child: Text(
+            file.name,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      );
+
+  imageView(BuildContext context, FirebaseFile file) {
+    final isImage = ['.jpeg', '.jpg', '.png'].any(file.name.contains);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(file.name),
+        backgroundColor: Color(0xB7000000),
+        //Color(0xB7000000),
+        //Color(0xDD000000),
+        centerTitle: true,
+      ),
+      body: isImage
+          ? Image.network(
+              file.url,
+              height: double.infinity,
+              fit: BoxFit.cover,
+            )
+          : Center(
+              child: Text(
+                'Cannot be displayed',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+    );
+  }
+
+  Future<List<FirebaseFile>> listAll(String upm_id) async {
+    final coll = FirebaseStorage.instance.ref('reports/$upm_id/');
+    final result = await coll.listAll();
+
+    final urls = await _getDownloadLinks(result.items);
+    return urls
+        .asMap()
+        .map((index, url) {
+          final ref = result.items[index];
+          final name = ref.name;
+          final file = FirebaseFile(ref: ref, name: name, url: url);
+
+          return MapEntry(index, file);
+        })
+        .values
+        .toList();
+  }
+
+  Future<List<String>> _getDownloadLinks(List<Reference> refs) =>
+      Future.wait(refs.map((ref) => ref.getDownloadURL()).toList());
+}
+
+Future loadPDF(BuildContext context, FirebaseFile ref, String upm_id) async {
+  try {
+    final url = 'reports/$upm_id/${ref.name}';
+
+    final file = await loadFirebase(url);
+    if (file == null) return;
+    Navigator.of(context).push(
+      MaterialPageRoute(
+          builder: (context) => PDFViewerPage(context, file: file)),
+    );
+  } catch (e) {
+    return null;
+  }
+}
+
+Future loadFirebase(String url) async {
+  try {
+    final refPDF = FirebaseStorage.instance.ref().child(url);
+    final bytes = await refPDF.getData();
+
+    return _storeFile(url, bytes!);
+  } catch (e) {
+    return null;
+  }
+}
+
+Future<File> _storeFile(String url, List<int> bytes) async {
+  final filename = path.basename(url);
+  final dir = await getApplicationDocumentsDirectory();
+
+  final file = File('${dir.path}/$filename');
+  await file.writeAsBytes(bytes, flush: true);
+  return file;
 }

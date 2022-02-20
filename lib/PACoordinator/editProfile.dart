@@ -1,19 +1,16 @@
-import 'package:SSE3151_project/student/loginPage.dart';
-import 'package:SSE3151_project/student/student_user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-class editProfile extends StatelessWidget {
+class editProfile_PAC extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   //controller
   final FNCtrl = TextEditingController();
   final MIDCtrl = TextEditingController();
-  final semCtrl = TextEditingController();
+  final depCtrl = TextEditingController();
   final PNCtrl = TextEditingController();
   final emailCtrl = TextEditingController();
   final wcCtrl = TextEditingController();
@@ -24,14 +21,12 @@ class editProfile extends StatelessWidget {
   String? image;
   String? name;
   String? UPMID;
-  String? semester;
   String? email;
   String? wechat;
   String? phoneNumber;
 
   String? currentName;
   String? currentUPMID;
-  String? currentSemester;
   String? currentEmail;
   String? currentWechat;
   String? currentPhoneNumber;
@@ -41,53 +36,38 @@ class editProfile extends StatelessWidget {
   void setVariable() {
     name = FNCtrl.text;
     UPMID = MIDCtrl.text;
-    semester = semCtrl.text;
     email = emailCtrl.text;
     wechat = wcCtrl.text;
     phoneNumber = PNCtrl.text;
   }
 
-  Future getStudentData() async {
-    final studentInfo = await FirebaseFirestore.instance
-        .collection('students')
+  Future getPACData() async {
+    final pacInfo = await FirebaseFirestore.instance
+        .collection('PA Coordinator')
         .doc(user.uid)
         .get();
 
-    image = studentInfo.get('image');
-    currentName = studentInfo.get('fullName');
-    currentUPMID = studentInfo.get('upmid');
-    currentSemester = studentInfo.get('semester');
-    currentEmail = studentInfo.get('email');
-    currentWechat = studentInfo.get('wechat');
-    currentPhoneNumber = studentInfo.get('phoneNumber');
+    image = pacInfo.get('image');
+    currentName = pacInfo.get('fullName');
+    currentUPMID = pacInfo.get('upmid');
+    currentEmail = pacInfo.get('email');
+    currentWechat = pacInfo.get('wechat');
+    currentPhoneNumber = pacInfo.get('phoneNumber');
 
     FNCtrl.text = currentName!;
     MIDCtrl.text = currentUPMID!;
-    semCtrl.text = currentSemester!;
     PNCtrl.text = currentPhoneNumber!;
     emailCtrl.text = currentEmail!;
     wcCtrl.text = currentWechat!;
-
-    // image = studentInfo.data()!['image'];
-    // currentName = studentInfo.data()!['fullName'];
-    // currentUPMID = studentInfo.data()!['upmid'];
-    // currentSemester = studentInfo.data()!['semester'];
-    // currentFaculty = studentInfo.data()!['faculty'];
-    // currentEmail = studentInfo.data()!['email'];
-    // currentWechat = studentInfo.data()!['wechat'];
-    // currentPassword = studentInfo.data()!['password'];
-    // currentPhoneNumber = studentInfo.data()!['phoneNumber'];
 
     print('getting...');
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    getStudentData();
+    getPACData();
 
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.indigo,
@@ -115,7 +95,7 @@ class editProfile extends StatelessWidget {
                 CircleAvatar(
                   radius: 40,
                   backgroundImage: NetworkImage(image ??
-                      'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/default_studicon.png?alt=media&token=7726cd03-0bb7-47bf-ac35-a86b0b44b457'),
+                      'https://firebasestorage.googleapis.com/v0/b/padvisor-45b73.appspot.com/o/def_profIcon.png?alt=media&token=12132e6a-7c3d-4424-a36a-6e1334dc799b'),
                 ),
                 SizedBox(height: 10),
                 Container(
@@ -143,16 +123,6 @@ class editProfile extends StatelessWidget {
                         validator: (val) => val != null && val.length < 6
                             ? 'This field cannot be empty'
                             : null,
-                      ),
-                      SizedBox(height: 8),
-                      TextFormField(
-                        controller: semCtrl,
-                        decoration: InputDecoration(
-                            labelText: 'Current Semester',
-                            hintText: currentSemester),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (val) =>
-                            val == null ? 'This field cannot be empty' : null,
                       ),
                       SizedBox(height: 8),
                       TextFormField(
@@ -185,10 +155,10 @@ class editProfile extends StatelessWidget {
                         validator: (val) =>
                             val == null ? 'This field cannot be empty' : null,
                       ),
+                      SizedBox(height: 8),
                     ],
                   ),
                 ),
-                SizedBox(height: 8),
               ],
             ),
           ),
@@ -214,7 +184,6 @@ class editProfile extends StatelessWidget {
           if (formKey.currentState!.validate()) {
             name = FNCtrl.text.trim();
             UPMID = MIDCtrl.text.trim();
-            semester = semCtrl.text;
             email = emailCtrl.text.trim();
             phoneNumber = PNCtrl.text.trim();
             wechat = wcCtrl.text.trim();
@@ -222,12 +191,11 @@ class editProfile extends StatelessWidget {
             User user = FirebaseAuth.instance.currentUser!;
 
             await FirebaseFirestore.instance
-                .collection("students")
+                .collection("PA Coordinator")
                 .doc(user.uid)
                 .update({
               'fullName': name,
               'upmid': UPMID,
-              'semester': semester,
               'email': email,
               'wechat': wechat,
               'phoneNumber': phoneNumber,

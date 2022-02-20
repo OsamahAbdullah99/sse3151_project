@@ -1,21 +1,18 @@
-import 'package:SSE3151_project/startPage.dart';
-import 'package:SSE3151_project/student/DashboardStudent.dart';
-import 'package:SSE3151_project/student/loginPage.dart';
-import 'package:SSE3151_project/student/editProfile.dart';
-import 'package:SSE3151_project/student/profile.dart';
+import 'loginPage.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-//trial test connection with firebase
-class HomePage_Student extends StatefulWidget {
-  const HomePage_Student({Key? key}) : super(key: key);
+import 'dashboardPAC.dart';
+
+class HomePage_PAC extends StatefulWidget {
+  const HomePage_PAC({Key? key}) : super(key: key);
 
   @override
-  State<HomePage_Student> createState() => _HomePage_StudentState();
+  _HomePage_PACState createState() => _HomePage_PACState();
 }
 
-class _HomePage_StudentState extends State<HomePage_Student> {
+class _HomePage_PACState extends State<HomePage_PAC> {
   @override
   void initState() {
     super.initState();
@@ -67,11 +64,11 @@ class _HomePage_StudentState extends State<HomePage_Student> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
-            return dashboardStudent();
+            return dashboardPAC();
           } else if (snapshot.hasError) {
             return Center(child: Text('Something Went Wrong'));
           } else {
-            return LoginWidget();
+            return LoginWidgetPAC();
           }
         },
       ),

@@ -1,7 +1,4 @@
 import 'package:SSE3151_project/PA/loginPage.dart';
-import 'package:SSE3151_project/provider/googleSignIn.dart';
-import 'package:SSE3151_project/services/database.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,7 +49,7 @@ class editProfile_PA extends StatelessWidget {
     phoneNumber = PNCtrl.text;
   }
 
-  Future getStudentData() async {
+  Future getPAData() async {
     final paInfo =
         await FirebaseFirestore.instance.collection('PA').doc(user.uid).get();
 
@@ -213,7 +210,7 @@ class editProfile_PA extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    getStudentData();
+    getPAData();
 
     return Scaffold(
       // extendBodyBehindAppBar: true,
