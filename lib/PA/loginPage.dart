@@ -77,7 +77,9 @@ class _LoginWidgetState extends State<LoginWidgetPA> {
                                 ? Icons.visibility
                                 : Icons.visibility_off),
                             onPressed: () {
-                              _isObscure = !_isObscure;
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
                             },
                           ),
                         ),

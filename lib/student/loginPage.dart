@@ -83,7 +83,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 ? Icons.visibility
                                 : Icons.visibility_off),
                             onPressed: () {
-                              _isObscure = !_isObscure;
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
                             },
                           ),
                         ),
@@ -100,8 +102,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     // ),
                     Container(
                       alignment: Alignment.centerRight,
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                       child: GestureDetector(
                         child: Text(
                           'Forgot Password?',
@@ -119,17 +120,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                     SizedBox(height: size.height * 0.05),
                     Container(
                       alignment: Alignment.centerRight,
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                       child: ElevatedButton(
                         onPressed: () => signIn(),
                         style: ButtonStyle(
-                            padding:
-                                MaterialStateProperty.all(EdgeInsets.all(0)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(80.0),
-                            ))),
+                            padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+                            shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80.0),
+                                ))),
                         child: Container(
                           alignment: Alignment.center,
                           height: 50.0,
@@ -201,34 +201,34 @@ class _LoginWidgetState extends State<LoginWidget> {
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.symmetric(horizontal: 55, vertical: 10),
                 child:
-                    // RichText(
-                    //   text: TextSpan(
-                    //     style: TextStyle(
-                    //       color: Color(0xFF2661FA),
-                    //       fontSize: 12,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
-                    //     text: 'Don\'t Have an Account? ',
-                    //     children: [
-                    //       TextSpan(
-                    //         recognizer: TapGestureRecognizer()
-                    //           ..onTap = widget.onClickedSignUp,
-                    //         text: 'Sign Up',
-                    //         style: TextStyle(
-                    //             decoration: TextDecoration.underline,
-                    //             color: Color(0xFF2661FA)),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    GestureDetector(
+                // RichText(
+                //   text: TextSpan(
+                //     style: TextStyle(
+                //       color: Color(0xFF2661FA),
+                //       fontSize: 12,
+                //       fontWeight: FontWeight.bold,
+                //     ),
+                //     text: 'Don\'t Have an Account? ',
+                //     children: [
+                //       TextSpan(
+                //         recognizer: TapGestureRecognizer()
+                //           ..onTap = widget.onClickedSignUp,
+                //         text: 'Sign Up',
+                //         style: TextStyle(
+                //             decoration: TextDecoration.underline,
+                //             color: Color(0xFF2661FA)),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                GestureDetector(
                   onTap: () => {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => RegisterWidget(
-                                // onClickedSignIn: () {},
-                                )))
+                              // onClickedSignIn: () {},
+                            )))
                   },
                   child: RichText(
                     text: TextSpan(
