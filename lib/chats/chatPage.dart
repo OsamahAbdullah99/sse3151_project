@@ -65,10 +65,10 @@ class _ChatPageState extends State<ChatPage> {
       }
     });
 
-    AwesomeNotifications().createdStream.listen((noti) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Notification Created on ${noti.channelKey}')));
-    });
+    // AwesomeNotifications().createdStream.listen((noti) {
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //       content: Text('Notification Created on ${noti.channelKey}')));
+    // });
 
     // AwesomeNotifications().actionStream.listen((event) {
     //   Navigator.pushAndRemoveUntil(
